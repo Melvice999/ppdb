@@ -8,13 +8,13 @@
 
     <title>Laravel</title>
 
-    <!-- Fonts -->
-
     <!-- Styles -->
     <style>
+        /* font */
         @import url('https://fonts.googleapis.com/css2?family=Aldrich&display=swap');
 
-        @keyframes slide {
+        /* animasi awan */
+        @keyframes awan {
             0% {
                 transform: translateX(-200%);
             }
@@ -59,33 +59,54 @@
     </div>
 
     {{-- header --}}
-    <div class="m-8 overflow-hidden">
-        <div class="w-100%  bg-l-sky-blue">
-            {{-- logo --}}
-            <div class="flex uppercase absolute">
-                <div class="m-5">
-                    <img src="{{ asset('asset/img/logo_smk.png') }}" alt="" width="120">
-                </div>
-                <div class="my-auto text-lg">
-                    Penerimaan Peserta Didik Baru <br>
-                    SMK Ma’arif NU Doro
-                </div>
-                
-            </div>
+    <div class=" overflow-hidden">
 
+        <div class="bg-l-sky-blue">
+            {{-- animasi awan --}}
             <div class="awan">
                 <img src="{{ asset('asset/img/awan.png') }}" alt=""
-                    style="animation: slide 20s linear infinite;">
+                    style="animation: awan 20s linear infinite;">
                 <img src="{{ asset('asset/img/awan.png') }}" alt=""
-                    style="animation: slide 40s linear infinite;">
+                    style="animation: awan 40s linear infinite;">
                 <img src="{{ asset('asset/img/awan.png') }}" alt=""
-                    style="animation: slide 28s linear infinite;">
+                    style="animation: awan 28s linear infinite;">
                 <img src="{{ asset('asset/img/awan.png') }}" alt=""
-                    style="animation: slide 16s linear infinite;">
+                    style="animation: awan 16s linear infinite;">
             </div>
 
+            {{-- logo --}}
+            <div class="absolute top-16 uppercase sm:left-10 md:left-36 lg:left-56 xl:left-80 2xl:left-96">
+                <div class="flex">
+                    <div class="m-5">
+                        <img src="{{ asset('asset/img/logo_smk.png') }}" alt="" width="100">
+                    </div>
+                    <div class="my-auto tracking-widest text-xl font-bold text-d-green ">
+                        Penerimaan Peserta Didik Baru <br>
+                        SMK Ma’arif NU Doro
+                    </div>
+                </div>
+            </div>
+
+            {{-- tombol daftar dan masuk --}}
+            <div class="border-d-green">
+                <div class="absolute top-44 sm:left-20 md:left-28 lg:left-48 xl:left-64 2xl:left-96">
+                    <div class="flex sm:gap-10 md:gap-40">
+                        <div class="px-16 py-3 border-2 rounded border-d-green bg-white cursor-pointer">
+                            Daftar
+                        </div>
+                        <div class="px-16 py-3 border-2 rounded border-d-green bg-white cursor-pointer">
+                            Masuk
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
+
     </div>
+
+
+
 </body>
 
 </html>
