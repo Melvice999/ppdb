@@ -7,13 +7,15 @@ export default {
   ],
   theme: {
     colors: {
+      'blue': "#3498DB",
       'd-green': "#149200",
+      'd-sky-blue' :"#C1EBF9",
+      'l-sky-blue' :"#F2F2F2",
       'white': "#FFF",
-      'l-sky-blue' :"#C1EBF9",
-      'blue': "#3498DB"
     },
     fontFamily: {
       'aldrich': ['Aldrich'],
+      'sen': ['sen']
     },
 
     extend: {},
