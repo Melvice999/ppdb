@@ -1,8 +1,8 @@
  {{-- navbar --}}
  <div class="w-full h-16 pl-5 grid content-center bg-d-green text-white">
-    <a href="/">
+    <div>
         <img src="{{ asset('asset/img/logo_smk.png') }}" alt="" width="50px" class="md:hidden">
-    </a>
+    </div>
      <div class="absolute right-0 top-1">
          {{-- Nav Hidden --}}
          <div class="md:hidden absolute right-0 top-4 mr-6 rotate-90 cursor-pointer" id="nav_hidden">
