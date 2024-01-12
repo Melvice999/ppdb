@@ -35,15 +35,15 @@
          <a class="flex-auto my-auto max-md:block max-md:mt-2">
              Hasil Seleksi
          </a>
-         <a class="flex-auto my-auto max-md:block max-md:mt-2">
+         <a href="informasi-pendaftar" class="flex-auto my-auto max-md:block max-md:mt-2">
              Informasi
          </a>
          <a class="flex-auto my-auto max-md:block max-md:mt-2">
              Kontak
          </a>
-         <a class="flex-auto my-auto pl-5 pt-2 pb-2 rounded-l-lg bg-white text-d-green max-md:block max-md:mt-2">
+         <a href="{{ route('registrasi-siswa.index') }}" class="flex-auto my-auto pl-5 pt-2 pb-2 rounded-l-lg md:bg-white text-d-green max-md:block max-md:mt-2 max-md:bg-none max-md:text-white max-md:p-0">
              <div class="my-auto">
-                 Profil
+                 Registrasi
              </div>
          </a>
      </div>
