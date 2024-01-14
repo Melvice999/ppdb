@@ -36,7 +36,7 @@
                         </a>
                         <a href="{{ route('auth-siswa.index') }}"
                             class="px-16 py-3 border-2 rounded border-d-green bg-white cursor-pointer max-md:mt-4 max-md:block">
-                            Masuk
+                            Login
                         </a>
                     </div>
                 </div>

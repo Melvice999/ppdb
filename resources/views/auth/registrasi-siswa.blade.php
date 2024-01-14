@@ -22,13 +22,12 @@
         }
     </style>
 </head>
-
 <body class="font-sen bg-d-green">
     <div class="flex items-center justify-center min-h-screen">
         <div class="bg-white outline outline-d-green rounded p-6 max-md:mx-10">
             {{-- Pesan Error --}}
             @if ($errors->any())
-                <ul class="bg-red p-3 rounded text-sm">
+                <ul class=" p-3 text-sm bg-red text-white rounded">
                     @foreach ($errors->all() as $error)
                         <li class="list-disc list-inside">{{ $error }}</li>
                     @endforeach
@@ -41,7 +40,7 @@
                 <h6 class="uppercase text-lg mt-5 mb-2">Registrasi Akun PPDB <br> SMK Ma'arif NU Doro</h6>
             </div>
 
-            <form action="{{ route('register') }}" method="POST">
+            <form action="{{ route('registrasi-akun.create') }}" method="POST">
                 @csrf
                 {{-- NIK --}}
                 <div class="mt-4">NIK</div>
@@ -97,7 +96,7 @@
                 </div>
                 <div class="flex items-center justify-center mt-5">
                     <button class="text-white rounded bg-[#39A170] px-20 w-full py-3">
-                        Daftar
+                        Registrasi
                     </button>
                 </div>
             </form>

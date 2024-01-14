@@ -40,22 +40,22 @@ Route::get(
     [RegisterController::class, 'index']
 )
     ->name('registrasi-siswa.index');
-// Route::post(
-//     '/registrasi-akun/create',
-//     [RegisterController::class, 'register']
-// )
-//     ->name('registrasi-akun.create');
+Route::post(
+    '/registrasi-akun/create',
+    [RegisterController::class, 'register']
+)
+    ->name('registrasi-akun.create');
 // Login siswa
 Route::get(
     '/auth-siswa/index',
     [AuthController::class, 'index']
 )
     ->name('auth-siswa.index');
-// Route::post(
-//     '/auth-siswa/login/{id?}',
-//     [AuthController::class, 'login']
-// )
-//     ->name('auth-siswa.login');
+Route::post(
+    '/auth-siswa/login',
+    [AuthController::class, 'login']
+)
+    ->name('auth-siswa.login');
 // Admin
 Route::get('/admin/beranda', function () {
     return view('admin/beranda');

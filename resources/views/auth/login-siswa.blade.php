@@ -19,22 +19,16 @@
         <div class="bg-white outline outline-d-green rounded p-6 max-md:mx-10">
             {{-- Pesan Error --}}
             @if (session('error'))
-                <ul class="bg-d-green text-white p-3 mb-10 rounded text-sm">
+                <ul class="bg-d-green text-white p-3 mb-5 rounded text-sm">
                     <li> {{ session('error') }} </li>
                 </ul>
-                <br>
+                {{-- <br> --}}
             @endif
-
-            @error('email')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-
             {{-- Pesan Sukses --}}
             @if (session('success'))
-                <ul class="bg-d-green text-white p-3 mb-10 rounded text-sm">
+                <ul class="bg-d-green text-white p-3 rounded text-sm">
                     <li> {{ session('success') }} </li>
+                    <li> {{ session('sukses') }} </li>
                 </ul>
                 <br>
             @endif
@@ -45,7 +39,7 @@
                 <p class="text-sm">Silahkan masuk menggunakan <br>akun yang telah didaftarkan</p>
             </div>
 
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('auth-siswa.login') }}">
 
                 @csrf
                 <div class="mt-10">
@@ -90,7 +84,7 @@
             </form>
             <div class="mt-5 relative text-right">
                 <div class="absolute">
-                    <a href="{{ route('registrasi-siswa.index') }}">Daftar</a>
+                    <a href="{{ route('registrasi-siswa.index') }}">Registrasi</a>
                 </div>
                 <a href="">Lupa Password?</a>
             </div>

@@ -46,4 +46,8 @@ class CalonSiswa extends Model
         'pendidikan_wali',
         'info_sekolah',
     ];
+    //   public function nikCalonSiswa()
+    // {
+    //     return $this->hasOne(AkunSiswa::class);
+    // }
 }
