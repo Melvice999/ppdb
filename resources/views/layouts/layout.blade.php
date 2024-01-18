@@ -38,7 +38,10 @@
 
 <body class="font-sen bg-l-sky-blue">
     @include('navbar.navbar')
-    @yield('content')
+    <div class="overflow-hidden">
+        @yield('content')
+    </div>
+
     <script type="module">
         $(document).ready(function() {
             // Open Nav Menu
@@ -46,8 +49,10 @@
                 $("#nav_hidden").removeClass("md:hidden").addClass("hidden")
                 $("#nav_open").removeClass("hidden").addClass("md:hidden")
                 $("#menu_nav_open").removeClass("max-md:hidden").addClass("max-md:block")
-                // overflow di animasi awan beranda guest
-                $(".overflow-hidden").addClass("hidden")
+                // overflow di saat nav open
+                $(".overflow-hidden").addClass("max-md:mt-64")
+                $("#ppdb1").addClass("max-md:mt-64")
+                $("#ppdb2").addClass("max-md:mt-64")
                 // navigasi up and down daftar
                 $("#navigasi").addClass("hidden")
             })
@@ -57,7 +62,9 @@
                 $("#nav_hidden").removeClass("hidden").addClass("md:hidden")
                 $("#menu_nav_open").removeClass("max-md:block").addClass("max-md:hidden")
                 // overflow di animasi awan beranda guest
-                $(".overflow-hidden").removeClass("hidden")
+                $(".overflow-hidden").removeClass("max-md:mt-64")
+                $("#ppdb1").removeClass("max-md:mt-64")
+                $("#ppdb2").removeClass("max-md:mt-64")
                 // navigasi up and down daftar
                 $("#navigasi").removeClass("hidden")
             })

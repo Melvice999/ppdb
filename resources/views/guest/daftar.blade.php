@@ -1,6 +1,5 @@
 @extends('layouts.layout')
 @section('content')
-
     {{-- Pesan Error --}}
     @if ($errors->any())
         <div class="grid mt-6 ml-10 mr-10 mx-auto place-items-center" id="clsErrors">

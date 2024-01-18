@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CalonSiswaController;
-
+use App\Http\Controllers\SiswaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,12 +28,14 @@ Route::get('/daftar', function () {
 Route::get('/informasi-pendaftar', function () {
     return view('guest/informasi-pendaftar');
 });
+
 // Daftar Formulir Calon Siswa
 Route::post(
     '/calon-siswa/store',
     [CalonSiswaController::class, 'store']
 )
     ->name('calon-siswa.store');
+
 // Registrasi Akun Siswa
 Route::get(
     '/registrasi-siswa/index',
@@ -45,6 +47,7 @@ Route::post(
     [RegisterController::class, 'register']
 )
     ->name('registrasi-akun.create');
+
 // Login siswa
 Route::get(
     '/auth-siswa/index',
@@ -56,8 +59,13 @@ Route::post(
     [AuthController::class, 'login']
 )
     ->name('auth-siswa.login');
-// Admin
-Route::get('/admin/beranda', function () {
-    return view('admin/beranda');
-});
 
+// Siswa
+Route::get('siswa-beranda/{id?}',
+[SiswaController::class, 'index']
+)
+    ->name('siswa-beranda.{id?}');
+// Admin
+Route::get('/admin-beranda', function () {
+    return view('admin/admin-beranda');
+});

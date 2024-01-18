@@ -22,7 +22,14 @@ export default {
       'sen': ['sen']
     },
 
-    extend: {},
+    extend: {
+      width:{
+        '4x': '472px'
+      },
+      height: {
+        '6x' : '709'
+      }
+    },
   },
   plugins: [],
 }
