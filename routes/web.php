@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CalonSiswaController;
 use App\Http\Controllers\SiswaController;
+use App\Models\CalonSiswa;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,15 +21,20 @@ use App\Http\Controllers\SiswaController;
 
 
 // Calon Siswa
-Route::get('/', function () {
-    return view('guest/beranda');
-});
-Route::get('/daftar', function () {
-    return view('guest/daftar');
-});
-Route::get('/informasi-pendaftar', function () {
-    return view('guest/informasi-pendaftar');
-});
+Route::get(
+    '/',
+    [CalonSiswaController::class, 'index']
+)->name('/');
+
+Route::get(
+    'daftar',
+    [CalonSiswaController::class, 'daftar']
+)->name('daftar');
+
+Route::get(
+    'informasi-pendaftaran',
+    [CalonSiswaController::class, 'informasi']
+)->name('informasi-pendaftaran');
 
 // Daftar Formulir Calon Siswa
 Route::post(
@@ -61,11 +68,46 @@ Route::post(
     ->name('auth-siswa.login');
 
 // Siswa
-Route::get('siswa-beranda/{id?}',
-[SiswaController::class, 'index']
+Route::get(
+    'siswa-beranda/{id?}',
+    [SiswaController::class, 'index']
 )
     ->name('siswa-beranda.{id?}');
+
 // Admin
-Route::get('/admin-beranda', function () {
-    return view('admin/admin-beranda');
-});
+Route::get(
+    'admin-beranda',
+    [AdminController::class, 'index']
+)
+    ->name('admin-beranda');
+Route::get(
+    'admin-beranda-tkro',
+    [AdminController::class, 'tkro']
+)
+    ->name('admin-beranda-tkro');
+Route::get(
+    'admin-beranda-tbsm',
+    [AdminController::class, 'tbsm']
+)
+    ->name('admin-beranda-tbsm');
+Route::get(
+    'admin-beranda-tkj',
+    [AdminController::class, 'tkj']
+)
+    ->name('admin-beranda-tkj');
+Route::get(
+    'admin-beranda-akl',
+    [AdminController::class, 'akl']
+)
+    ->name('admin-beranda-akl');
+Route::get(
+    'admin-beranda-tervalidasi',
+    [AdminController::class, 'tervalidasi']
+)
+    ->name('admin-beranda-tervalidasi');
+
+Route::get(
+    'admin-beranda-belum-tervalidasi',
+    [AdminController::class, 'belumTervalidasi']
+)
+    ->name('admin-beranda-belum-tervalidasi');

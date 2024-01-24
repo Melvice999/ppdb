@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.guest-layout')
 @section('content')
     {{-- Pesan Sukses --}}
     @if (session('success'))

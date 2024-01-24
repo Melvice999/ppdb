@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.guest-layout')
 @section('content')
     {{-- header --}}
     <div class="bg-d-sky-blue max-md:h-64">
@@ -29,7 +29,7 @@
             <div class="absolute top-52 sm:left-20 md:left-28 max-md:top-44 lg:left-48 xl:left-64 2xl:left-96"
                 id="ppdb2">
                 <div class="flex ml-20 sm:gap-10 lg:gap-36 max-md:block">
-                    <a href="daftar"
+                    <a href="{{ route('daftar') }}"
                         class="px-16 py-3 border-2 rounded border-d-green bg-white cursor-pointer max-md:block">
                         Daftar
                     </a>

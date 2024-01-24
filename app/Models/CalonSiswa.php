@@ -22,6 +22,7 @@ class CalonSiswa extends Model
         'desa',
         'rt',
         'rw',
+        'provinsi',
         'kecamatan',
         'kabupaten',
         'jenis_kelamin',
@@ -39,15 +40,14 @@ class CalonSiswa extends Model
         'desa_wali',
         'rt_wali',
         'rw_wali',
+        'provinsi_wali',
         'kecamatan_wali',
         'kabupaten_wali',
         'kode_pos_wali',
         'pekerjaan_wali',
         'pendidikan_wali',
         'info_sekolah',
+        'tahun_daftar',
     ];
-    //   public function nikCalonSiswa()
-    // {
-    //     return $this->hasOne(AkunSiswa::class);
-    // }
+
 }

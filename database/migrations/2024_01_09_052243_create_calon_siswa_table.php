@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -21,12 +22,13 @@ return new class extends Migration
             $table->string('desa');
             $table->string('rt');
             $table->string('rw');
+            $table->string('provinsi');
             $table->string('kecamatan');
             $table->string('kabupaten');
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->enum('warga_negara', ['WNI', 'WNA']);
             $table->string('kode_pos');
-            $table->enum('prodi', ['TBSM', 'TKJ', 'AKL']);
+            $table->enum('prodi', ['TBSM', 'TKRO', 'TKJ', 'AKL']);
             $table->enum('batik', ['S', 'M', 'L', 'XL', 'XXL']);
             $table->enum('olahraga', ['S', 'M', 'L', 'XL', 'XXL']);
             $table->enum('wearpack', ['S', 'M', 'L', 'XL', 'XXL']);
@@ -38,17 +40,17 @@ return new class extends Migration
             $table->string('desa_wali');
             $table->string('rt_wali');
             $table->string('rw_wali');
+            $table->string('provinsi_wali');
             $table->string('kecamatan_wali');
             $table->string('kabupaten_wali');
             $table->string('kode_pos_wali');
             $table->string('pekerjaan_wali');
             $table->string('pendidikan_wali');
             $table->string('info_sekolah');
+            $table->year('tahun_daftar')->default(DB::raw('YEAR(NOW())'));
+            $table->integer('status')->default(0);
 
             $table->timestamps();
-
-
-            
         });
     }
 
