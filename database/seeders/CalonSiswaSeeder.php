@@ -59,5 +59,8 @@ class CalonSiswaSeeder extends Seeder
                 'tahun_daftar' => $faker->numberBetween(2020, 2024),
             ]);
         }
+        DB::table('pengaturan')->insert([
+            'nama' => "Gelombang 1"
+        ]);
     }
 }

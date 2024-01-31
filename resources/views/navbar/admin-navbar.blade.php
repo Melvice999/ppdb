@@ -34,7 +34,7 @@
 
             <li
                 class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 hover:bg-white hover:text-d-green rounded-2xl">
-                <a href="#" class="flex items-center w-full rounded-md">
+                <a href="{{ route('admin-beranda')}}" class="flex items-center w-full rounded-md">
                     <i class="fa-solid fa-house min-w-16 text-lg"></i>
                     <span class="whitespace-nowrap">&nbsp;&nbsp;&nbsp; Beranda</span>
                 </a>
@@ -42,17 +42,17 @@
 
             <li
                 class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 hover:bg-white hover:text-d-green rounded-2xl">
-                <a href="#" class="flex items-center w-full rounded-md">
+                <a href="{{ route('admin-akun-siswa') }}" class="flex items-center w-full rounded-md">
                     <i class="fa-solid fa-file min-w-16 text-lg"></i>
-                    <span class="whitespace-nowrap">&nbsp;&nbsp;&nbsp; Data Siswa</span>
+                    <span class="whitespace-nowrap">&nbsp;&nbsp;&nbsp; Akun Siswa</span>
                 </a>
             </li>
 
             <li
                 class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 hover:bg-white hover:text-d-green rounded-2xl">
-                <a href="#" class="flex items-center w-full rounded-md">
+                <a href="{{ route('admin-pengaturan') }}" class="flex items-center w-full rounded-md">
                     <i class="fa-solid fa-gear min-w-16 text-lg"></i>
-                    <span class="whitespace-nowrap">&nbsp;&nbsp;&nbsp; Edit Informasi</span>
+                    <span class="whitespace-nowrap">&nbsp;&nbsp;&nbsp; Pengaturan</span>
                 </a>
             </li>
 
@@ -101,11 +101,11 @@
         navToggleMobile.click(function() {
             if ($("nav ul").hasClass("max-md:hidden")) {
                 $("nav ul").removeClass("max-md:hidden")
-                $("nav").removeClass("max-md:h-16").addClass("max-md:h-auto")
+                $("nav").removeClass("max-md:h-16").addClass("max-md:h-full")
                 $("section").addClass("max-md:mt-96")
             } else {
                 $("nav ul").addClass("max-md:hidden")
-                $("nav").removeClass("max-md:h-4/5").addClass("max-md:h-16")
+                $("nav").removeClass("max-md:h-full").addClass("max-md:h-16")
                 $("section").removeClass("max-md:mt-96")
             }
 

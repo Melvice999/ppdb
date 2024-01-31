@@ -20,7 +20,7 @@
 <body class="min-h-screen bg-l-sky-blue font-sen">
     @include('navbar.admin-navbar')
 
-    <section class="absolute top-0 left-60 h-screen py-3 px-10 max-md:top-20 max-md:left-0 max-md:w-full">
+    <section class="mt-0 ml-60 h-screen py-3 px-10 max-md:mt-20 max-md:ml-0 max-md:w-full">
         @yield('content')
     </section>
 </body>

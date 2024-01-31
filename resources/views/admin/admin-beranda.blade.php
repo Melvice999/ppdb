@@ -54,7 +54,7 @@
     <div class="mt-10">Data Validasi</div>
     <div class="grid grid-cols-2 w-full gap-10 mt-3 max-md:grid-cols-1">
 
-        <a href="{{ route('admin-beranda-tervalidasi') }}" class="grid w-full bg-d-green text-white rounded-lg p-3">
+        <a href="{{ route('admin-beranda-sudah-tervalidasi') }}" class="grid w-full bg-d-green text-white rounded-lg p-3">
             <div class="flex">
                 <i class="fa-solid fa-check border-e me-4 flex justify-center items-center w-14 text-xl"></i>
                 <div class=" text-5xl max-md:text-2xl"> {{ $status1 }}

@@ -13,25 +13,25 @@ class CalonSiswaController extends Controller
     public function index()
     {
         $data = [
-            "title" => "Halaman Utama PPDB SMK Ma'arif NU Doro",
+            'title' => "Halaman Utama PPDB SMK Ma'arif NU Doro",
         ];
-        return view("guest/beranda", $data);
+        return view('guest/beranda', $data);
     }
 
     public function daftar()
     {
         $data = [
-            "title" => "Formulir Pendaftaran PPDB SMK Ma'arif NU Doro",
+            'title' => "Formulir Pendaftaran PPDB SMK Ma'arif NU Doro",
         ];
-        return view("guest/daftar", $data);
+        return view('guest/daftar', $data);
     }
 
     public function informasi()
     {
         $data = [
-            "title" => "Panduan dan Informasi PPDB SMK Ma'arif NU Doro",
+            'title' => "Panduan dan Informasi PPDB SMK Ma'arif NU Doro",
         ];
-        return view("guest/informasi-pendaftaran", $data);
+        return view('guest/informasi-pendaftaran', $data);
     }
 
     public function store(Request $request)

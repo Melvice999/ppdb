@@ -80,34 +80,27 @@ Route::get(
     [AdminController::class, 'index']
 )
     ->name('admin-beranda');
+
+
+
+Route::group(['prefix' => 'admin-beranda'], function () {
+    Route::get('tkro', [AdminController::class, 'berandaProdi'])->name('admin-beranda-tkro');
+    Route::get('tbsm', [AdminController::class, 'berandaProdi'])->name('admin-beranda-tbsm');
+    Route::get('tkj', [AdminController::class, 'berandaProdi'])->name('admin-beranda-tkj');
+    Route::get('akl', [AdminController::class, 'berandaProdi'])->name('admin-beranda-akl');
+    Route::get('sudah-tervalidasi', [AdminController::class, 'berandaValidate'])->name('admin-beranda-sudah-tervalidasi');
+    Route::get('belum-tervalidasi', [AdminController::class, 'berandaValidate'])->name('admin-beranda-belum-tervalidasi');
+});
 Route::get(
-    'admin-beranda-tkro',
-    [AdminController::class, 'tkro']
+    'admin-akun-siswa',
+    [AdminController::class, 'dataAkunSiswa']
 )
-    ->name('admin-beranda-tkro');
-Route::get(
-    'admin-beranda-tbsm',
-    [AdminController::class, 'tbsm']
-)
-    ->name('admin-beranda-tbsm');
-Route::get(
-    'admin-beranda-tkj',
-    [AdminController::class, 'tkj']
-)
-    ->name('admin-beranda-tkj');
-Route::get(
-    'admin-beranda-akl',
-    [AdminController::class, 'akl']
-)
-    ->name('admin-beranda-akl');
-Route::get(
-    'admin-beranda-tervalidasi',
-    [AdminController::class, 'tervalidasi']
-)
-    ->name('admin-beranda-tervalidasi');
+->name('admin-akun-siswa');
 
 Route::get(
-    'admin-beranda-belum-tervalidasi',
-    [AdminController::class, 'belumTervalidasi']
+    'admin-pengaturan',
+    [AdminController::class, 'pengaturan']
 )
-    ->name('admin-beranda-belum-tervalidasi');
+    ->name('admin-pengaturan');
+
+// Route::post('admin-pengaturan-update/{id}', [AdminController::class, 'pengaturanUpdate'])->name('admin-pengaturan-update');
