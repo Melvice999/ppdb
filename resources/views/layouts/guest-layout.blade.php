@@ -41,7 +41,7 @@
     @include('navbar.guest-navbar')
     <div class="overflow-hidden min-h-screen relative">
         @yield('content')
-        <div class="mb-24"></div>
+        <div class="mb-24 max-md:mb-80 max-lg:mb-40"></div>
 
         <div class="absolute bottom-0 w-full bg-d-green text-white py-2 pl-10 pr-10">
             <div class="flex justify-between border-b border-white font-bold py-2">
@@ -56,10 +56,10 @@
                 </div>
             </div>
 
-            <div class="flex py-2">
-                <div>Kontak Kami</div>
-                <div class="flex text-xl ms-10">
-                    <i class="fa-solid fa-minus rotate-90 me-2"></i>
+            <div class="flex py-2 max-md:text-sm max-md:block">
+                <div class="flex">Kontak Kami <span class="hidden ms-2 max-md:block">:</span></div>
+                <div class="flex text-xl ms-10 max-md:text-sm max-md:block max-md:ms-0 max-md:mt-2">
+                    <i class="fa-solid fa-minus rotate-90 me-2 max-md:hidden"></i>
                     <a href="" class="me-3 flex items-center">
                         <i class="fa-brands fa-whatsapp"></i>
                         <div class="text-base ms-2">whatsapp</div>
@@ -116,9 +116,9 @@
                     $("#nav_open").removeClass("hidden").addClass("md:hidden")
                     $("#menu_nav_open").removeClass("max-md:hidden").addClass("max-md:block")
                     // overflow di saat nav open
-                    $(".overflow-hidden").addClass("max-md:mt-64")
-                    $("#ppdb1").addClass("max-md:mt-64")
-                    $("#ppdb2").addClass("max-md:mt-64")
+                    $(".overflow-hidden").addClass("max-md:mt-52")
+                    // $("#ppdb1").addClass("max-md:mt-64")
+                    // $("#ppdb2").addClass("max-md:mt-64")
                     // navigasi up and down daftar
                     $("#navigasi").addClass("hidden")
                 })
@@ -128,9 +128,9 @@
                     $("#nav_hidden").removeClass("hidden").addClass("md:hidden")
                     $("#menu_nav_open").removeClass("max-md:block").addClass("max-md:hidden")
                     // overflow di animasi awan beranda guest
-                    $(".overflow-hidden").removeClass("max-md:mt-64")
-                    $("#ppdb1").removeClass("max-md:mt-64")
-                    $("#ppdb2").removeClass("max-md:mt-64")
+                    $(".overflow-hidden").removeClass("max-md:mt-52")
+                    // $("#ppdb1").removeClass("max-md:mt-64")
+                    // $("#ppdb2").removeClass("max-md:mt-64")
                     // navigasi up and down daftar
                     $("#navigasi").removeClass("hidden")
                 })

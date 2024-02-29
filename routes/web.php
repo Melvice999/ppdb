@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CalonSiswaController;
 use App\Http\Controllers\SiswaController;
 use App\Models\CalonSiswa;
+use PhpParser\Node\Stmt\GroupUse;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,11 +32,16 @@ Route::group(['prefix' => '/'], function () {
     // Registrasi Akun Siswa
     Route::get('registrasi-siswa/index', [RegisterController::class, 'index'])->name('registrasi-siswa.index');
     Route::post('registrasi-akun/create', [RegisterController::class, 'register'])->name('registrasi-akun.create');
-    // Login siswa
-    Route::get('auth-siswa/index', [AuthController::class, 'index'])->name('auth-siswa.index');
-    Route::post('auth-siswa/login', [AuthController::class, 'login'])->name('auth-siswa.login');
 });
-
+Route::group(['prefix' => 'auth'], function () {
+    // Auth
+    Route::get('siswa-index', [AuthController::class, 'index'])->name('auth-siswa-index');
+    Route::post('siswa-login', [AuthController::class, 'login'])->name('auth-siswa-login');
+    Route::get('admin-index', [AuthController::class, 'indexAdmin'])->name('auth-admin-index');
+    Route::post('admin-login', [AuthController::class, 'loginAdmin'])->name('auth-admin-login');
+    Route::get('headmaster-index', [AuthController::class, 'indexHeadmaster'])->name('auth-headmaster-index');
+    Route::post('headmaster-login', [AuthController::class, 'loginHeadmaster'])->name('auth-headmaster-login');
+});
 
 // Siswa
 Route::get('siswa-beranda/{id?}', [SiswaController::class, 'index'])->name('siswa-beranda.{id?}');
@@ -67,3 +73,4 @@ Route::group(['prefix' => 'admin-pengaturan'], function () {
     Route::get('informasi', [AdminController::class, 'pengaturanInformasi'])->name('admin-pengaturan-informasi');
 });
 
+Route::get('admin-pusat-akun', [AdminController::class, 'pusatAkun'])->name('admin-pusat-akun');

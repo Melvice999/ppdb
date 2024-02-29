@@ -14,7 +14,7 @@ class AuthController extends Controller
 {
     public function index()
     {
-        return view('auth/login-siswa');
+        return view('auth/user/login-siswa');
     }
     public function login(Request $request)
     {

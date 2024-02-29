@@ -42,7 +42,7 @@ class AdminController extends Controller
         $status1        = CalonSiswa::where('status', 1)->where('tahun_daftar', now()->year);
 
         $data = [
-            'title'             => 'halo',
+            'title'             => 'Beranda Admin',
             'calonSiswaTbsm'    => $calonSiswaTbsm,
             'calonSiswaTkro'    => $calonSiswaTkro,
             'calonSiswaTkj'     => $calonSiswaTkj,
@@ -78,7 +78,7 @@ class AdminController extends Controller
         $pengaturan         = PengaturanModel::get();
         $data = [
             'pengaturan'        => $pengaturan,
-            'title'             => 'Manajemen Data Siswa PPDB SMK',
+            'title'             => 'Pengaturan Admin',
         ];
 
         return view('admin.admin-pengaturan', $data);
@@ -88,7 +88,7 @@ class AdminController extends Controller
         $beranda    = BerandaModel::get();
         $data = [
             'beranda'   => $beranda,
-            'title'     => 'Manajemen Data Siswa PPDB SMK',
+            'title'     => 'Pengaturan Admin',
         ];
         return view('admin.pengaturan.beranda.edit-beranda', $data);
     }
@@ -97,7 +97,7 @@ class AdminController extends Controller
         $beranda    = BerandaModel::get();
         $data = [
             'beranda'   => $beranda,
-            'title'     => 'Manajemen Data Siswa PPDB SMK',
+            'title'     => 'Pengaturan Admin',
         ];
         return view('admin.pengaturan.beranda.tambah-beranda', $data);
     }
@@ -119,7 +119,7 @@ class AdminController extends Controller
         $beranda    = BerandaModel::find($id);
         $data = [
             'beranda'   => $beranda,
-            'title'     => 'Manajemen Data Siswa PPDB SMK',
+            'title'     => 'Pengaturan Admin',
         ];
         return view('admin.pengaturan.beranda.update-beranda', $data);
     }
@@ -144,7 +144,7 @@ class AdminController extends Controller
         $pengaturan    = PengaturanModel::get();
         $data = [
             'pengaturan'    => $pengaturan,
-            'title'         => 'Manajemen Data Siswa PPDB SMK',
+            'title'         => 'Pengaturan Admin',
         ];
         return view('admin.pengaturan.kontak.edit-kontak', $data);
     }
@@ -153,8 +153,20 @@ class AdminController extends Controller
         $informasi    = PengaturanModel::select('j_informasi', 'informasi')->first();
         $data = [
             'informasi'    => $informasi,
-            'title'         => 'Manajemen Data Siswa PPDB SMK',
+            'title'         => 'Pengaturan Admin',
         ];
         return view('admin.pengaturan.informasi.edit-informasi', $data);
+    }
+
+    public function pusatAkun()
+    {
+        $informasi    = PengaturanModel::select('j_informasi', 'informasi')->first();
+        $pengaturan    = PengaturanModel::get();
+        $data = [
+            'informasi'     => $informasi,
+            'pengaturan'    => $pengaturan,
+            'title'         => 'Pusat Akun',
+        ];
+        return view('admin.admin-pusat-akun', $data);
     }
 }

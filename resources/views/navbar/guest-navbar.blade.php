@@ -27,9 +27,11 @@
          <a href="{{ route('daftar') }}" class="flex-auto my-auto max-md:block max-md:mt-2">
              Pendaftaran
          </a>
-         <a href="{{ route('hasil-seleksi') }}" class="flex-auto my-auto max-md:block max-md:mt-2">
-             Hasil Seleksi
-         </a>
+         @if ($pengaturan->hasil_seleksi === 1)
+             <a href="{{ route('hasil-seleksi') }}" class="flex-auto my-auto max-md:block max-md:mt-2">
+                 Hasil Seleksi
+             </a>
+         @endif
          <a href="{{ route('informasi-pendaftaran') }}" class="flex-auto my-auto max-md:block max-md:mt-2">
              Informasi
          </a>

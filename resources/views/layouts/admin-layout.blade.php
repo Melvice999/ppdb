@@ -6,13 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" href="{{ asset('assets/img/logo_smk.ico') }}" type="image/x-icon">
+
     <style>
         @import url('https://fonts.cdnfonts.com/css/sen');
     </style>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <!-- Menggunakan CDN untuk Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    {{-- Tinymce Editor --}}
+    <script src="{{ asset('assets/vendors/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#mytextarea'
+        });
+    </script>
     <title>{{ $title }}</title>
 
 </head>

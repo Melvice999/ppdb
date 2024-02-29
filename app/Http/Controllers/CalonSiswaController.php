@@ -13,19 +13,22 @@ class CalonSiswaController extends Controller
     public function index()
     {
         $beranda = BerandaModel::where('status', 1)->get();
-        // dd($beranda);
+        $pengaturan = PengaturanModel::select('hasil_seleksi')->first();
 
         $data = [
-            'beranda'   => $beranda,
-            'title'     => "Halaman Utama PPDB SMK Ma'arif NU Doro",
+            'beranda'       => $beranda,
+            'pengaturan'    => $pengaturan,
+            'title'         => "PPDB SMK Ma'arif NU Doro",
         ];
         return view('guest/beranda', $data);
     }
 
     public function daftar()
     {
+        $pengaturan = PengaturanModel::select('hasil_seleksi', 'pendaftaran')->first();
         $data = [
-            'title' => "Formulir Pendaftaran PPDB SMK Ma'arif NU Doro",
+            'pengaturan'    => $pengaturan,
+            'title'         => "Formulir Pendaftaran | PPDB SMK Ma'arif NU Doro",
         ];
         return view('guest/daftar', $data);
     }
@@ -70,8 +73,6 @@ class CalonSiswaController extends Controller
         $textValueDesaWali = fetchAndExtractText('https://alamat.thecloudalert.com/api/kelurahan/get/?d_kecamatan_id=' . $request->kecamatan_wali, 'id', $request->desa_wali, 'text');
         $textValueKodePosWali = fetchAndExtractText('https://alamat.thecloudalert.com/api/kodepos/get/?d_kabkota_id=' . $request->kabupaten_wali . '&d_kecamatan_id=' . $request->kecamatan_wali, 'id', $request->kode_pos_wali, 'text');
 
-        // Assuming you have already retrieved $textValueProvinsi, $textValueKabupaten, etc.
-
         $data = [
             'nik' => $request->nik,
             'kk' => $request->kk,
@@ -111,16 +112,17 @@ class CalonSiswaController extends Controller
 
         CalonSiswa::create($data);
 
-        // Redirect ke halaman yang sesuai
         return redirect()->to(url('/informasi-pendaftar'))->with('success', 'Data berhasil disimpan');
     }
 
     public function informasi()
     {
         $informasi    = PengaturanModel::select('j_informasi', 'informasi')->first();
+        $pengaturan = PengaturanModel::select('hasil_seleksi')->first();
         $data = [
-            'informasi'    => $informasi,
-            'title'         => 'Manajemen Data Siswa PPDB SMK',
+            'informasi'     => $informasi,
+            'pengaturan'    => $pengaturan,
+            'title'         => "Informasi | PPDB SMK Ma'arif NU Doro",
         ];
 
         return view('guest/informasi-pendaftaran', $data);
@@ -128,10 +130,13 @@ class CalonSiswaController extends Controller
 
     public function hasilSeleksi()
     {
+        $pengaturan = PengaturanModel::select('hasil_seleksi')->first();
+        $siswa    = CalonSiswa::where('status', '1')->where('tahun_daftar', now()->year)->get();
         $data = [
-            'title' => "Formulir Pendaftaran PPDB SMK Ma'arif NU Doro",
+            'siswa'      => $siswa,
+            'pengaturan' => $pengaturan,
+            'title'      => "Hasil Seleksi | PPDB SMK Ma'arif NU Doro",
         ];
         return view('guest/hasil-seleksi', $data);
     }
-
 }

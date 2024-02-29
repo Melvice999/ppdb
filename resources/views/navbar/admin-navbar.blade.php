@@ -33,18 +33,26 @@
             </li>
 
             <li
-                class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 hover:bg-white hover:text-d-green rounded-2xl">
-                <a href="{{ route('admin-beranda')}}" class="flex items-center w-full rounded-md">
+                class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 rounded-2xl {{ $title === 'Beranda Admin' ? 'bg-l-sky-blue text-d-green' : 'hover:bg-white hover:text-d-green' }}">
+                <a href="{{ route('admin-beranda') }}" class="flex items-center w-full rounded-md">
                     <i class="fa-solid fa-house min-w-16 text-lg"></i>
                     <span class="whitespace-nowrap">&nbsp;&nbsp;&nbsp; Beranda</span>
                 </a>
             </li>
 
             <li
-                class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 hover:bg-white hover:text-d-green rounded-2xl">
+                class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 rounded-2xl {{ $title === 'Pengaturan Admin' ? 'bg-l-sky-blue text-d-green' : 'hover:bg-white hover:text-d-green' }}">
                 <a href="{{ route('admin-pengaturan') }}" class="flex items-center w-full rounded-md">
                     <i class="fa-solid fa-gear min-w-16 text-lg"></i>
                     <span class="whitespace-nowrap">&nbsp;&nbsp;&nbsp; Pengaturan</span>
+                </a>
+            </li>
+
+            <li
+                class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 rounded-2xl {{ $title === 'Pusat Akun' ? 'bg-l-sky-blue text-d-green' : 'hover:bg-white hover:text-d-green' }}">
+                <a href="{{ route('admin-pusat-akun') }}" class="flex items-center w-full rounded-md">
+                    <i class="fa-solid fa-user min-w-16 text-lg"></i>
+                    <span class="whitespace-nowrap">&nbsp;&nbsp;&nbsp; Pusat Akun</span>
                 </a>
             </li>
 
