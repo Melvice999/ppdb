@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="{{ asset('asset/img/logo_smk.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('assets/img/logo_smk.png') }}" type="image/x-icon">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -34,7 +34,7 @@
             @endif
             <div class="text-center">
                 {{-- Header --}}
-                <img src="{{ asset('asset/img/logo_smk.png') }}" width="90px" class="mx-auto">
+                <img src="{{ asset('assets/img/logo_smk.png') }}" width="90px" class="mx-auto">
                 <h6 class="uppercase text-lg mt-5 mb-2">Login Akun PPDB <br> SMK Ma'arif NU Doro</h6>
                 <p class="text-sm">Silahkan masuk menggunakan <br>akun yang telah didaftarkan</p>
             </div>

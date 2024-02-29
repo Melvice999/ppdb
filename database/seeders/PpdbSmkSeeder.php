@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;
 
-class CalonSiswaSeeder extends Seeder
+class PpdbSmkSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -60,7 +60,19 @@ class CalonSiswaSeeder extends Seeder
             ]);
         }
         DB::table('pengaturan')->insert([
-            'nama' => "Gelombang 1"
+            'pendaftaran' => 0,
+            'hasil_seleksi' => 0,
+            'j_informasi' => 'Halaman Informasi',
+            'informasi' => 'Tidak ada informasi',
+            'wa' => 0,
+            'ig' => 0,
+            'fb' => 0,
+            'yt' => 0,
+            'web' => 0,
+        ]);
+        DB::table('beranda')->insert([
+            ['judul' => 'Beranda SMK 1', 'konten' => 'Isi Beranda SMK 1'],
+            ['judul' => 'Beranda SMK 2', 'konten' => 'Isi Beranda SMK 2'],
         ]);
     }
 }

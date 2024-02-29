@@ -2,10 +2,10 @@
     <header class="relative">
         <div class="flex items-center pb-4 w-11/12">
             <span class="flex items-center justify-center min-w-16">
-                <img src="{{ asset('asset/img/logo_smk.png') }}" alt="" class="w-10 rounded-md me-2">
+                <img src="{{ asset('assets/img/logo_smk.png') }}" alt="" class="w-10 rounded-md me-2">
             </span>
 
-            <img src="{{ asset('asset/img/logo_smk.png') }}" alt="" class="w-10 rounded-md ms-4 hidden"
+            <img src="{{ asset('assets/img/logo_smk.png') }}" alt="" class="w-10 rounded-md ms-4 hidden"
                 id="logo_close">
 
             <div class="whitespace-nowrap flex flex-col">
@@ -37,14 +37,6 @@
                 <a href="{{ route('admin-beranda')}}" class="flex items-center w-full rounded-md">
                     <i class="fa-solid fa-house min-w-16 text-lg"></i>
                     <span class="whitespace-nowrap">&nbsp;&nbsp;&nbsp; Beranda</span>
-                </a>
-            </li>
-
-            <li
-                class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 hover:bg-white hover:text-d-green rounded-2xl">
-                <a href="{{ route('admin-akun-siswa') }}" class="flex items-center w-full rounded-md">
-                    <i class="fa-solid fa-file min-w-16 text-lg"></i>
-                    <span class="whitespace-nowrap">&nbsp;&nbsp;&nbsp; Akun Siswa</span>
                 </a>
             </li>
 
@@ -84,7 +76,7 @@
                 $("nav").removeClass('w-60').addClass('w-24');
                 $("#logout").removeClass("w-4/5").addClass("w-12");
                 $("#logo_close").removeClass("hidden");
-                $("section").removeClass("left-60").addClass("left-20");
+                $("section").removeClass("ml-60").addClass("ml-20");
             } else {
                 // Open Nav Menu
                 navToggle.removeClass(openToggle).addClass(closeToggle);
@@ -93,7 +85,7 @@
                 $("nav").removeClass('w-24').addClass('w-60');
                 $("#logout").removeClass("w-12").addClass("w-4/5");
                 $("#logo_close").addClass("hidden");
-                $("section").removeClass("left-20").addClass("left-60");
+                $("section").removeClass("ml-20").addClass("ml-60");
             }
         });
 
@@ -102,11 +94,11 @@
             if ($("nav ul").hasClass("max-md:hidden")) {
                 $("nav ul").removeClass("max-md:hidden")
                 $("nav").removeClass("max-md:h-16").addClass("max-md:h-full")
-                $("section").addClass("max-md:mt-96")
+                $("section").addClass("max-md:hidden")
             } else {
                 $("nav ul").addClass("max-md:hidden")
                 $("nav").removeClass("max-md:h-full").addClass("max-md:h-16")
-                $("section").removeClass("max-md:mt-96")
+                $("section").removeClass("max-md:hidden")
             }
 
         })

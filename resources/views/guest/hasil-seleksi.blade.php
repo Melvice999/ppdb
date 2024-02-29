@@ -1,0 +1,1 @@
+ini adalah hasil seleksi

@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->integer('pendaftaran')->default(0);
             $table->integer('hasil_seleksi')->default(0);
+            $table->string('j_informasi');
+            $table->string('informasi');
+            $table->string('wa');
             $table->string('ig');
             $table->string('fb');
             $table->string('yt');

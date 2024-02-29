@@ -10,26 +10,19 @@
             </div>
         </div>
     @endif
+    <div class="grid mt-6 ml-10 mr-10 place-items-center">
 
-    <div class="grid mt-6 ml-10 mr-10 mx-auto place-items-center">
-        <div class="w-1/2 bg-white px-10 max-md:w-full max-md:px-10 rounded-md max-md:mt-6 whitespace-pre-line text-justify">
-            <div class="text-lg font-bold">
-                LANGKAH-LANGKAH PPDB ONLINE 2024 SMK MA'ARIF NU DORO
-                <hr class="text-d-sky-blue mt-10">
+
+        <div class="w-1/2 px-10 bg-white max-md:w-full max-md:px-10 rounded-md text-justify max-md:mt-7">
+            <div class="text-lg font-bold text-center py-3">
+                {{ $informasi->j_informasi }}
             </div>
-            <ol class="list-decimal">
-                <li>Masuk ke situs web resmi PPDB online.</li>
-                <li>Klik opsi "Daftar" yang terdapat pada halaman utama.
-                </li>
-                <li>Isi formulir pendaftaran dengan informasi yang akurat dan lengkap.
-                </li>
-                <li>Lanjutkan dengan melakukan registrasi atau membuat akun pribadi dengan mengisi username dan password.
-                </li>
-                <li>Lakukan proses login menggunakan akun yang telah dibuat sebelumnya.
-                </li>
-                <li>Lengkapi persyaratan pendaftaran, seperti mengunggah dokumen seperti Kartu Keluarga (KK), akte kelahiran, dan pas foto.
-                </li>
-            </ol>
+            <hr class="text-d-green">
+
+            <div class="pt-3">
+                {!! $informasi->informasi !!}
+                <br><br>
+            </div>
         </div>
     </div>
 @endsection()

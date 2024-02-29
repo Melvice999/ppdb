@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('multi_pengaturan', function (Blueprint $table) {
+        Schema::create('beranda', function (Blueprint $table) {
             $table->id();
-            $table->string('cp');
-            $table->string('beranda');
+            $table->string('judul');
+            $table->string('konten');
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('multi_pengaturan');
+        Schema::dropIfExists('beranda');
     }
 };

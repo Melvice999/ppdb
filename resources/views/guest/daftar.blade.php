@@ -20,7 +20,7 @@
         @csrf
         <div class="grid mt-6 ml-10 mr-10 place-items-center">
 
-            <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full" id="up">
+            <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full">
                 <label for="nik">NIK</label><br>
                 <input type="number" name="nik" value="{{ old('nik') }}"
                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -279,7 +279,7 @@
                     placeholder="Masukan Pendidikan Wali" class="border-b w-full focus:outline-none" >
             </div>
 
-            <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6" id="down">
+            <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
                 <label for="info_sekolah">Info Sekolah</label><br>
                 <input type="text" name="info_sekolah" value="{{ old('info_sekolah') }}"
                     placeholder="Mendapatkan Informasi Sekolah Melalui" class="border-b w-full focus:outline-none"
@@ -296,19 +296,6 @@
         </div>
 
     </form>
-
-    <div class="fixed bottom-1/2 text-d-sky-blue text-3xl opacity-80 md:ml-10 lg:ml-40 xl:ml-72 2xl:ml-80" id="navigasi">
-        <a href="#up">
-            <div class="w-7 h-7">
-                <i class="fa-solid fa-circle-up"></i>
-            </div>
-        </a>
-        <a href="#down">
-            <div class="w-7 h-7 mt-2">
-                <i class="fa-solid fa-circle-down"></i>
-            </div>
-        </a>
-    </div>
 
     <script type="module">
         $(document).ready(function() {

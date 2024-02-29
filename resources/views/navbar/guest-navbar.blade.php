@@ -1,7 +1,7 @@
  {{-- navbar --}}
  <div class="w-full h-16 pl-5 grid content-center bg-d-green text-white">
      <div>
-         <img src="{{ asset('asset/img/logo_smk.png') }}" alt="" width="50px" class="md:hidden">
+         <img src="{{ asset('assets/img/logo_smk.png') }}" alt="" width="50px" class="md:hidden">
      </div>
      <div class="absolute right-0 top-1">
          <div class="absolute right-0 text-3xl">
@@ -19,7 +19,7 @@
      <div class="flex max-md:hidden max-md:absolute max-md:top-16 max-md:left-0 max-md:bg-d-green max-md:w-full max-md:px-10 max-md:py-9"
          id="menu_nav_open">
          <a href="/" class="mr-5 flex-auto max-md:hidden">
-             <img src="{{ asset('asset/img/logo_smk.png') }}" alt="" width="40px">
+             <img src="{{ asset('assets/img/logo_smk.png') }}" alt="" width="40px">
          </a>
          <a href="/" class="flex-auto my-auto max-md:block">
              Beranda
@@ -27,14 +27,11 @@
          <a href="{{ route('daftar') }}" class="flex-auto my-auto max-md:block max-md:mt-2">
              Pendaftaran
          </a>
-         <a href="{{ route('/') }}" class="flex-auto my-auto max-md:block max-md:mt-2">
+         <a href="{{ route('hasil-seleksi') }}" class="flex-auto my-auto max-md:block max-md:mt-2">
              Hasil Seleksi
          </a>
          <a href="{{ route('informasi-pendaftaran') }}" class="flex-auto my-auto max-md:block max-md:mt-2">
              Informasi
-         </a>
-         <a href="{{ route('/') }}" class="flex-auto my-auto max-md:block max-md:mt-2">
-             Kontak
          </a>
          <a href="{{ route('registrasi-siswa.index') }}"
              class="flex-auto my-auto pl-5 pt-2 pb-2 rounded-l-lg md:bg-white text-d-green max-md:block max-md:mt-2 max-md:bg-none max-md:text-white max-md:p-0">

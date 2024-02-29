@@ -77,49 +77,7 @@
         </a>
 
     </div>
-    <div class="my-4 mt-10">
-        Statistik Pendaftar
-    </div>
-    <div class="w-full rounded-lg bg-white">
-        <canvas id="pendaftarChart" class="w-auto pt-11 pb-8 px-5"></canvas>
-    </div>
 
     <div class="h-10"></div>
-    <script>
-        // Ambil referensi canvas
-        var ctx = document.getElementById('pendaftarChart').getContext('2d');
-
-        // Data Pendaftar Pertahun
-        var data = {
-            labels: ['Tahun 2020', 'Tahun 2021', 'Tahun 2022', 'Tahun 2021', 'Tahun 2022'],
-            datasets: [{
-                // label: display: false,
-                data: [500, 800, 1200, 500, 800, ], // Ganti ini dengan data pendaftar aktual
-                backgroundColor: 'green',
-                borderColor: 'green',
-                borderWidth: 1
-            }]
-        };
-
-        // Konfigurasi Chart
-        var config = {
-            type: 'line',
-            data: data,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false,
-                    }
-                }
-            }
-        };
-
-        // Buat Chart
-        var myChart = new Chart(ctx, config);
-    </script>
+  
 @endsection()

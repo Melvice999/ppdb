@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BerandaModel;
 use Illuminate\Http\Request;
 use App\Models\CalonSiswa;
-
-// 
+use App\Models\PengaturanModel;
 use Illuminate\Support\Facades\Http;
 
 class CalonSiswaController extends Controller
 {
     public function index()
     {
+        $beranda = BerandaModel::where('status', 1)->get();
+        // dd($beranda);
+
         $data = [
-            'title' => "Halaman Utama PPDB SMK Ma'arif NU Doro",
+            'beranda'   => $beranda,
+            'title'     => "Halaman Utama PPDB SMK Ma'arif NU Doro",
         ];
         return view('guest/beranda', $data);
     }
@@ -24,14 +28,6 @@ class CalonSiswaController extends Controller
             'title' => "Formulir Pendaftaran PPDB SMK Ma'arif NU Doro",
         ];
         return view('guest/daftar', $data);
-    }
-
-    public function informasi()
-    {
-        $data = [
-            'title' => "Panduan dan Informasi PPDB SMK Ma'arif NU Doro",
-        ];
-        return view('guest/informasi-pendaftaran', $data);
     }
 
     public function store(Request $request)
@@ -118,4 +114,24 @@ class CalonSiswaController extends Controller
         // Redirect ke halaman yang sesuai
         return redirect()->to(url('/informasi-pendaftar'))->with('success', 'Data berhasil disimpan');
     }
+
+    public function informasi()
+    {
+        $informasi    = PengaturanModel::select('j_informasi', 'informasi')->first();
+        $data = [
+            'informasi'    => $informasi,
+            'title'         => 'Manajemen Data Siswa PPDB SMK',
+        ];
+
+        return view('guest/informasi-pendaftaran', $data);
+    }
+
+    public function hasilSeleksi()
+    {
+        $data = [
+            'title' => "Formulir Pendaftaran PPDB SMK Ma'arif NU Doro",
+        ];
+        return view('guest/hasil-seleksi', $data);
+    }
+
 }
