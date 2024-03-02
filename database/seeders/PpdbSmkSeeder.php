@@ -69,6 +69,7 @@ class PpdbSmkSeeder extends Seeder
             'fb' => 0,
             'yt' => 0,
             'web' => 0,
+            'map' => 0,
         ]);
         DB::table('beranda')->insert([
             ['judul' => 'Beranda SMK 1', 'konten' => 'Isi Beranda SMK 1'],

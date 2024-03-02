@@ -1,7 +1,7 @@
 @extends('layouts.admin-layout')
 @section('content')
     <div class="w-full text-2xl font-medium">
-        Admin / Pengaturan / Beranda
+        Admin / Pengaturan / Kontak
     </div>
 
     @if (session('success'))
@@ -13,7 +13,7 @@
             </div>
         </div>
     @endif
-    <form action="{{ route('admin-pengaturan-create-beranda') }}" method="POST">
+    <form action="{{ route('admin-pengaturan-update-kontak', ['id' => $id]) }}" method="POST">
         @csrf
         <div class="flex justify-between mt-10 mb-4">
             <div class="max-md:me-6">Edit Pengaturan Beranda PPDB Tahun {{ now()->year }}</div>
@@ -32,7 +32,7 @@
                     <td class="border-b border-d-green">
                         <div class="flex">
                             :&nbsp; <input type="text" name="wa" autocomplete="off" value="{{ $item->wa }}"
-                                placeholder="Masukan Whatsapp" class="w-full focus:outline-none bg-l-sky-blue">
+                                placeholder="Masukan Whatsapp" class="w-full focus:outline-none bg-l-sky-blue" required>
                         </div>
                     </td>
                 </tr>
@@ -44,7 +44,7 @@
                     <td class="border-b border-d-green">
                         <div class="flex">
                             :&nbsp; <input type="text" name="ig" autocomplete="off" value="{{ $item->ig }}"
-                                placeholder="Masukan Whatsapp" class="w-full focus:outline-none bg-l-sky-blue">
+                                placeholder="Masukan Instagram" class="w-full focus:outline-none bg-l-sky-blue" required>
                         </div>
 
                     </td>
@@ -57,7 +57,7 @@
                     <td class="border-b border-d-green">
                         <div class="flex">
                             :&nbsp; <input type="text" name="fb" autocomplete="off" value="{{ $item->fb }}"
-                                placeholder="Masukan Whatsapp" class="w-full focus:outline-none bg-l-sky-blue">
+                                placeholder="Masukan Facebook" class="w-full focus:outline-none bg-l-sky-blue" required>
                         </div>
                     </td>
                 </tr>
@@ -69,7 +69,7 @@
                     <td class="border-b border-d-green">
                         <div class="flex">
                             :&nbsp; <input type="text" name="yt" autocomplete="off" value="{{ $item->yt }}"
-                                placeholder="Masukan Whatsapp" class="w-full focus:outline-none bg-l-sky-blue">
+                                placeholder="Masukan Youtube" class="w-full focus:outline-none bg-l-sky-blue" required>
                         </div>
                     </td>
                 </tr>
@@ -81,7 +81,19 @@
                     <td class="border-b border-d-green">
                         <div class="flex">
                             :&nbsp; <input type="text" name="web" autocomplete="off" value="{{ $item->web }}"
-                                placeholder="Masukan Whatsapp" class="w-full focus:outline-none bg-l-sky-blue">
+                                placeholder="Masukan Website" class="w-full focus:outline-none bg-l-sky-blue" required>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="py-3">
+                        <label for="map">Maps</label>
+                    </td>
+                    <td class="border-b border-d-green">
+                        <div class="flex">
+                            :&nbsp; <input type="text" name="map" autocomplete="off" value="{{ $item->map }}"
+                                placeholder="Masukan Lokasi" class="w-full focus:outline-none bg-l-sky-blue" required>
                         </div>
                     </td>
                 </tr>

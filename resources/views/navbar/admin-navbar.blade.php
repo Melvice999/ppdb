@@ -1,4 +1,4 @@
-<nav class="fixed top-0 left-0 h-full px-2 py-2 z-50 bg-d-green text-white w-60 max-md:w-full max-md:h-16">
+<nav class="fixed top-0 left-0 h-full px-2 py-2 z-10 bg-d-green text-white w-60 max-md:w-full max-md:h-16">
     <header class="relative">
         <div class="flex items-center pb-4 w-11/12">
             <span class="flex items-center justify-center min-w-16">
@@ -15,7 +15,8 @@
             </div>
         </div>
 
-        <i class="fa-solid fa-bars text-3xl absolute top-2 right-4 invisible max-md:visible" id="nav_toggle_mobile"></i>
+        <i class="fa-solid fa-bars text-3xl absolute top-2 right-4 invisible max-md:visible cursor-pointer"
+            id="nav_toggle_mobile"></i>
 
         <i class="fa-solid fa-circle-chevron-right absolute top-8 -right-6 translate-y-1/2 rotate-180 h-8 w-8 bg-white text-d-green rounded-full flex items-center justify-center text-2xl cursor-pointer max-md:hidden"
             id="nav_toggle"></i>
@@ -24,12 +25,17 @@
     <div class="flex flex-col justify-between mx-4">
 
         <ul class="mt-5 max-md:hidden ">
-            <li class="flex items-center mt-3 h-14 px-4 cursor-pointer bg-l-sky-blue rounded-2xl">
-                <a href="">
-                    <i class="fa-solid fa-magnifying-glass min-w-16 text-lg me-3 text-d-green"></i>
-                    <input type="text" placeholder="Cari..."
-                        class="w-4/6 text-base text-black font-medium outline-none border-none bg-l-sky-blue">
-                </a>
+            <li class="mt-3 h-14 px-4 bg-l-sky-blue rounded-2xl border border-l-sky-blue">
+
+                <form action="{{ route('admin-penelusuran') }}" method="GET">
+                    <div class="flex mt-3">
+                        <button type="submit" class="border border-l-sky-blue">
+                            <i class="fa-solid fa-magnifying-glass min-w-16 text-lg me-3 text-d-green"></i>
+                        </button>
+                        <input type="text" name="search" placeholder="Cari..."
+                            class="{{-- w-4/6 --}} w-full text-base text-black font-medium outline-none bg-l-sky-blue filled">
+                    </div>
+                </form>
             </li>
 
             <li
@@ -100,10 +106,14 @@
         let navToggleMobile = $("#nav_toggle_mobile")
         navToggleMobile.click(function() {
             if ($("nav ul").hasClass("max-md:hidden")) {
+                navToggleMobile.removeClass("fa-bars")
+                navToggleMobile.addClass("fa-xmark")
                 $("nav ul").removeClass("max-md:hidden")
                 $("nav").removeClass("max-md:h-16").addClass("max-md:h-full")
                 $("section").addClass("max-md:hidden")
             } else {
+                navToggleMobile.removeClass("fa-xmark")
+                navToggleMobile.addClass("fa-bars")
                 $("nav ul").addClass("max-md:hidden")
                 $("nav").removeClass("max-md:h-full").addClass("max-md:h-16")
                 $("section").removeClass("max-md:hidden")

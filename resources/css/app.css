@@ -1,4 +1,24 @@
-@import '@fortawesome/fontawesome-free/css/all.css';
+@import "@fortawesome/fontawesome-free/css/all.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer base {
+  .no-tailwindcss-base {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+          font-size: revert;
+          font-weight: revert;
+      }
+
+      ol,
+      ul {
+          list-style: revert;
+          margin: revert;
+          padding: revert;
+      }
+  }
+}

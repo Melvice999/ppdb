@@ -5,7 +5,8 @@
 
     <div class="flex justify-between mt-10 mb-4">
         <div class="max-md:me-6">Edit Pengaturan Beranda PPDB Tahun {{ now()->year }}</div>
-        <a href="{{ route('admin-pengaturan-tambah-beranda') }}" class="border px-4 py-3 bg-d-green text-white rounded-xl flex items-center justify-center">
+        <a href="{{ route('admin-pengaturan-tambah-beranda') }}"
+            class="border px-4 py-3 bg-d-green text-white rounded-xl flex items-center justify-center">
             <i class="fa-solid fa-plus"></i>
         </a>
     </div>
@@ -32,9 +33,11 @@
 
                         <td class="py-3 px-4">{{ $item->judul }}</td>
                         <td class="py-3 px-4 flex justify-end me-12 max-md:me-0">
+
                             @if ($item->status == 0)
                                 <div class="flex">
-                                    <form action="{{ route('admin-pengaturan-update', ['id' => $item->id]) }}"
+                                    <form
+                                        action="{{ route('admin-pengaturan-update-status-false-beranda', ['id' => $item->id]) }}"
                                         method="post">
                                         @csrf
                                         <input type="hidden" name="update_column" value="status">
@@ -51,15 +54,16 @@
                                         <i
                                             class="fa-solid fa-pen-to-square border rounded-lg bg-d-green text-white py-2 px-2 ms-3"></i>
                                     </a>
-                                    <a href="">
-                                        <i
-                                            class="fa-solid fa-trash border rounded-lg bg-d-green text-white py-2 px-2 ms-3"></i>
+                                    <button onclick="openConfirmationModal()">
+                                        <i class="fa-solid fa-trash border rounded-lg bg-red text-white py-2 px-2 ms-3"></i>
+                                    </button>
                                     </a>
                                 </div>
                             @endif
                             @if ($item->status == 1)
                                 <div class="flex">
-                                    <form action="{{ route('admin-pengaturan-update', ['id' => $item->id]) }}"
+                                    <form
+                                        action="{{ route('admin-pengaturan-update-status-true-beranda', ['id' => $item->id]) }}"
                                         method="post">
                                         @csrf
                                         <input type="hidden" name="update_column" value="status">
@@ -76,9 +80,9 @@
                                         <i
                                             class="fa-solid fa-pen-to-square border rounded-lg bg-d-green text-white py-2 px-2 ms-3"></i>
                                     </a>
-                                    <a href="">
-                                        <i
-                                            class="fa-solid fa-trash border rounded-lg bg-d-green text-white py-2 px-2 ms-3"></i>
+                                    <button onclick="openConfirmationModal()">
+                                        <i class="fa-solid fa-trash border rounded-lg bg-red text-white py-2 px-2 ms-3"></i>
+                                    </button>
                                     </a>
                                 </div>
                             @endif
@@ -88,4 +92,37 @@
             </tbody>
         </table>
     </div>
+
+    @foreach ($beranda as $item)
+        <!-- Modal Konfirmasi Delete Data -->
+        <div id="confirmationModal"
+            class="fixed inset-0 w-full h-full bg-black bg-opacity-50 hidden items-center justify-center">
+            <div class="bg-white p-8 max-w-md rounded">
+                <p class="text-lg font-bold mb-4">Konfirmasi Hapus Data</p>
+                <p class="text-gray-700 mb-4">Apakah Anda yakin ingin menghapus {{ $item->judul }}?</p>
+                <div class="flex justify-end">
+                    <button onclick="closeConfirmationModal()"
+                        class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded mr-2">
+                        Batal
+                    </button>
+
+                    <a href="{{ route('admin-pengaturan-hapus-beranda', ['id' => $item->id]) }}"
+                        class="bg-red hover:bg-red text-white font-bold py-2 px-4 rounded">
+                        Hapus
+                    </a>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    <script>
+        function openConfirmationModal() {
+            document.getElementById('confirmationModal').style.display = 'flex';
+        }
+
+        function closeConfirmationModal() {
+            document.getElementById('confirmationModal').style.display = 'none';
+        }
+    </script>
+    <!-- End Modal Konfirmasi Delete Data -->
 @endsection()

@@ -1,6 +1,6 @@
 @extends('layouts.guest-layout')
 @section('content')
-    @if ($pengaturan->pendaftaran === 1)
+    @if ($pendaftaran->pendaftaran === 1)
         {{-- Pesan Error --}}
         @if ($errors->any())
             <div class="grid mt-6 ml-10 mr-10 mx-auto place-items-center" id="clsErrors">
@@ -162,15 +162,15 @@
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
                     <label for="olahraga">Ukuran Olahraga</label><br>
                     <select name="olahraga" class="mt-1 w-full py-2 focus:outline-none border-b cursor-pointer">
-                        <option value="S" {{ old('batik') == 'S' ? 'selected' : '' }}> S
+                        <option value="S" {{ old('olahraga') == 'S' ? 'selected' : '' }}> S
                         </option>
-                        <option value="M" {{ old('batik') == 'M' ? 'selected' : '' }}>M
+                        <option value="M" {{ old('olahraga') == 'M' ? 'selected' : '' }}>M
                         </option>
-                        <option value="L" {{ old('batik') == 'L' ? 'selected' : '' }}>L
+                        <option value="L" {{ old('olahraga') == 'L' ? 'selected' : '' }}>L
                         </option>
-                        <option value="XL" {{ old('batik') == 'XL' ? 'selected' : '' }}>XL
+                        <option value="XL" {{ old('olahraga') == 'XL' ? 'selected' : '' }}>XL
                         </option>
-                        <option value="XXL" {{ old('batik') == 'XXL' ? 'selected' : '' }}>XXL
+                        <option value="XXL" {{ old('olahraga') == 'XXL' ? 'selected' : '' }}>XXL
                         </option>
                     </select>
                 </div>
@@ -178,15 +178,15 @@
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
                     <label for="wearpack">Ukuran Wearpack</label><br>
                     <select name="wearpack" class="mt-1 w-full py-2 focus:outline-none border-b cursor-pointer">
-                        <option value="S" {{ old('batik') == 'S' ? 'selected' : '' }}> S
+                        <option value="S" {{ old('wearpack') == 'S' ? 'selected' : '' }}> S
                         </option>
-                        <option value="M" {{ old('batik') == 'M' ? 'selected' : '' }}>M
+                        <option value="M" {{ old('wearpack') == 'M' ? 'selected' : '' }}>M
                         </option>
-                        <option value="L" {{ old('batik') == 'L' ? 'selected' : '' }}>L
+                        <option value="L" {{ old('wearpack') == 'L' ? 'selected' : '' }}>L
                         </option>
-                        <option value="XL" {{ old('batik') == 'XL' ? 'selected' : '' }}>XL
+                        <option value="XL" {{ old('wearpack') == 'XL' ? 'selected' : '' }}>XL
                         </option>
-                        <option value="XXL" {{ old('batik') == 'XXL' ? 'selected' : '' }}>XXL
+                        <option value="XXL" {{ old('wearpack') == 'XXL' ? 'selected' : '' }}>XXL
                         </option>
                     </select>
                 </div>
@@ -301,7 +301,7 @@
             </div>
 
         </form>
-
+        <div class="h-40"></div>
         <script type="module">
             $(document).ready(function() {
                 // Open Nav Menu
@@ -461,7 +461,7 @@
             });
         </script>
     @endif
-    @if ($pengaturan->pendaftaran === 0)
+    @if ($pendaftaran->pendaftaran === 0)
         <div class="grid mt-6 mx-10 place-items-center text-base max-sm:mx-3">
             {{-- {{ $siswa }} --}}
 

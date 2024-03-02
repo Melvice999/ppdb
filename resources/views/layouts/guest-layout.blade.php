@@ -56,56 +56,50 @@
                 </div>
             </div>
 
-            <div class="flex py-2 max-md:text-sm max-md:block">
-                <div class="flex">Kontak Kami <span class="hidden ms-2 max-md:block">:</span></div>
-                <div class="flex text-xl ms-10 max-md:text-sm max-md:block max-md:ms-0 max-md:mt-2">
-                    <i class="fa-solid fa-minus rotate-90 me-2 max-md:hidden"></i>
-                    <a href="" class="me-3 flex items-center">
-                        <i class="fa-brands fa-whatsapp"></i>
-                        <div class="text-base ms-2">whatsapp</div>
-                    </a>
-                    <a href="" class="me-3 flex items-center">
-                        <i class="fa-brands fa-instagram"></i>
-                        <div class="text-base ms-2">instagram</div>
-                    </a>
+            @foreach ($pengaturan as $item)
+                <div class="flex">Kontak Kami <span class="block ms-2 mb-2">:</span></div>
+                <div class="grid grid-cols-2 py-2 max-md:text-sm max-md:block">
 
-                    <a href="" class="me-3 flex items-center">
-                        <i class="fa-brands fa-facebook"></i>
-                        <div class="text-base ms-2">facebook</div>
-                    </a>
-                    <a href="" class="me-3 flex items-center">
-                        <i class="fa-solid fa-earth-asia"></i>
-                        <div class="text-base ms-2">website</div>
-                    </a>
+                    <table>
 
-                    <a href="" class="me-3 flex items-center">
-                        <i class="fa-brands fa-youtube"></i>
-                        <div class="text-base ms-2">youtube</div>
-                    </a>
-                    <a href="" class="me-3 flex items-center">
-                        <i class="fa-solid fa-location-dot"></i>
-                        <div class="text-base ms-2">maps</div>
-                    </a>
+                        <td class="flex items-center">
+                            <i class="fa-brands fa-whatsapp w-5"></i>
+                            <div class="text-base ms-2">{{ $item->wa }}</div>
+                        </td>
+
+                        <td class="flex items-center">
+                            <i class="fa-brands fa-instagram w-5"></i>
+                            <div class="text-base ms-2">{{ $item->ig }}</div>
+                        </td>
+
+                        <td class="flex items-center">
+                            <i class="fa-brands fa-facebook w-5"></i>
+                            <div class="text-base ms-2">{{ $item->fb }}</div>
+                        </td>
+
+                        <td class="flex items-center">
+                            <i class="fa-solid fa-earth-asia w-5"></i>
+                            <div class="text-base ms-2">{{ $item->web }}</div>
+                        </td>
+
+                        <td class="flex items-center">
+                            <i class="fa-brands fa-youtube w-5"></i>
+                            <div class="text-base ms-2">{{ $item->yt }}</div>
+                        </td>
+
+                        <td class="flex items-center">
+                            <i class="fa-solid fa-location-dot w-5"></i>
+                            <div class="text-base ms-2">{{ $item->map }}</div>
+                        </td>
+
+                    </table>
+
+                    <iframe class="justify-self-end w-64 h-36 rounded-xl max-md:mt-4"
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15839.26412390808!2d109.6897945!3d-7.0308979!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7018ea59978517%3A0x39a4f7ba92c82aa0!2sSMK%20MAARIF%20NU%20DORO!5e0!3m2!1sid!2sid!4v1709352682720!5m2!1sid!2sid"
+                        style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
-            </div>
-            {{--             
-            <div class="max-md:max-w-md mx-auto">
-                
-                <div class="flex">
-                    <div class="w-1/2">
-
-                        SMK MAARIF NU adalah sekolah dibawah naungan LP MAARIF NU Kecamatan Doro dengan visi MANTAB
-                        (Mandiri
-                        Terampil dan Berakhlaqul karimah). Sekolah unggulan dengan program studi Teknik Bisnis Sepeda
-                        Motor,
-                        Teknik Komputer dan Jaringan, serta Akuntansi Keuangan Lembaga
-                    </div>
-                    <div>
-                        Jl. Raya Doro-Jolotigo, Doro, Kec. Doro, Kab. Pekalongan Prov. Jawa Tengah
-                    </div>
-                </div>
-            </div>
-        </div> --}}
+            @endforeach
         </div>
 
         <script type="module">

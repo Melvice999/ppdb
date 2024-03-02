@@ -50,4 +50,11 @@ class CalonSiswa extends Model
         'tahun_daftar',
     ];
 
+    // fitur penelusuran
+    public function scopeSearch($query, $keyword)
+    {
+        return $query->where('nama', 'like', '%' . $keyword . '%')
+                     ->orWhere('kecamatan', 'like', '%' . $keyword . '%');
+    }
+
 }

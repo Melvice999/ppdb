@@ -13,22 +13,30 @@ class CalonSiswaController extends Controller
     public function index()
     {
         $beranda = BerandaModel::where('status', 1)->get();
-        $pengaturan = PengaturanModel::select('hasil_seleksi')->first();
-
+        $hasil_seleksi = PengaturanModel::select('hasil_seleksi')->first();
+        $pengaturan = PengaturanModel::get();
         $data = [
-            'beranda'       => $beranda,
-            'pengaturan'    => $pengaturan,
-            'title'         => "PPDB SMK Ma'arif NU Doro",
+            'beranda'           => $beranda,
+            'pengaturan'        => $pengaturan,
+            'hasil_seleksi'     => $hasil_seleksi,
+            'title'             => "PPDB SMK Ma'arif NU Doro",
         ];
         return view('guest/beranda', $data);
     }
 
     public function daftar()
     {
-        $pengaturan = PengaturanModel::select('hasil_seleksi', 'pendaftaran')->first();
+        $pendaftaran = PengaturanModel::select('pendaftaran')->first();
+
+        $beranda = BerandaModel::where('status', 1)->get();
+        $hasil_seleksi = PengaturanModel::select('hasil_seleksi')->first();
+        $pengaturan = PengaturanModel::get();
         $data = [
-            'pengaturan'    => $pengaturan,
-            'title'         => "Formulir Pendaftaran | PPDB SMK Ma'arif NU Doro",
+            'beranda'           => $beranda,
+            'pengaturan'        => $pengaturan,
+            'hasil_seleksi'     => $hasil_seleksi,
+            'pendaftaran'       => $pendaftaran,
+            'title'             => "Formulir Pendaftaran | PPDB SMK Ma'arif NU Doro",
         ];
         return view('guest/daftar', $data);
     }
@@ -118,11 +126,16 @@ class CalonSiswaController extends Controller
     public function informasi()
     {
         $informasi    = PengaturanModel::select('j_informasi', 'informasi')->first();
-        $pengaturan = PengaturanModel::select('hasil_seleksi')->first();
+
+        $beranda = BerandaModel::where('status', 1)->get();
+        $hasil_seleksi = PengaturanModel::select('hasil_seleksi')->first();
+        $pengaturan = PengaturanModel::get();
         $data = [
-            'informasi'     => $informasi,
-            'pengaturan'    => $pengaturan,
-            'title'         => "Informasi | PPDB SMK Ma'arif NU Doro",
+            'beranda'           => $beranda,
+            'pengaturan'        => $pengaturan,
+            'hasil_seleksi'     => $hasil_seleksi,
+            'informasi'         => $informasi,
+            'title'             => "Informasi | PPDB SMK Ma'arif NU Doro",
         ];
 
         return view('guest/informasi-pendaftaran', $data);
@@ -130,12 +143,17 @@ class CalonSiswaController extends Controller
 
     public function hasilSeleksi()
     {
-        $pengaturan = PengaturanModel::select('hasil_seleksi')->first();
         $siswa    = CalonSiswa::where('status', '1')->where('tahun_daftar', now()->year)->get();
+
+        $beranda = BerandaModel::where('status', 1)->get();
+        $hasil_seleksi = PengaturanModel::select('hasil_seleksi')->first();
+        $pengaturan = PengaturanModel::get();
         $data = [
-            'siswa'      => $siswa,
-            'pengaturan' => $pengaturan,
-            'title'      => "Hasil Seleksi | PPDB SMK Ma'arif NU Doro",
+            'beranda'           => $beranda,
+            'pengaturan'        => $pengaturan,
+            'hasil_seleksi'     => $hasil_seleksi,
+            'siswa'             => $siswa,
+            'title'             => "Hasil Seleksi | PPDB SMK Ma'arif NU Doro",
         ];
         return view('guest/hasil-seleksi', $data);
     }

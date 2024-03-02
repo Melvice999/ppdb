@@ -14,10 +14,10 @@
 
 
         <div class="w-1/2 px-10 bg-white max-md:w-full max-md:px-10 rounded-md text-justify max-md:mt-7">
-            <div class="text-lg font-bold text-center py-3">
+            <div class="text-lg font-bold text-center py-3 no-tailwindcss-base">
                 {{ $informasi->j_informasi }}
             </div>
-            <hr class="text-d-green">
+            <hr class="text-d-green no-tailwindcss-base">
 
             <div class="pt-3">
                 {!! $informasi->informasi !!}

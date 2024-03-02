@@ -47,12 +47,12 @@
 
         @foreach ($beranda as $item)
             <div class="w-1/2 px-10 bg-white max-md:w-full max-md:px-10 rounded-md text-justify max-md:mt-7">
-                <div class="text-lg font-bold py-3">
+                <div class="text-lg font-bold py-3 no-tailwindcss-base">
                     {{ $item->judul }}
                 </div>
                 <hr class="text-d-green">
 
-                <div class="pt-3">
+                <div class="pt-3 no-tailwindcss-base">
                     {!! $item->konten !!}
                     <br><br>
                 </div>

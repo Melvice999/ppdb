@@ -1,6 +1,6 @@
 @extends('layouts.guest-layout')
 @section('content')
-    @if ($pengaturan->hasil_seleksi === 1)
+    @if ($hasil_seleksi->hasil_seleksi === 1)
         <div class="grid mt-6 mx-10 place-items-center text-base max-sm:mx-3">
             {{-- {{ $siswa }} --}}
 
@@ -32,7 +32,7 @@
         </div>
     @endif
 
-    @if ($pengaturan->hasil_seleksi === 0)
+    @if ($hasil_seleksi->hasil_seleksi === 0)
         <div class="grid mt-6 mx-10 place-items-center text-base max-sm:mx-3">
             {{-- {{ $siswa }} --}}
 

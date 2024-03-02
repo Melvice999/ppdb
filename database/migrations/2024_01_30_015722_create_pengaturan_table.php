@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('fb');
             $table->string('yt');
             $table->string('web');
+            $table->string('map');
             $table->timestamps();
         });
     }
