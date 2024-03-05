@@ -24,7 +24,7 @@
             class="w-40 h-60 rounded-xl overflow-hidden mb-3 bg-white" alt="">
     </div>
 
-    <form action="{{ route('admin-beranda-siswa-edit', ['id' => $siswa->nik]) }}" method="POST">
+    <form action="{{ route('admin-beranda-siswa-edit-post', ['id' => $siswa->nik]) }}" method="POST">
         @csrf
         <div class="grid mt-6 max-md:place-items-center">
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full">

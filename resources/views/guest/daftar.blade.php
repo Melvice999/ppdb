@@ -291,17 +291,15 @@
                         placeholder="Mendapatkan Informasi Sekolah Melalui" class="border-b w-full focus:outline-none">
                 </div>
 
-                <div class="text-end w-1/2 max-md:w-full mb-6">
+                <div class="text-end w-1/2 max-md:w-full">
                     <button
                         class="mt-6 py-2 px-7 rounded-2xl bg-white border border-d-green hover:bg-d-green hover:text-white">
                         Selesai
                     </button>
                 </div>
-
             </div>
-
         </form>
-        <div class="h-40"></div>
+
         <script type="module">
             $(document).ready(function() {
                 // Open Nav Menu

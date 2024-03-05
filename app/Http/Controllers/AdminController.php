@@ -88,7 +88,7 @@ class AdminController extends Controller
         return view('admin.beranda.siswa-edit', $data);
     }
 
-    public function postBerandaSiswaEdit(Request $request, $id = null)
+    public function postBerandaSiswaEdit(Request $request, $id)
     {
         CalonSiswa::where('nik', $id)->update([
             'nik' => $request->nik,

@@ -34,7 +34,7 @@
                         class="px-16 py-3 border-2 rounded border-d-green bg-white cursor-pointer max-md:block">
                         Daftar
                     </a>
-                    <a href="{{ route('auth-siswa-index') }}"
+                    <a href="{{ route('auth-siswa') }}"
                         class="px-16 py-3 border-2 rounded border-d-green bg-white cursor-pointer max-md:mt-4 max-md:block">
                         Login
                     </a>

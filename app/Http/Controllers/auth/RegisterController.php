@@ -18,7 +18,7 @@ class RegisterController extends Controller
 {
     public function index()
     {
-        return view('auth/user/registrasi-siswa');
+        return view('auth/registrasi-siswa');
     }
 
     protected function register(Request $request)

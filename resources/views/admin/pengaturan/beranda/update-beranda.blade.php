@@ -5,7 +5,7 @@
 
     <div class="w-full text-2xl font-medium">
         Admin / Pengaturan / Beranda</div>
-    <form action="{{ route('admin-pengaturan-update-beranda', ['id' => $beranda->id]) }}" method="POST">
+    <form action="{{ route('admin-pengaturan-update-beranda-post', ['id' => $beranda->id]) }}" method="POST">
         @csrf
         <div class="flex justify-between mt-10 mb-4">
             <div class="max-md:me-6">Edit Pengaturan Beranda PPDB Tahun {{ now()->year }}</div>

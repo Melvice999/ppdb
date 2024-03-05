@@ -47,7 +47,7 @@
                 <div class="relative ">
                     {{-- Icon NIK --}}
                     <div class="absolute">
-                        <i class="fa-solid fa-user"></i>
+                        <i class="fa-solid fa-user text-d-green"></i>
                     </div>
                     {{-- Input NIK --}}
                     <input type="number" name="nik" value="{{ old('nik') }}"
@@ -60,7 +60,7 @@
                 <div class="relative ">
                     {{-- Icon Email --}}
                     <div class="absolute">
-                        <i class="fa-solid fa-envelope"></i>
+                        <i class="fa-solid fa-envelope text-d-green"></i>
                     </div>
                     {{-- Input Email --}}
                     <input type="email" name="email" value="{{ old('email') }}" placeholder="Masukan Email"
@@ -71,7 +71,7 @@
                 <div class="relative">
                     <div class="absolute">
                         {{-- Icon Lock Password --}}
-                        <i class="fa-solid fa-lock"></i>
+                        <i class="fa-solid fa-lock text-d-green"></i>
                     </div>
                     {{-- Input Password --}}
                     <input type="password" name="password" id="password" value="{{ old('password') }}"
@@ -83,7 +83,7 @@
                 <div class="relative">
                     <div class="absolute">
                         {{-- Icon Lock Password --}}
-                        <i class="fa-solid fa-lock"></i>
+                        <i class="fa-solid fa-lock text-d-green"></i>
                     </div>
                     {{-- Input Password --}}
                     <input type="password" name="password_confirmation" id="password_confirmation"

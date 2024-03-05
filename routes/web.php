@@ -36,16 +36,30 @@ Route::group(['prefix' => '/'], function () {
 
 // Auth
 Route::group(['prefix' => 'auth'], function () {
-    Route::get('siswa-index', [AuthController::class, 'index'])->name('auth-siswa-index');
-    Route::post('siswa-login', [AuthController::class, 'login'])->name('auth-siswa-login');
-    Route::get('admin-index', [AuthController::class, 'indexAdmin'])->name('auth-admin-index');
-    Route::post('admin-login', [AuthController::class, 'loginAdmin'])->name('auth-admin-login');
-    Route::get('headmaster-index', [AuthController::class, 'indexHeadmaster'])->name('auth-headmaster-index');
-    Route::post('headmaster-login', [AuthController::class, 'loginHeadmaster'])->name('auth-headmaster-login');
+    // dumb auth middleware if search
+    Route::get('/', [AuthController::class, 'login'])->name('login');
+
+    // siswa
+    Route::get('siswa', [AuthController::class, 'login'])->name('auth-siswa');
+    Route::post('siswa-login', [AuthController::class, 'postLoginSiswa'])->name('auth-siswa-login');
+    // Route::post('siswa-beranda/{id?}', [AuthController::class, 'postLoginSiswa'])->name('siswa-beranda.{id?}');
+
+
+    // admin
+    Route::get('admin', [AuthController::class, 'login'])->name('auth-admin');
+    Route::post('admin-login', [AuthController::class, 'postLoginAdmin'])->name('auth-admin-login');
+
+    // headmaster
+    Route::get('headmaster', [AuthController::class, 'login'])->name('auth-headmaster');
+    Route::post('headmaster-login', [AuthController::class, 'postLoginHeadmaster'])->name('auth-headmaster-login');
 });
 
 // Siswa
-Route::get('siswa-beranda/{id?}', [SiswaController::class, 'index'])->name('siswa-beranda.{id?}');
+Route::group(['prefix' => 'siswa', 'middleware' => 'auth'], function () {
+    Route::get('beranda', [SiswaController::class, 'index'])->name('siswa-beranda/{id?}');
+    Route::get('pusat-akun', [SiswaController::class, 'pusatAkun'])->name('siswa-pusat-akun');
+    Route::get('logout', [SiswaController::class, 'logout'])->name('siswa-logout');
+});
 
 // Admin
 Route::group(['prefix' => 'admin-beranda'], function () {
@@ -61,9 +75,9 @@ Route::group(['prefix' => 'admin-beranda'], function () {
     Route::get('sudah-tervalidasi', [AdminController::class, 'berandaValidate'])->name('admin-beranda-sudah-tervalidasi');
     Route::get('belum-tervalidasi', [AdminController::class, 'berandaValidate'])->name('admin-beranda-belum-tervalidasi');
 
-    // Action
+    // Action Edit
     Route::get('siswa-edit/{id?}', [AdminController::class, 'berandaSiswaEdit'])->name('admin-beranda-siswa-edit');
-    Route::post('siswa-edit/{id?}', [AdminController::class, 'postBerandaSiswaEdit'])->name('admin-beranda-siswa-edit');
+    Route::post('siswa-edit-post/{id?}', [AdminController::class, 'postBerandaSiswaEdit'])->name('admin-beranda-siswa-edit-post');
     Route::post('siswa-verifikasi/{id?}', [AdminController::class, 'berandaSiswavertifikasi'])->name('admin-beranda-siswa-verifikasi');
     Route::post('siswa-unverifikasi/{id?}', [AdminController::class, 'berandaSiswaUnvertifikasi'])->name('admin-beranda-siswa-unverifikasi');
     Route::get('siswa-delete/{id?}', [AdminController::class, 'berandaSiswaDelete'])->name('admin-beranda-siswa-delete');
@@ -79,7 +93,7 @@ Route::group(['prefix' => 'admin-pengaturan'], function () {
     Route::get('tambah-beranda', [AdminController::class, 'pengaturanTambahBeranda'])->name('admin-pengaturan-tambah-beranda');
     Route::post('create-beranda', [AdminController::class, 'pengaturanCreateBeranda'])->name('admin-pengaturan-create-beranda');
     Route::get('update-beranda/{id?}', [AdminController::class, 'pengaturanUpdateBeranda'])->name('admin-pengaturan-update-beranda');
-    Route::post('update-beranda/{id?}', [AdminController::class, 'postPengaturanUpdateBeranda'])->name('admin-pengaturan-update-beranda');
+    Route::post('update-beranda-post/{id?}', [AdminController::class, 'postPengaturanUpdateBeranda'])->name('admin-pengaturan-update-beranda-post');
     Route::post('update-status-true-beranda/{id?}', [AdminController::class, 'postPengaturanUpdateStatusTrueBeranda'])->name('admin-pengaturan-update-status-true-beranda');
     Route::post('update-status-false-beranda/{id?}', [AdminController::class, 'postPengaturanUpdateStatusFalseBeranda'])->name('admin-pengaturan-update-status-false-beranda');
     Route::get('hapus-beranda/{id?}', [AdminController::class, 'pengaturanHapusBeranda'])->name('admin-pengaturan-hapus-beranda');
@@ -91,6 +105,8 @@ Route::group(['prefix' => 'admin-pengaturan'], function () {
     // Informasi
     Route::get('informasi', [AdminController::class, 'pengaturanInformasi'])->name('admin-pengaturan-informasi');
 });
+
+
 
 Route::get('admin-pusat-akun', [AdminController::class, 'pusatAkun'])->name('admin-pusat-akun');
 

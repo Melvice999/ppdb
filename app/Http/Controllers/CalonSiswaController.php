@@ -81,7 +81,7 @@ class CalonSiswaController extends Controller
         $textValueDesaWali = fetchAndExtractText('https://alamat.thecloudalert.com/api/kelurahan/get/?d_kecamatan_id=' . $request->kecamatan_wali, 'id', $request->desa_wali, 'text');
         $textValueKodePosWali = fetchAndExtractText('https://alamat.thecloudalert.com/api/kodepos/get/?d_kabkota_id=' . $request->kabupaten_wali . '&d_kecamatan_id=' . $request->kecamatan_wali, 'id', $request->kode_pos_wali, 'text');
 
-        $data = [
+        $siswa = [
             'nik' => $request->nik,
             'kk' => $request->kk,
             'nama' => $request->nama,
@@ -118,9 +118,22 @@ class CalonSiswaController extends Controller
             'info_sekolah' => $request->info_sekolah,
         ];
 
-        CalonSiswa::create($data);
+        CalonSiswa::create($siswa);
 
-        return redirect()->to(url('/informasi-pendaftar'))->with('success', 'Data berhasil disimpan');
+        $informasi    = PengaturanModel::select('j_informasi', 'informasi')->first();
+
+        $beranda = BerandaModel::where('status', 1)->get();
+        $hasil_seleksi = PengaturanModel::select('hasil_seleksi')->first();
+        $pengaturan = PengaturanModel::get();
+        $data = [
+            'beranda'           => $beranda,
+            'pengaturan'        => $pengaturan,
+            'hasil_seleksi'     => $hasil_seleksi,
+            'informasi'         => $informasi,
+            'title'             => "Informasi | PPDB SMK Ma'arif NU Doro",
+        ];
+
+        return redirect()->to(url('informasi-pendaftaran'))->with('success', 'Data berhasil disimpan');
     }
 
     public function informasi()
