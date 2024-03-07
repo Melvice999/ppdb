@@ -42,7 +42,7 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password,),
         ]);
         return redirect()
-            ->to(url('auth-siswa/index'))
+            ->to(url('auth/siswa'))
             ->with('success', 'Selamat anda berhasil mendaftar')
             ->with('sukses', 'silahkan login');
     }

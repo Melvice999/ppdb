@@ -17,7 +17,7 @@ class AuthController extends Controller
     {
 
         if (Auth::check()) {
-            return redirect('siswa/beranda');
+            return redirect('siswa/profil');
         } else {
             $auth   = $request->route()->getName();
             $data = [
@@ -40,7 +40,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->to(url('siswa/beranda'));
+            return redirect()->to(url('siswa/profil'));
         } else {
             $emailExists = Auth::getProvider()->retrieveByCredentials(['email' => $request->email]);
 

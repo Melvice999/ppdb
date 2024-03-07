@@ -56,8 +56,18 @@ Route::group(['prefix' => 'auth'], function () {
 
 // Siswa
 Route::group(['prefix' => 'siswa', 'middleware' => 'auth'], function () {
-    Route::get('beranda', [SiswaController::class, 'index'])->name('siswa-beranda/{id?}');
-    Route::get('pusat-akun', [SiswaController::class, 'pusatAkun'])->name('siswa-pusat-akun');
+
+    Route::get('profil/{id?}', [SiswaController::class, 'index'])->name('siswa-profil');
+    Route::get('formulir-pendaftaran', [SiswaController::class, 'formulirPendaftaran'])->name('siswa-formulir-pendaftaran');
+    Route::get('pengaturan', [SiswaController::class, 'pengaturan'])->name('siswa-pengaturan');
+
+    Route::get('upload-berkas', [SiswaController::class, 'uploadBerkas'])->name('siswa-upload-berkas');
+    Route::post('upload-berkas-post', [SiswaController::class, 'uploadBerkasPost'])->name('siswa-upload-berkas-post');
+
+    Route::get('update-berkas', [SiswaController::class, 'updateBerkas'])->name('siswa-update-berkas');
+    Route::post('update-berkas-post', [SiswaController::class, 'updateBerkasPost'])->name('siswa-update-berkas-post');
+
+
     Route::get('logout', [SiswaController::class, 'logout'])->name('siswa-logout');
 });
 

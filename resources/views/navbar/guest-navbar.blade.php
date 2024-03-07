@@ -16,7 +16,7 @@
          </div>
      </div>
      {{-- Menu Nav --}}
-     <div class="flex max-md:hidden max-md:absolute max-md:top-16 max-md:left-0 max-md:bg-d-green max-md:w-full max-md:px-10 max-md:py-9"
+     <div class="flex max-md:hidden max-md:absolute max-md:top-16 max-md:left-0 max-md:bg-d-green max-md:w-full max-md:px-6 max-md:py-5"
          id="menu_nav_open">
          <a href="/" class="mr-5 flex-auto max-md:hidden">
              <img src="{{ asset('assets/img/logo_smk.png') }}" alt="" width="40px">
@@ -40,6 +40,7 @@
              <div class="my-auto">
                  Registrasi
              </div>
+             
          </a>
      </div>
  </div>

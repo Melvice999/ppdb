@@ -4,8 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{{ asset('assets/img/logo_smk.ico') }}" type="image/x-icon">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <title>Laravel</title>
+    <title>{{ $title }}</title>
 
     <!-- Styles -->
     <style>
@@ -26,8 +27,10 @@
 </head>
 
 <body class="font-sen bg-l-sky-blue">
-@include('navbar.siswa-navbar')
- @yield('content')
+    @include('navbar.siswa-navbar')
+    @yield('content')
+
+    <div class="p-10"></div>
 
 </body>
 

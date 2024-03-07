@@ -3,8 +3,8 @@
     <div class="flex justify-center mt-6 ml-10 mr-10 max-md:block">
         <div class="w-1/2 p-10 bg-white max-md:w-full rounded-md">
             <div class="grid grid-cols-3  max-md:block">
-                <div>
-                    <img src="{{ asset('asset/siswa/pas-foto/foto_profil.png') }}" alt="foto-siswa"
+                <div class="flex justify-center">
+                    <img src="{{ asset($berkas && $berkas->nik ? 'storage/siswa/pas-foto/' . $berkas->pas_foto : 'storage/siswa/pas-foto/foto_profil.png') }}" alt="foto-siswa"
                         class="w-24 h-36 rounded-3xl">
                 </div>
 
@@ -51,7 +51,7 @@
                         </div>
                         <div class="max-md:hidden">:</div>
                         <div class="col-span-2">
-                            PPDB-001-2024
+                            PPDB-XXXX-XXXX
                         </div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                         Tanggal Lahir
                     </div>
                     <div class="max-md:hidden">:</div>
-                    <div class=""> {{ $user->tanggal_lahir }} </div>
+                    <div class=""> {{ \Carbon\Carbon::parse($user->tanggal_lahir)->format('d-m-Y') }} </div>
                 </div>
                 <div class="grid grid-cols-4 border-b border-d-green border-opacity-60 max-md:block">
                     <div>
@@ -371,5 +371,4 @@
             </div>
         </div>
     </div>
-    <div class="p-10"></div>
 @endsection
