@@ -10,7 +10,7 @@
             </div>
         </div>
     @endif
-    <div class="grid mt-6 ml-10 mr-10 place-items-center">
+    <div class="grid mt-6 ml-10 mr-10 place-items-center no-tailwindcss-base">
 
 
         <div class="w-1/2 px-10 bg-white max-md:w-full max-md:px-10 rounded-md text-justify max-md:mt-7">

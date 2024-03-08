@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('beranda', function (Blueprint $table) {
             $table->id();
             $table->string('judul');
-            $table->string('konten');
+            $table->text('konten');
             $table->integer('status')->default(1);
             $table->timestamps();
         });
