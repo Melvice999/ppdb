@@ -9,9 +9,9 @@
     @if ($errors->any())
         <div class="flex justify-center mx-10 mt-1">
             <div class="w-1/2 flex max-md:w-full mt-2 bg-red text-white rounded justify-center items-center">
-                <div class="py-2 ps-2 max-md:w-2/5">
+                <div class="py-2 ps-2">
                     @foreach ($errors->all() as $error)
-                        {{ $error }}
+                        <li> {{ $error }} </li>
                     @endforeach
                 </div>
             </div>

@@ -7,7 +7,7 @@ use App\Models\AkunSiswa;
 use App\Models\BerkasSiswa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
 
 
 class SiswaController extends Controller
@@ -58,9 +58,11 @@ class SiswaController extends Controller
   $akun = AkunSiswa::where('email', $email)->first();
   $nik = $akun->nik;
   $user = CalonSiswa::where('nik', $nik)->first();
+  $berkas = BerkasSiswa::where('nik', $nik)->first();
 
   $data = [
    'title' => 'Pengaturan',
+   'berkas' => $berkas,
   ];
 
   return view('siswa/siswa-pengaturan', $data, ['user' => $user]);
@@ -105,8 +107,9 @@ class SiswaController extends Controller
   $aktaName = $nik . '-Akta.pdf';
   $kkName = $nik . '-KK.pdf';
   // pas foto karena terdapat ekstensi png/jpg/jpeg 
-  $extensionPasFoto = $pasFoto->getClientOriginalExtension();
-  $pasFotoName = $nik . '-Pas-Foto.' . $extensionPasFoto;
+  // $extensionPasFoto = $pasFoto->getClientOriginalExtension();
+  // $pasFotoName = $nik . '-Pas-Foto.' . $extensionPasFoto;
+  $pasFotoName = $nik . '-Pas-Foto.png';
   $shunName = $nik . '-SHUN.pdf';
   $ijazahName = $nik . '-Ijazah.pdf';
 
@@ -144,11 +147,207 @@ class SiswaController extends Controller
 
 
   $data = [
-   'title' => 'Upload Berkas ' . $user->nama,
+   'title' => 'Berkas ' . $user->nama,
    'berkas' => $berkas,
   ];
 
   return view('siswa/berkas/siswa-update-berkas', $data, ['user' => $user]);
+ }
+
+ public function updateBerkasAktaPost(Request $request, $id)
+ {
+  $berkasSiswa = BerkasSiswa::where('nik', $id)->first();
+
+  if ($request->hasFile('akta')) {
+   // Hapus berkas lama jika ada
+   $aktaLama = $berkasSiswa->akta;
+   if ($aktaLama) {
+    Storage::delete($aktaLama);
+   }
+
+   $aktaName = $id . '-Akta.pdf';
+
+   // Simpan berkas baru
+   $request->file('akta')->storeAS('siswa/akta', $aktaName, 'public');
+  }
+
+  BerkasSiswa::where('nik', $id)->update([
+   'akta' => $aktaName,
+  ]);
+
+  return redirect()->back()->with('success', 'Akta berhasil diupdate.');
+ }
+
+ public function updateBerkasKKPost(Request $request, $id)
+ {
+  $berkasSiswa = BerkasSiswa::where('nik', $id)->first();
+
+  if ($request->hasFile('kk')) {
+   // Hapus berkas lama jika ada
+   $kkLama = $berkasSiswa->kk;
+   if ($kkLama) {
+    Storage::delete($kkLama);
+   }
+
+   $kkName = $id . '-KK.pdf';
+
+   // Simpan berkas baru
+   $request->file('kk')->storeAS('siswa/kk', $kkName, 'public');
+  }
+
+  BerkasSiswa::where('nik', $id)->update([
+   'kk' => $kkName,
+  ]);
+
+  return redirect()->back()->with('success', 'KK berhasil diupdate.');
+ }
+
+ public function updateBerkasPasFotoPost(Request $request, $id)
+ {
+  $berkasSiswa = BerkasSiswa::where('nik', $id)->first();
+
+  if ($request->hasFile('pas_foto')) {
+   // Hapus berkas lama jika ada
+   $pasFotoLama = $berkasSiswa->pas_foto;
+   if ($pasFotoLama) {
+    Storage::delete($pasFotoLama);
+   }
+
+   // pas foto karena terdapat ekstensi png/jpg/jpeg 
+   // $pasFoto = $request->file('pas_foto');
+   // $extensionPasFoto = $pasFoto->getClientOriginalExtension();
+   // $pasFotoName = $id . '-Pas-Foto.png' . $extensionPasFoto;
+   $pasFotoName = $id . '-Pas-Foto.png';
+
+   // Simpan berkas baru
+   $request->file('pas_foto')->storeAS('siswa/pas-foto', $pasFotoName, 'public');
+  }
+
+  BerkasSiswa::where('nik', $id)->update([
+   'pas_foto' => $pasFotoName,
+  ]);
+
+  return redirect()->back()->with('success', 'Foto berhasil diupdate.');
+ }
+
+ public function updateBerkasShunPost(Request $request, $id)
+ {
+  $berkasSiswa = BerkasSiswa::where('nik', $id)->first();
+
+  if ($request->hasFile('shun')) {
+   // Hapus berkas lama jika ada
+   $shunLama = $berkasSiswa->shun;
+   if ($shunLama) {
+    Storage::delete($shunLama);
+   }
+
+   $shunName = $id . '-SHUN.pdf';
+
+   // Simpan berkas baru
+   $request->file('shun')->storeAS('siswa/shun', $shunName, 'public');
+  }
+
+  BerkasSiswa::where('nik', $id)->update([
+   'shun' => $shunName,
+  ]);
+
+  return redirect()->back()->with('success', 'SHUN berhasil diupdate.');
+ }
+
+ public function updateBerkasIjazahPost(Request $request, $id)
+ {
+  $berkasSiswa = BerkasSiswa::where('nik', $id)->first();
+
+  if ($request->hasFile('ijazah')) {
+   // Hapus berkas lama jika ada
+   $ijazahLama = $berkasSiswa->ijazah;
+   if ($ijazahLama) {
+    Storage::delete($ijazahLama);
+   }
+
+   $ijazahName = $id . '-Ijazah.pdf';
+
+   // Simpan berkas baru
+   $request->file('ijazah')->storeAS('siswa/ijazah', $ijazahName, 'public');
+  }
+
+  BerkasSiswa::where('nik', $id)->update([
+   'ijazah' => $ijazahName,
+  ]);
+
+  return redirect()->back()->with('success', 'Ijazah berhasil diupdate.');
+ }
+
+ public function cetakFormulir()
+ {
+  $user = Auth::user();
+  $email = $user->email;
+
+  $akun = AkunSiswa::where('email', $email)->first();
+  $nik = $akun->nik;
+  $user = CalonSiswa::where('nik', $nik)->first();
+  $berkas = BerkasSiswa::where('nik', $nik)->first();
+
+  $data = [
+   'title' => 'Cetak Formulir ' . $user->nama,
+   'berkas' => $berkas,
+  ];
+
+  return view('siswa/cetak-formulir/siswa-cetak-formulir', $data, ['user' => $user]);
+ }
+
+ public function pengaturanAkun()
+ {
+  $user = Auth::user();
+  $email = $user->email;
+
+  $akun = AkunSiswa::where('email', $email)->first();
+  $nik = $akun->nik;
+  $user = CalonSiswa::where('nik', $nik)->first();
+  $berkas = BerkasSiswa::where('nik', $nik)->first();
+
+  $data = [
+   'akun' => $akun,
+   'title' => 'Pengaturan Akun ' . $user->nama,
+   'berkas' => $berkas,
+  ];
+
+  return view('siswa/pengaturan-akun/siswa-pengaturan-akun', $data, ['user' => $user]);
+ }
+
+ public function pengaturanEmailPost(Request $request)
+ {
+  $request->validate([
+   'email'     => 'required|email|ends_with:@gmail.com|unique:akun_siswa',
+   // 'password'  => 'required|confirmed|min:6'
+  ], [
+   'email.ends_with'       => 'Email harus @gmail.com.',
+   'email.unique'          => 'Email sudah terdaftar.',
+   // 'password.confirmed'    => 'Password tidak cocok.',
+   // 'password.min'          => 'Password minimal 6 karakter.',
+  ]);
+  $nik = $request->nik;
+  $email = $request->email;
+  AkunSiswa::where('nik', $nik)->update([
+   'email' => $email,
+  ]);
+  return redirect()->back()->with('success', 'Email berhasil diubah.');
+ }
+
+ public function pengaturanPasswordPost(Request $request)
+ {
+  $request->validate([
+   'password'  => 'required|confirmed|min:6'
+  ], [
+   'password.confirmed'    => 'Password tidak cocok.',
+   'password.min'          => 'Password minimal 6 karakter.',
+  ]);
+  $nik = $request->nik;
+  $password = $request->password;
+  AkunSiswa::where('nik', $nik)->update([
+   'password' => $password,
+  ]);
+  return redirect()->back()->with('success', 'Password berhasil diubah.');
  }
 
  public function logout()

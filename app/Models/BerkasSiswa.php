@@ -9,4 +9,12 @@ class BerkasSiswa extends Model
 {
     use HasFactory;
     protected $table = "berkas_siswa";
+
+    protected $fillable = [
+        'akta',
+        'kk',
+        'pas_foto',
+        'shun',
+        'ijazah',
+    ];
 }

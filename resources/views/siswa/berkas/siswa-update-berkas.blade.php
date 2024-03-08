@@ -7,6 +7,19 @@
     </style>
 
     @if ($berkas && $berkas->akta)
+        @if (session('success'))
+            <div class="flex justify-center mt-3 mx-10 max-md:block">
+                <div class="w-1/2 mt-2 max-md:w-full">
+                    <div class="grid grid-cols-1 gap-6 max-md:grid-cols-1">
+                        <div
+                            class="flex justify-center items-center w-full h-10 rounded max-md:w-full border-d-green border cursor-pointer bg-d-green text-white">
+                            {{ session('success') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <div class="mt-1 mx-10 max-md:block">
 
             {{-- Akta --}}
@@ -31,9 +44,11 @@
             </div>
 
             {{-- Input akta on click --}}
-            <form action="">
+            <form action="{{ route('siswa-update-berkas-akta-post', ['id' => $user->nik]) }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" value="{{ $user->nik }}" name="nik">
+
+                <input type="hidden" value="{{ $berkas->akta }}" name="aktaLama">
 
                 <div class="hidden justify-center mb-5" id="triggerAkta">
                     <div class="w-1/2 grid grid-cols-3 max-md:w-full mt-2 bg-white">
@@ -43,8 +58,8 @@
                         </div>
 
                         <div class="border-d-green border focus:outline-none flex justify-center items-center">
-                            <input type="file" class="w-full ps-2" accept=".pdf" onchange="validateFileSize(this, 1.5)"
-                                id="inputAkta">
+                            <input type="file" class="w-full ps-2" accept=".pdf" name="akta"
+                                onchange="validateFileSize(this, 1.5)" id="inputAkta" required>
                         </div>
 
                         <div
@@ -55,9 +70,9 @@
                                 <i class="fa-solid fa-eye text-blue"></i>
                             </div>
 
-                            <div class=" h-full w-full cursor-pointer flex justify-center items-center">
+                            <button class=" h-full w-full cursor-pointer flex justify-center items-center">
                                 <i class="fa-solid fa-paper-plane text-d-green"></i>
-                            </div>
+                            </button>
 
                         </div>
 
@@ -87,9 +102,11 @@
             </div>
 
             {{-- Input KK on click --}}
-            <form action="">
+            <form action="{{ route('siswa-update-berkas-kk-post', ['id' => $user->nik]) }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" value="{{ $user->nik }}" name="nik">
+
+                <input type="hidden" value="{{ $berkas->kk }}" name="kkLama">
 
                 <div class="hidden justify-center mb-5" id="triggerKk">
                     <div class="w-1/2 grid grid-cols-3 max-md:w-full mt-2 bg-white">
@@ -99,8 +116,8 @@
                         </div>
 
                         <div class="border-d-green border focus:outline-none flex justify-center items-center">
-                            <input type="file" class="w-full ps-2" accept=".pdf" onchange="validateFileSize(this, 1.5)"
-                                id="inputKk">
+                            <input type="file" class="w-full ps-2" accept=".pdf" name="kk" onchange="validateFileSize(this, 1.5)"
+                                id="inputKk" required>
                         </div>
 
                         <div
@@ -110,9 +127,9 @@
                                 <i class="fa-solid fa-eye text-blue"></i>
                             </div>
 
-                            <div class=" h-full flex justify-center items-center">
+                            <button class=" h-full flex justify-center items-center">
                                 <i class="fa-solid fa-paper-plane text-d-green"></i>
-                            </div>
+                            </button>
 
                         </div>
 
@@ -140,9 +157,11 @@
             </div>
 
             {{-- Input Pas Foto on click --}}
-            <form action="">
+            <form action="{{ route('siswa-update-berkas-pas-foto-post', ['id' => $user->nik]) }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" value="{{ $user->nik }}" name="nik">
+
+                <input type="hidden" value="{{ $berkas->pas_foto }}" name="pasFotoLama">
 
                 <div class="hidden justify-center mb-5" id="triggerPasFoto">
                     <div class="w-1/2 grid grid-cols-3 max-md:w-full mt-2 bg-white">
@@ -152,8 +171,8 @@
                         </div>
 
                         <div class="border-d-green border focus:outline-none flex justify-center items-center">
-                            <input type="file" class="w-full ps-2" accept=".jpg, .png, .jpeg"
-                                onchange="validateFileSize(this, 1.5)" id="inputPasFoto">
+                            <input type="file" class="w-full ps-2" accept=".jpg, .png, .jpeg" name="pas_foto"
+                                onchange="validateFileSize(this, 1.5)" id="inputPasFoto" required>
                         </div>
 
                         <div
@@ -163,9 +182,9 @@
                                 <i class="fa-solid fa-eye text-blue"></i>
                             </div>
 
-                            <div class=" h-full flex justify-center items-center">
+                            <button class=" h-full flex justify-center items-center">
                                 <i class="fa-solid fa-paper-plane text-d-green"></i>
-                            </div>
+                            </button>
 
                         </div>
 
@@ -193,9 +212,11 @@
             </div>
 
             {{-- Input SHUN on click --}}
-            <form action="">
+            <form action="{{ route('siswa-update-berkas-shun-post', ['id' => $user->nik]) }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" value="{{ $user->nik }}" name="nik">
+
+                <input type="hidden" value="{{ $berkas->shun }}" name="shunLama">
 
                 <div class="hidden justify-center mb-5" id="triggerShun">
                     <div class="w-1/2 grid grid-cols-3 max-md:w-full mt-2 bg-white">
@@ -205,8 +226,8 @@
                         </div>
 
                         <div class="border-d-green border focus:outline-none flex justify-center items-center">
-                            <input type="file" class="w-full ps-2" accept=".pdf"
-                                onchange="validateFileSize(this, 1.5)" id="inputShun">
+                            <input type="file" class="w-full ps-2" accept=".pdf" name="shun"
+                                onchange="validateFileSize(this, 1.5)" id="inputShun" required>
                         </div>
 
                         <div
@@ -216,9 +237,9 @@
                                 <i class="fa-solid fa-eye text-blue"></i>
                             </div>
 
-                            <div class=" h-full flex justify-center items-center">
+                            <button class=" h-full flex justify-center items-center">
                                 <i class="fa-solid fa-paper-plane text-d-green"></i>
-                            </div>
+                            </button>
 
                         </div>
 
@@ -246,9 +267,11 @@
             </div>
 
             {{-- Input Ijazah on click --}}
-            <form action="">
+            <form action="{{ route('siswa-update-berkas-ijazah-post', ['id' => $user->nik]) }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" value="{{ $user->nik }}" name="nik">
+
+                <input type="hidden" value="{{ $berkas->ijazah }}" name="ijazahLama">
 
                 <div class="hidden justify-center mb-5" id="triggerIjazah">
                     <div class="w-1/2 grid grid-cols-3 max-md:w-full mt-2 bg-white">
@@ -258,8 +281,8 @@
                         </div>
 
                         <div class="border-d-green border focus:outline-none flex justify-center items-center">
-                            <input type="file" class="w-full ps-2" accept=".pdf"
-                                onchange="validateFileSize(this, 1.5)" id="inputIjazah">
+                            <input type="file" class="w-full ps-2" accept=".pdf" name="ijazah"
+                                onchange="validateFileSize(this, 1.5)" id="inputIjazah" required>
                         </div>
 
                         <div
@@ -268,9 +291,9 @@
                             <div class="border-r h-full flex justify-center items-center" id="lihatIjazah">
                                 <i class="fa-solid fa-eye text-blue"></i>
                             </div>
-                            <div class=" h-full flex justify-center items-center">
+                            <button class=" h-full flex justify-center items-center">
                                 <i class="fa-solid fa-paper-plane text-d-green"></i>
-                            </div>
+                            </button>
 
                         </div>
 

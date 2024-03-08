@@ -5,7 +5,7 @@
             <div class="w-1/2 mt-2 max-md:w-full">
                 <div class="grid grid-cols-1 gap-6 max-md:grid-cols-1">
                     <div
-                        class="flex justify-center items-center w-full h-10 rounded bg-white max-md:w-full border-d-green border cursor-pointer hover:bg-d-green hover:text-white">
+                        class="flex justify-center items-center w-full h-10 rounded max-md:w-full border-d-green border cursor-pointer bg-d-green text-white">
                         {{ session('success') }}
                     </div>
                 </div>
@@ -18,6 +18,7 @@
 
             <div class="grid grid-cols-3 max-md:block">
                 <div class="flex justify-center">
+
                     <img src="{{ asset($berkas && $berkas->nik ? 'storage/siswa/pas-foto/' . $berkas->pas_foto : 'storage/siswa/pas-foto/foto_profil.png') }}"
                         alt="foto-siswa" class="w-24 h-36 rounded-3xl">
                 </div>
@@ -92,7 +93,7 @@
                         Lengkapi Berkas
                     </div>
                 </a>
-                
+
             </div>
         </div>
     </div>
@@ -123,10 +124,12 @@
                     </div>
                 </a>
 
-                <div
-                    class="flex justify-center items-center w-full h-10 rounded bg-white max-md:w-full border-d-green border cursor-pointer hover:bg-d-green hover:text-white max-md:hidden">
-                    Cetak Formulir
-                </div>
+                <a href="{{ route('siswa-cetak-formulir') }}" class=" max-md:hidden">
+                    <div
+                        class="flex justify-center items-center w-full h-10 rounded bg-white max-md:w-full border-d-green border cursor-pointer hover:bg-d-green hover:text-white">
+                        Cetak Formulir
+                    </div>
+                </a>
 
             </div>
         </div>
@@ -137,9 +140,11 @@
             class="w-1/2 mt-2 bg-white max-md:w-full rounded-md  border-d-green border cursor-pointer hover:bg-d-green hover:text-white">
             <div class="grid grid-cols-1 max-md:block">
 
-                <div class="flex justify-center items-center w-full h-10 rounded">
-                    Cetak Formulir
-                </div>
+                <a href="{{ route('siswa-cetak-formulir') }}">
+                    <div class="flex justify-center items-center w-full h-10 rounded">
+                        Cetak Formulir
+                    </div>
+                </a>
 
             </div>
         </div>
@@ -151,9 +156,11 @@
             class="w-1/2 mt-2 bg-white max-md:w-full rounded-md  border-d-green border cursor-pointer hover:bg-d-green hover:text-white">
             <div class="grid grid-cols-1 max-md:block">
 
-                <div class="flex justify-center items-center w-full h-10 rounded">
-                    Pengaturan Akun
-                </div>
+                <a href="{{ route('siswa-pengaturan-akun') }}">
+                    <div class="flex justify-center items-center w-full h-10 rounded">
+                        Pengaturan Akun
+                    </div>
+                </a>
 
             </div>
         </div>

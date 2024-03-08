@@ -89,7 +89,7 @@
 
                             {{-- Input Password --}}
                             <input type="password" name="password" id="password" placeholder="Masukan password"
-                                class="outline-none w-full pl-2" required>
+                                class="outline-none w-full pl-2" autocomplete="off" required>
 
                             {{-- Icon Eye Slash --}}
                             <i class="fa-regular fa-eye-slash cursor-pointer text-d-green" id="eye"></i>

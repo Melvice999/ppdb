@@ -67,6 +67,18 @@ Route::group(['prefix' => 'siswa', 'middleware' => 'auth'], function () {
     Route::get('update-berkas', [SiswaController::class, 'updateBerkas'])->name('siswa-update-berkas');
     Route::post('update-berkas-post', [SiswaController::class, 'updateBerkasPost'])->name('siswa-update-berkas-post');
 
+    // update berkas
+    Route::post('update-berkas-akta-post/{id?}', [SiswaController::class, 'updateBerkasAktaPost'])->name('siswa-update-berkas-akta-post');
+    Route::post('update-berkas-kk-post/{id?}', [SiswaController::class, 'updateBerkasKKPost'])->name('siswa-update-berkas-kk-post');
+    Route::post('update-berkas-pas-foto-post/{id?}', [SiswaController::class, 'updateBerkasPasFotoPost'])->name('siswa-update-berkas-pas-foto-post');
+    Route::post('update-berkas-shun-post/{id?}', [SiswaController::class, 'updateBerkasShunPost'])->name('siswa-update-berkas-shun-post');
+    Route::post('update-berkas-ijazah-post/{id?}', [SiswaController::class, 'updateBerkasIjazahPost'])->name('siswa-update-berkas-ijazah-post');
+
+    Route::get('cetak-formulir', [SiswaController::class, 'cetakFormulir'])->name('siswa-cetak-formulir');
+
+    Route::get('pengaturan-akun', [SiswaController::class, 'pengaturanAkun'])->name('siswa-pengaturan-akun');
+    Route::post('pengaturan-email-post', [SiswaController::class, 'pengaturanEmailPost'])->name('siswa-pengaturan-email-post');
+    Route::post('pengaturan-password-post', [SiswaController::class, 'pengaturanPasswordPost'])->name('siswa-pengaturan-password-post');
 
     Route::get('logout', [SiswaController::class, 'logout'])->name('siswa-logout');
 });

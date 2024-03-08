@@ -75,7 +75,7 @@
                     </div>
                     {{-- Input Password --}}
                     <input type="password" name="password" id="password" value="{{ old('password') }}"
-                        placeholder="Masukan password"
+                        placeholder="Masukan password" autocomplete="off"
                         class="border-b border-[#000842] focus:border-[#000842]  outline-none w-full pl-5" required>
                 </div>
                 {{-- Konfirmasi Password --}}
@@ -87,7 +87,7 @@
                     </div>
                     {{-- Input Password --}}
                     <input type="password" name="password_confirmation" id="password_confirmation"
-                        value="{{ old('password_confirmation') }}" placeholder="Konfirmasi password"
+                        value="{{ old('password_confirmation') }}" placeholder="Konfirmasi password" autocomplete="off"
                         class="border-b border-[#000842] focus:border-[#000842]  outline-none w-full pl-5" required>
                     <div class="mt-4">
                         <input type="checkbox" id="tampilkanPW" class="cursor-pointer">
