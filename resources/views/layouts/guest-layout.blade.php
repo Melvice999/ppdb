@@ -38,15 +38,17 @@
 </head>
 
 <body class="font-sen bg-l-sky-blue" id="up">
-    @include('navbar.guest-navbar')
-    <div class="overflow-hidden min-h-screen relative">
 
+    @include('navbar.guest-navbar')
+
+    <div class="overflow-hidden min-h-screen relative">
         @yield('content')
     </div>
 
     <div class="mb-20"></div>
 
-    <footer class="w-full absolute bg-d-green text-white py-2 pl-10 pr-10">
+    <footer class="w-full absolute bg-d-green text-white py-2 px-10 max-[375px]:px-3 max-[375px]:text-xs">
+
         <div class="flex justify-between border-b border-white font-bold py-2">
             <div>
                 SMK MA'ARIF NU DORO
@@ -61,43 +63,43 @@
 
         @foreach ($pengaturan as $item)
             <div class="flex mt-2">Kontak Kami <span class="block ms-2 mb-2">:</span></div>
-            <div class="grid grid-cols-2 py-2 max-md:text-sm max-md:block">
+            <div class="grid grid-cols-2 py-2 max-md:w-full max-md:text-sm max-md:block">
 
                 <table>
 
                     <td class="flex items-center">
                         <i class="fa-brands fa-whatsapp w-5"></i>
-                        <div class="text-base ms-2">{{ $item->wa }}</div>
+                        <div class="ms-2">{{ $item->wa }}</div>
                     </td>
 
                     <td class="flex items-center">
                         <i class="fa-brands fa-instagram w-5"></i>
-                        <div class="text-base ms-2">{{ $item->ig }}</div>
+                        <div class="ms-2">{{ $item->ig }}</div>
                     </td>
 
                     <td class="flex items-center">
                         <i class="fa-brands fa-facebook w-5"></i>
-                        <div class="text-base ms-2">{{ $item->fb }}</div>
+                        <div class="ms-2">{{ $item->fb }}</div>
                     </td>
 
                     <td class="flex items-center">
                         <i class="fa-solid fa-earth-asia w-5"></i>
-                        <div class="text-base ms-2">{{ $item->web }}</div>
+                        <div class="ms-2">{{ $item->web }}</div>
                     </td>
 
                     <td class="flex items-center">
                         <i class="fa-brands fa-youtube w-5"></i>
-                        <div class="text-base ms-2">{{ $item->yt }}</div>
+                        <div class="ms-2">{{ $item->yt }}</div>
                     </td>
 
                     <td class="flex items-center">
                         <i class="fa-solid fa-location-dot w-5"></i>
-                        <div class="text-base ms-2">{{ $item->map }}</div>
+                        <div class="ms-2">{{ $item->map }}</div>
                     </td>
 
                 </table>
 
-                <iframe class="justify-self-end w-64 h-36 rounded-xl max-md:mt-4"
+                <iframe class="justify-self-end w-64 h-36 rounded-xl max-md:mt-4 max-[375px]:w-56"
                     src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15839.26412390808!2d109.6897945!3d-7.0308979!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7018ea59978517%3A0x39a4f7ba92c82aa0!2sSMK%20MAARIF%20NU%20DORO!5e0!3m2!1sid!2sid!4v1709352682720!5m2!1sid!2sid"
                     style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
@@ -107,14 +109,16 @@
 
     <script type="module">
         $(document).ready(function() {
+
             // Open Nav Menu
             $("#nav_hidden").click(function() {
                 $("#nav_hidden").removeClass("md:hidden").addClass("hidden")
                 $("#nav_open").removeClass("hidden").addClass("md:hidden")
                 $("#menu_nav_open").removeClass("max-md:hidden").addClass("max-md:block")
+
                 // overflow di saat nav open
-                $(".overflow-hidden").addClass("max-md:mt-48")
-                
+                $(".overflow-hidden").addClass("max-md:mt-40")
+
                 // navigasi up and down daftar
                 $("#navigasi").addClass("hidden")
             })
@@ -123,9 +127,10 @@
                 $("#nav_open").removeClass("md:hidden").addClass("hidden")
                 $("#nav_hidden").removeClass("hidden").addClass("md:hidden")
                 $("#menu_nav_open").removeClass("max-md:block").addClass("max-md:hidden")
+
                 // overflow di animasi awan beranda guest
-                $(".overflow-hidden").removeClass("max-md:mt-48")
-                
+                $(".overflow-hidden").removeClass("max-md:mt-40")
+
                 // navigasi up and down daftar
                 $("#navigasi").removeClass("hidden")
             })

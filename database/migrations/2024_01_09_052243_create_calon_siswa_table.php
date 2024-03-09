@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('kabupaten');
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->enum('warga_negara', ['WNI', 'WNA']);
-            $table->string('kode_pos');
+            $table->string('kode_pos')->nullable();;
             $table->enum('prodi', ['TBSM', 'TKRO', 'TKJ', 'AKL']);
             $table->enum('batik', ['S', 'M', 'L', 'XL', 'XXL']);
             $table->enum('olahraga', ['S', 'M', 'L', 'XL', 'XXL']);
@@ -43,7 +43,7 @@ return new class extends Migration
             $table->string('provinsi_wali');
             $table->string('kecamatan_wali');
             $table->string('kabupaten_wali');
-            $table->string('kode_pos_wali');
+            $table->string('kode_pos_wali')->nullable();;
             $table->string('pekerjaan_wali');
             $table->string('pendidikan_wali');
             $table->string('info_sekolah');

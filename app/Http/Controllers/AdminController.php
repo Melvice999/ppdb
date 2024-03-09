@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AkunSiswa;
 use Illuminate\Http\Request;
 use App\Models\CalonSiswa;
 use App\Models\PengaturanModel;
 use App\Models\BerandaModel;
+use App\Models\BerkasSiswa;
+use Illuminate\Support\Facades\Storage;
 
 use function Ramsey\Uuid\v1;
 
@@ -13,6 +16,8 @@ class AdminController extends Controller
 {
     public function index()
     {
+        // jika ingin menambahkan tahun tinggal tambahkan addYear()-> untuk 1x tahunnya
+        // 'tkj'       => CalonSiswa::where('prodi', 'tkj')->where('tahun_daftar',  now()->addYear()->year)->count(),
         $data = [
             'tbsm'      => CalonSiswa::where('prodi', 'tbsm')->where('tahun_daftar', now()->year)->count(),
             'tkro'      => CalonSiswa::where('prodi', 'tkro')->where('tahun_daftar', now()->year)->count(),
@@ -71,7 +76,7 @@ class AdminController extends Controller
         $status1        = CalonSiswa::where('status', 1)->where('tahun_daftar', now()->year)->get();
 
         $data = [
-            'title'     => 'halo',
+            'title'     => 'Beranda Admin',
             'status0'   => $status0,
             'status1'   => $status1,
         ];
@@ -157,8 +162,26 @@ class AdminController extends Controller
 
     public function berandaSiswaDelete($id)
     {
-        CalonSiswa::where('nik', $id)
-            ->delete();
+        $berkasSiswa = BerkasSiswa::where('nik', $id)->first();
+
+        $hapusFile = [
+            storage_path('app/public/siswa/akta/' . $berkasSiswa->akta),
+            storage_path('app/public/siswa/kk/' . $berkasSiswa->kk),
+            storage_path('app/public/siswa/pas-foto/' . $berkasSiswa->pas_foto),
+            storage_path('app/public/siswa/shun/' . $berkasSiswa->shun),
+            storage_path('app/public/siswa/ijazah/' . $berkasSiswa->ijazah),
+        ];
+
+        foreach ($hapusFile as $hapus) {
+            if (file_exists($hapus)) {
+
+                unlink($hapus);
+            }
+        }
+        // dd("behasih");
+        BerkasSiswa::where('nik', $id)->delete();
+        AkunSiswa::where('nik', $id)->delete();
+        CalonSiswa::where('nik', $id)->delete();
         return redirect()->back()->with('success', 'Data berhasil dihapus');
     }
 

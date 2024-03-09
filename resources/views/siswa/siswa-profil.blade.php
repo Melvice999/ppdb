@@ -98,7 +98,7 @@
         </div>
     </div>
 
-    <div class="{{ $berkas && $berkas->akta ? 'flex mt-4' : 'hidden' }} mt-2 justify-center mx-10 max-md:flex">
+    <div class="{{ $berkas && $berkas->akta ? 'flex mt-4' : 'hidden' }} mt-2 justify-center mx-10">
         <div
             class="w-1/2 bg-white max-md:w-full rounded-md  border-d-green border cursor-pointer hover:bg-d-green hover:text-white">
             <div class="grid grid-cols-1 max-md:block">

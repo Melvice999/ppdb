@@ -38,38 +38,38 @@
                 </form>
             </li>
 
-            <li
-                class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 rounded-2xl {{ $title === 'Beranda Admin' ? 'bg-l-sky-blue text-d-green' : 'hover:bg-white hover:text-d-green' }}">
-                <a href="{{ route('admin-beranda') }}" class="flex items-center w-full rounded-md">
+            <a href="{{ route('admin-beranda') }}">
+                <li
+                    class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 rounded-2xl {{ $title === 'Beranda Admin' ? 'bg-l-sky-blue text-d-green' : 'hover:bg-white hover:text-d-green' }}">
                     <i class="fa-solid fa-house min-w-16 text-lg"></i>
                     <span class="whitespace-nowrap">&nbsp;&nbsp;&nbsp; Beranda</span>
-                </a>
-            </li>
+                </li>
+            </a>
 
-            <li
-                class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 rounded-2xl {{ $title === 'Pengaturan Admin' ? 'bg-l-sky-blue text-d-green' : 'hover:bg-white hover:text-d-green' }}">
-                <a href="{{ route('admin-pengaturan') }}" class="flex items-center w-full rounded-md">
+            <a href="{{ route('admin-pengaturan') }}">
+                <li
+                    class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 rounded-2xl {{ $title === 'Pengaturan Admin' ? 'bg-l-sky-blue text-d-green' : 'hover:bg-white hover:text-d-green' }}">
                     <i class="fa-solid fa-gear min-w-16 text-lg"></i>
                     <span class="whitespace-nowrap">&nbsp;&nbsp;&nbsp; Pengaturan</span>
-                </a>
-            </li>
+                </li>
+            </a>
 
-            <li
-                class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 rounded-2xl {{ $title === 'Pusat Akun' ? 'bg-l-sky-blue text-d-green' : 'hover:bg-white hover:text-d-green' }}">
-                <a href="{{ route('admin-pusat-akun') }}" class="flex items-center w-full rounded-md">
+            <a href="{{ route('admin-pusat-akun') }}">
+                <li
+                    class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 rounded-2xl {{ $title === 'Pusat Akun' ? 'bg-l-sky-blue text-d-green' : 'hover:bg-white hover:text-d-green' }}">
                     <i class="fa-solid fa-user min-w-16 text-lg"></i>
                     <span class="whitespace-nowrap">&nbsp;&nbsp;&nbsp; Pusat Akun</span>
-                </a>
-            </li>
+                </li>
+            </a>
 
-            <li class="absolute border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 hover:bg-white hover:text-d-green rounded-2xl bottom-5  w-4/5 max-md:w-full max-md:relative max-md:bottom-0 max-md:mt-6 mb-3"
-                id="logout">
-                <a href="#" class="flex items-center w-full rounded-md">
+            <a href="#">
+                <li class="absolute border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 hover:bg-white hover:text-d-green rounded-2xl bottom-5  w-4/5 max-md:w-full max-md:relative max-md:bottom-0 max-md:mt-6 mb-3"
+                    id="logout">
                     <i class="fa-solid fa-right-from-bracket min-w-16 text-lg"></i>
                     <span>&nbsp;&nbsp;&nbsp;
                         Logout</span>
-                </a>
-            </li>
+                </li>
+            </a>
 
         </ul>
     </div>
@@ -85,8 +85,8 @@
             if (navToggle.hasClass(closeToggle)) {
                 // Close Nav Menu
                 navToggle.removeClass(closeToggle).addClass(openToggle);
-                $("nav span").addClass("invisible");
-                $("nav input").addClass('hidden');
+                $("nav span").addClass("invisible max-md:visible");
+                $("nav input").addClass('hidden max-md:block');
                 $("nav").removeClass('w-60').addClass('w-24');
                 $("#logout").removeClass("w-4/5").addClass("w-12");
                 $("#logo_close").removeClass("hidden");
@@ -94,8 +94,8 @@
             } else {
                 // Open Nav Menu
                 navToggle.removeClass(openToggle).addClass(closeToggle);
-                $("nav span").removeClass("invisible");
-                $("nav input").removeClass('hidden');
+                $("nav span").removeClass("invisible max-md:visible");
+                $("nav input").removeClass('hidden max-md:block');
                 $("nav").removeClass('w-24').addClass('w-60');
                 $("#logout").removeClass("w-12").addClass("w-4/5");
                 $("#logo_close").addClass("hidden");

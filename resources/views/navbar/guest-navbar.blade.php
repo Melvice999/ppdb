@@ -3,6 +3,7 @@
      <div>
          <img src="{{ asset('assets/img/logo_smk.png') }}" alt="" width="50px" class="md:hidden">
      </div>
+     
      <div class="absolute right-0 top-1">
          <div class="absolute right-0 text-3xl">
              {{-- Nav Hidden --}}
@@ -15,6 +16,7 @@
              </div>
          </div>
      </div>
+
      {{-- Menu Nav --}}
      <div class="flex max-md:hidden max-md:absolute max-md:top-16 max-md:left-0 max-md:bg-d-green max-md:w-full max-md:px-6 max-md:py-5"
          id="menu_nav_open">
