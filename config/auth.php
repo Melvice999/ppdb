@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\AdminModel;
+
 return [
 
     /*
@@ -40,6 +42,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        // daftarkan agar disimpan ke session
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -65,8 +72,13 @@ return [
         //     'model' => App\Models\User::class,
         // ],
         'users' => [
-            'driver' => 'database',
-            'table' => 'akun_siswa',
+            'driver' => 'eloquent',
+            'model' => \App\Models\AkunSiswa::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => \App\Models\AdminModel::class,
         ],
 
         // 'users' => [

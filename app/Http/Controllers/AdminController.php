@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminModel;
 use App\Models\AkunSiswa;
 use Illuminate\Http\Request;
 use App\Models\CalonSiswa;
 use App\Models\PengaturanModel;
 use App\Models\BerandaModel;
 use App\Models\BerkasSiswa;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
-use function Ramsey\Uuid\v1;
+
+
 
 class AdminController extends Controller
 {
@@ -327,14 +330,46 @@ class AdminController extends Controller
 
     public function pusatAkun()
     {
-        $informasi    = PengaturanModel::select('j_informasi', 'informasi')->first();
-        $pengaturan    = PengaturanModel::get();
+        $admin  = Auth::guard('admin')->user();
+        $email = $admin->email;
+        $akun = AdminModel::where('email', $email)->first();
+
         $data = [
-            'informasi'     => $informasi,
-            'pengaturan'    => $pengaturan,
-            'title'         => 'Pusat Akun',
+            'akun'      => $akun,
+            'title'     => 'Pusat Akun',
         ];
         return view('admin.admin-pusat-akun', $data);
+    }
+
+    public function pusatAkunPost(Request $request)
+    {
+        $id = $request->id;
+
+        $request->validate([
+            'email' => 'required|email|ends_with:@gmail.com',
+            'password' => 'nullable|confirmed|min:5',
+        ], [
+            'email.email'           => 'Harus diisi dengan email.',
+            'email.ends_with'       => 'Email harus @gmail.com.',
+            'password.confirmed'    => 'Password tidak cocok.',
+            'password.min'          => 'Password minimal 5 karakter.',
+        ]);
+
+        $updateData = [];
+
+        if ($request->filled('email')) {
+            $updateData['email'] = $request->email;
+            $pesan = 'Email';
+        }
+
+        if ($request->filled('password')) {
+            $updateData['password'] = Hash::make($request->password);
+            $pesan = 'Password';
+        }
+
+        AdminModel::where('id', $id)->update($updateData);
+
+        return redirect()->back()->with('success', $pesan . ' berhasil diubah');
     }
 
     public function penelusuran(Request $request)
@@ -347,5 +382,11 @@ class AdminController extends Controller
             'title' => 'Hasil Penelusuran'
         ];
         return view('admin.admin-penelusuran', $data,  compact('calonSiswa'))->with('success', '');
+    }
+
+    public function logout()
+    {
+        Auth::guard('admin')->logout();
+        return redirect('auth-admin');
     }
 }

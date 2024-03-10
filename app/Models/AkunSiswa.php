@@ -16,7 +16,6 @@ class AkunSiswa extends Authenticatable
     protected $fillable = [
         'nik',
         'email',
-        'username',
         'password',
     ];
     protected $hidden = [
@@ -27,10 +26,5 @@ class AkunSiswa extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
-    // public function calonSiswa()
-    // {
-    //     return $this->belongsTo(CalonSiswa::class, 'nik', 'nik');
-    // }
 
 }

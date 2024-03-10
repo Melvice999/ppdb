@@ -319,12 +319,9 @@ class SiswaController extends Controller
  {
   $request->validate([
    'email'     => 'required|email|ends_with:@gmail.com|unique:akun_siswa',
-   // 'password'  => 'required|confirmed|min:6'
   ], [
    'email.ends_with'       => 'Email harus @gmail.com.',
    'email.unique'          => 'Email sudah terdaftar.',
-   // 'password.confirmed'    => 'Password tidak cocok.',
-   // 'password.min'          => 'Password minimal 6 karakter.',
   ]);
   $nik = $request->nik;
   $email = $request->email;

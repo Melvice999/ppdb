@@ -62,7 +62,7 @@
                 </li>
             </a>
 
-            <a href="#">
+            <a href="{{ route('admin-logout') }}">
                 <li class="absolute border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 hover:bg-white hover:text-d-green rounded-2xl bottom-5  w-4/5 max-md:w-full max-md:relative max-md:bottom-0 max-md:mt-6 mb-3"
                     id="logout">
                     <i class="fa-solid fa-right-from-bracket min-w-16 text-lg"></i>

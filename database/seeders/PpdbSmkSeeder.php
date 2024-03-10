@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 
 class PpdbSmkSeeder extends Seeder
@@ -128,15 +129,17 @@ class PpdbSmkSeeder extends Seeder
                 </div>',
             ],
         ]);
+
+        $adminPassword = Hash::make('admin');
         DB::table('admin')->insert([
-            'username'  => 'admin',
             'email'     => 'admin@gmail.com',
-            'password'  => 'admin',
+            'password'  => $adminPassword,
         ]);
+
+        $headmasterPassword = Hash::make('headmaster');
         DB::table('headmaster')->insert([
-            'username'  => 'headmaster',
             'email'     => 'headmaster@gmail.com',
-            'password'  => 'headmaster',
+            'password'  => $headmasterPassword
         ]);
     }
 }

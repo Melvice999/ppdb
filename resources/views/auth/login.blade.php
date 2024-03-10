@@ -57,8 +57,14 @@
                 <p class="text-sm">Silahkan masuk menggunakan <br>akun yang telah didaftarkan</p>
             </div>
 
-
-            <form method="POST" action="{{ route('auth-siswa-login') }}">
+            <form method="POST"
+                action="{{ route(
+                    $auth === 'auth-siswa'
+                        ? 'auth-siswa-login'
+                        : ($auth === 'auth-admin'
+                            ? 'auth-admin-login'
+                            : 'auth-headmaster-login'),
+                ) }}">
                 @csrf
 
                 <div class="mt-10">

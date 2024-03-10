@@ -1,94 +1,153 @@
 @extends('layouts.admin-layout')
 @section('content')
     <div class="w-full text-2xl font-medium">
-        Admin / Pengaturan / Beranda
+        Admin / Pusat Akun
     </div>
 
     @if (session('success'))
         <div class="grid mt-6 mx-auto place-items-center">
-            <div class="w-full text-white bg-d-green rounded-md mb-6">
+            <div class="w-full text-white bg-d-green rounded-md">
                 <ul class="p-4">
                     <li> {{ session('success') }}</li>
                 </ul>
             </div>
         </div>
     @endif
-    <form action="{{ route('admin-pengaturan-create-beranda') }}" method="POST">
+
+    @if ($errors->any())
+        <div class="grid mt-6 mx-auto place-items-center">
+            <div class="w-full text-white bg-red rounded-md">
+                <ul class="p-4">
+                    @foreach ($errors->all() as $error)
+                        <li> {{ $error }} </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    @endif
+
+    <form action="{{ route('admin-pusat-akun-post') }}" method="POST">
         @csrf
+
+        <input type="hidden" value="{{ $akun->id }}" name="id">
+
         <div class="flex justify-between mt-10 mb-4">
-            <div class="max-md:me-6">Edit Pengaturan Beranda PPDB Tahun {{ now()->year }}</div>
+            <div class="max-md:me-6">Ubah Akun Admin</div>
             <button type="submit" class="border px-4 py-3 bg-d-green text-white rounded-xl">
                 Simpan
             </button>
         </div>
 
+        <div class="grid grid-cols-2 w-full gap-10 mt-3 max-md:grid-cols-1">
 
-        @foreach ($pengaturan as $item)
-            <table class="w-full">
-                <tr>
-                    <td class="py-3">
-                        <label for="wa">Whatsapp</label>
-                    </td>
-                    <td class="border-b border-d-green">
-                        <div class="flex">
-                            :&nbsp; <input type="text" name="wa" autocomplete="off" value="{{ $item->wa }}"
-                                placeholder="Masukan Whatsapp" class="w-full focus:outline-none bg-l-sky-blue">
+            <div class="grid w-full bg-d-green text-white rounded-lg p-3" id="toggleEmail">
+                <div class="flex">
+                    <i class="fa-solid fa-envelope border-e me-4 flex justify-center items-center w-14 text-xl"></i>
+                    <div class="py-2 flex w-full">
+                        <div>
+                            Ubah Email
                         </div>
-                    </td>
-                </tr>
+                    </div>
+                    <i class="fa-solid fa-pen-to-square border-s flex justify-center items-center w-14 text-xl"></i>
 
-                <tr>
-                    <td class="py-3">
-                        <label for="ig">Instagram</label>
-                    </td>
-                    <td class="border-b border-d-green">
-                        <div class="flex">
-                            :&nbsp; <input type="text" name="ig" autocomplete="off" value="{{ $item->ig }}"
-                                placeholder="Masukan Whatsapp" class="w-full focus:outline-none bg-l-sky-blue">
+                </div>
+            </div>
+
+            <div class="grid w-full bg-d-green text-white rounded-lg p-3" id="togglePassword">
+                <div class="flex">
+                    <i class="fa-solid fa-lock border-e me-4 flex justify-center items-center w-14 text-xl"></i>
+                    <div class="py-2 flex w-full">
+                        <div>
+                            Ubah Password
                         </div>
+                    </div>
+                    <i class="fa-solid fa-pen-to-square border-s flex justify-center items-center w-14 text-xl"></i>
 
-                    </td>
-                </tr>
+                </div>
+            </div>
 
-                <tr>
-                    <td class="py-3">
-                        <label for="fb">Facebook</label>
-                    </td>
-                    <td class="border-b border-d-green">
-                        <div class="flex">
-                            :&nbsp; <input type="text" name="fb" autocomplete="off" value="{{ $item->fb }}"
-                                placeholder="Masukan Whatsapp" class="w-full focus:outline-none bg-l-sky-blue">
-                        </div>
-                    </td>
-                </tr>
+        </div>
 
-                <tr>
-                    <td class="py-3">
-                        <label for="yt">Youtube</label>
-                    </td>
-                    <td class="border-b border-d-green">
-                        <div class="flex">
-                            :&nbsp; <input type="text" name="yt" autocomplete="off" value="{{ $item->yt }}"
-                                placeholder="Masukan Whatsapp" class="w-full focus:outline-none bg-l-sky-blue">
-                        </div>
-                    </td>
-                </tr>
+        <table class="w-full mt-4">
+            <tr class="hidden" id="openEmail">
+                <td class="py-3">
+                    <label for="wa">Email</label>
+                </td>
+                <td class="border-b border-d-green">
+                    <div class="flex">
+                        :&nbsp;
+                        <input type="text" name="email" value="{{ $akun->email }}" autocomplete="off"
+                            placeholder="Masukan Email" class="w-full focus:outline-none bg-l-sky-blue">
+                    </div>
+                </td>
+            </tr>
 
-                <tr>
-                    <td class="py-3">
-                        <label for="web">Website</label>
-                    </td>
-                    <td class="border-b border-d-green">
-                        <div class="flex">
-                            :&nbsp; <input type="text" name="web" autocomplete="off" value="{{ $item->web }}"
-                                placeholder="Masukan Whatsapp" class="w-full focus:outline-none bg-l-sky-blue">
-                        </div>
-                    </td>
-                </tr>
+            <tr class="" id="openPassword">
+                <td class="py-3">
+                    <label for="ig">Password</label>
+                </td>
+                <td class="border-b border-d-green">
+                    <div class="flex">
+                        :&nbsp;
+                        <input type="password" name="password" autocomplete="off" placeholder="Masukan password"
+                            class="w-full focus:outline-none bg-l-sky-blue">
+                    </div>
 
-            </table>
-        @endforeach
+                </td>
+            </tr>
 
+            <tr class="" id="openConfrmPassword">
+                <td class="py-3">
+                    <label for="fb">Konfirmasi Password</label>
+                </td>
+                <td class="border-b border-d-green">
+                    <div class="flex">
+                        :&nbsp;
+                        <input type="password" name="password_confirmation" autocomplete="off"
+                            placeholder="Masukan konfirmasi password" class="w-full focus:outline-none bg-l-sky-blue">
+                    </div>
+                </td>
+            </tr>
+
+        </table>
 
     </form>
+
+    <div class="mt-2 flex items-center">
+
+            <i class="fa-solid fa-toggle-off text-d-green text-3xl me-2" id="toggleShowPassword"></i>
+
+            Lihat Password
+
+    </div>
+
+    <script type="module">
+        $(document).ready(function() {
+            $("#toggleEmail").on("click", function() {
+                $("#openEmail").toggleClass("hidden");
+                $("#openPassword").addClass("hidden");
+                $("#openConfrmPassword").addClass("hidden");
+            });
+
+            $("#togglePassword").on("click", function() {
+                $("#openEmail").addClass("hidden");
+                $("#openPassword").toggleClass("hidden");
+                $("#openConfrmPassword").toggleClass("hidden");
+            });
+            $("#toggleShowPassword").on("click", function() {
+                // Toggle the class on the icon
+                $(this).toggleClass("fa-toggle-off fa-toggle-on");
+
+                // Toggle the password input type
+                if ($(this).hasClass("fa-toggle-on")) {
+                    $("#openPassword input").attr("type", "text");
+                    $("#openConfrmPassword input").attr("type", "text");
+                } else {
+                    $("#openPassword input").attr("type", "password");
+                    $("#openConfrmPassword input").attr("type", "password");
+                }
+            });
+        });
+    </script>
+
 @endsection()

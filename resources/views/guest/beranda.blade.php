@@ -29,18 +29,18 @@
 
         {{-- tombol daftar dan masuk --}}
         <div class="border-d-green text-d-green">
-            <div class="absolute top-28 mt-2 max-md:mt-2" id="ppdb2">
+            <div class="absolute uppercase font-aldrich top-36 mt-4 max-md:top-20 max-[375px]:top-24" id="ppdb2">
 
                 <div class="flex justify-center w-screen">
 
                     <div class="flex gap-10 max-md:block">
 
                         <a href="{{ route('daftar') }}"
-                            class="w-32 h-10 flex justify-center items-center border-2 rounded border-d-green bg-white cursor-pointer">
+                            class="w-48 h-10 flex justify-center items-center border rounded border-d-green bg-white cursor-pointer">
                             Daftar
                         </a>
                         <a href="{{ route('auth-siswa') }}"
-                            class="w-32 h-10 flex justify-center items-center border-2 rounded border-d-green bg-white cursor-pointer max-md:mt-4">
+                            class="w-48 h-10 flex justify-center items-center border rounded border-d-green bg-white cursor-pointer max-md:mt-4">
                             Login
                         </a>
 

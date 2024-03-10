@@ -1,13 +1,11 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CalonSiswaController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\SiswaController;
-use App\Models\CalonSiswa;
-use PhpParser\Node\Stmt\GroupUse;
+use App\Http\Controllers\AdminController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +20,7 @@ use PhpParser\Node\Stmt\GroupUse;
 
 
 // Calon Siswa
-Route::group(['prefix' => '/'], function () {
+Route::prefix('/')->group(function () {
     Route::get('/', [CalonSiswaController::class, 'index'])->name('/');
     Route::get('daftar', [CalonSiswaController::class, 'daftar'])->name('daftar');
     Route::get('hasil-seleksi', [CalonSiswaController::class, 'hasilSeleksi'])->name('hasil-seleksi');
@@ -34,29 +32,27 @@ Route::group(['prefix' => '/'], function () {
     Route::post('registrasi-akun/create', [RegisterController::class, 'register'])->name('registrasi-akun.create');
 });
 
-// Auth
-Route::group(['prefix' => 'auth'], function () {
-    // dumb auth middleware if search
-    Route::get('/', [AuthController::class, 'login'])->name('login');
-
-    // siswa
-    Route::get('siswa', [AuthController::class, 'login'])->name('auth-siswa');
+// Auth siswa
+Route::prefix('auth-siswa')->group(function () {
+    Route::get('/', [AuthController::class, 'loginSiswa'])->name('auth-siswa');
     Route::post('siswa-login', [AuthController::class, 'postLoginSiswa'])->name('auth-siswa-login');
-    // Route::post('siswa-beranda/{id?}', [AuthController::class, 'postLoginSiswa'])->name('siswa-beranda.{id?}');
+});
 
-
-    // admin
-    Route::get('admin', [AuthController::class, 'login'])->name('auth-admin');
+// Auth admin
+Route::prefix('auth-admin')->group(function () {
+    Route::get('/', [AuthController::class, 'loginAdmin'])->name('auth-admin');
     Route::post('admin-login', [AuthController::class, 'postLoginAdmin'])->name('auth-admin-login');
+});
 
-    // headmaster
-    Route::get('headmaster', [AuthController::class, 'login'])->name('auth-headmaster');
+
+// Auth headmaster
+Route::prefix('auth-headmaster')->group(function () {
+    Route::get('/', [AuthController::class, 'loginHeadmaster'])->name('auth-headmaster');
     Route::post('headmaster-login', [AuthController::class, 'postLoginHeadmaster'])->name('auth-headmaster-login');
 });
 
 // Siswa
-Route::group(['prefix' => 'siswa', 'middleware' => 'auth'], function () {
-
+Route::prefix('siswa')->middleware('auth-siswa')->group(function () {
     Route::get('profil/{id?}', [SiswaController::class, 'index'])->name('siswa-profil');
     Route::get('formulir-pendaftaran', [SiswaController::class, 'formulirPendaftaran'])->name('siswa-formulir-pendaftaran');
     Route::get('pengaturan', [SiswaController::class, 'pengaturan'])->name('siswa-pengaturan');
@@ -84,52 +80,53 @@ Route::group(['prefix' => 'siswa', 'middleware' => 'auth'], function () {
 });
 
 // Admin
-Route::group(['prefix' => 'admin-beranda'], function () {
-    Route::get('/', [AdminController::class, 'index'])->name('admin-beranda');
+Route::prefix('admin')->middleware('auth-admin')->group(function () {
 
-    // View by prodi
-    Route::get('tkro', [AdminController::class, 'berandaProdi'])->name('admin-beranda-tkro');
-    Route::get('tbsm', [AdminController::class, 'berandaProdi'])->name('admin-beranda-tbsm');
-    Route::get('tkj', [AdminController::class, 'berandaProdi'])->name('admin-beranda-tkj');
-    Route::get('akl', [AdminController::class, 'berandaProdi'])->name('admin-beranda-akl');
+    Route::get('admin-beranda', [AdminController::class, 'index'])->name('admin-beranda');
+
+    //     // View by prodi
+    Route::get('admin-beranda-tkro', [AdminController::class, 'berandaProdi'])->name('admin-beranda-tkro');
+    Route::get('admin-beranda-tbsm', [AdminController::class, 'berandaProdi'])->name('admin-beranda-tbsm');
+    Route::get('admin-beranda-tkj', [AdminController::class, 'berandaProdi'])->name('admin-beranda-tkj');
+    Route::get('admin-beranda-akl', [AdminController::class, 'berandaProdi'])->name('admin-beranda-akl');
 
     // View by verify
-    Route::get('sudah-tervalidasi', [AdminController::class, 'berandaValidate'])->name('admin-beranda-sudah-tervalidasi');
-    Route::get('belum-tervalidasi', [AdminController::class, 'berandaValidate'])->name('admin-beranda-belum-tervalidasi');
+    Route::get('admin-beranda-sudah-tervalidasi', [AdminController::class, 'berandaValidate'])->name('admin-beranda-sudah-tervalidasi');
+    Route::get('admin-beranda-belum-tervalidasi', [AdminController::class, 'berandaValidate'])->name('admin-beranda-belum-tervalidasi');
 
     // Action Edit
-    Route::get('siswa-edit/{id?}', [AdminController::class, 'berandaSiswaEdit'])->name('admin-beranda-siswa-edit');
-    Route::post('siswa-edit-post/{id?}', [AdminController::class, 'postBerandaSiswaEdit'])->name('admin-beranda-siswa-edit-post');
-    Route::post('siswa-verifikasi/{id?}', [AdminController::class, 'berandaSiswavertifikasi'])->name('admin-beranda-siswa-verifikasi');
-    Route::post('siswa-unverifikasi/{id?}', [AdminController::class, 'berandaSiswaUnvertifikasi'])->name('admin-beranda-siswa-unverifikasi');
-    Route::get('siswa-delete/{id?}', [AdminController::class, 'berandaSiswaDelete'])->name('admin-beranda-siswa-delete');
-});
+    Route::get('admin-beranda-siswa-edit/{id?}', [AdminController::class, 'berandaSiswaEdit'])->name('admin-beranda-siswa-edit');
+    Route::post('admin-beranda-siswa-edit-post/{id?}', [AdminController::class, 'postBerandaSiswaEdit'])->name('admin-beranda-siswa-edit-post');
+    Route::post('admin-beranda-siswa-verifikasi/{id?}', [AdminController::class, 'berandaSiswavertifikasi'])->name('admin-beranda-siswa-verifikasi');
+    Route::post('admin-beranda-siswa-unverifikasi/{id?}', [AdminController::class, 'berandaSiswaUnvertifikasi'])->name('admin-beranda-siswa-unverifikasi');
+    Route::get('admin-beranda-siswa-delete/{id?}', [AdminController::class, 'berandaSiswaDelete'])->name('admin-beranda-siswa-delete');
 
-// Admin-Pengaturan
-Route::group(['prefix' => 'admin-pengaturan'], function () {
-    Route::get('/', [AdminController::class, 'pengaturan'])->name('admin-pengaturan');
-    Route::post('update/{id}', [AdminController::class, 'pengaturanUpdate'])->name('admin-pengaturan-update');
+    // Admin-Pengaturan
+
+    Route::get('admin-pengaturan', [AdminController::class, 'pengaturan'])->name('admin-pengaturan');
+    Route::post('admin-pengaturan-update/{id}', [AdminController::class, 'pengaturanUpdate'])->name('admin-pengaturan-update');
 
     // Beranda
-    Route::get('beranda', [AdminController::class, 'pengaturanBeranda'])->name('admin-pengaturan-beranda');
-    Route::get('tambah-beranda', [AdminController::class, 'pengaturanTambahBeranda'])->name('admin-pengaturan-tambah-beranda');
-    Route::post('create-beranda', [AdminController::class, 'pengaturanCreateBeranda'])->name('admin-pengaturan-create-beranda');
-    Route::get('update-beranda/{id?}', [AdminController::class, 'pengaturanUpdateBeranda'])->name('admin-pengaturan-update-beranda');
-    Route::post('update-beranda-post/{id?}', [AdminController::class, 'postPengaturanUpdateBeranda'])->name('admin-pengaturan-update-beranda-post');
-    Route::post('update-status-true-beranda/{id?}', [AdminController::class, 'postPengaturanUpdateStatusTrueBeranda'])->name('admin-pengaturan-update-status-true-beranda');
-    Route::post('update-status-false-beranda/{id?}', [AdminController::class, 'postPengaturanUpdateStatusFalseBeranda'])->name('admin-pengaturan-update-status-false-beranda');
-    Route::get('hapus-beranda/{id?}', [AdminController::class, 'pengaturanHapusBeranda'])->name('admin-pengaturan-hapus-beranda');
+    Route::get('admin-pengaturan-beranda', [AdminController::class, 'pengaturanBeranda'])->name('admin-pengaturan-beranda');
+    Route::get('admin-pengaturan-tambah-beranda', [AdminController::class, 'pengaturanTambahBeranda'])->name('admin-pengaturan-tambah-beranda');
+    Route::post('admin-pengaturan-create-beranda', [AdminController::class, 'pengaturanCreateBeranda'])->name('admin-pengaturan-create-beranda');
+    Route::get('admin-pengaturan-update-beranda/{id?}', [AdminController::class, 'pengaturanUpdateBeranda'])->name('admin-pengaturan-update-beranda');
+    Route::post('admin-pengaturan-update-beranda-post/{id?}', [AdminController::class, 'postPengaturanUpdateBeranda'])->name('admin-pengaturan-update-beranda-post');
+    Route::post('admin-pengaturan-update-status-true-beranda/{id?}', [AdminController::class, 'postPengaturanUpdateStatusTrueBeranda'])->name('admin-pengaturan-update-status-true-beranda');
+    Route::post('admin-pengaturan-update-status-false-beranda/{id?}', [AdminController::class, 'postPengaturanUpdateStatusFalseBeranda'])->name('admin-pengaturan-update-status-false-beranda');
+    Route::get('admin-pengaturan-hapus-beranda/{id?}', [AdminController::class, 'pengaturanHapusBeranda'])->name('admin-pengaturan-hapus-beranda');
 
     // Kontak
-    Route::get('kontak', [AdminController::class, 'pengaturanKontak'])->name('admin-pengaturan-kontak');
-    Route::post('update-kontak/{id?}', [AdminController::class, 'postPengaturanKontak'])->name('admin-pengaturan-update-kontak');
+    Route::get('admin-pengaturan-kontak', [AdminController::class, 'pengaturanKontak'])->name('admin-pengaturan-kontak');
+    Route::post('admin-pengaturan-update-kontak/{id?}', [AdminController::class, 'postPengaturanKontak'])->name('admin-pengaturan-update-kontak');
 
     // Informasi
-    Route::get('informasi', [AdminController::class, 'pengaturanInformasi'])->name('admin-pengaturan-informasi');
+    Route::get('admin-pengaturan-informasi', [AdminController::class, 'pengaturanInformasi'])->name('admin-pengaturan-informasi');
+
+    Route::get('admin-pusat-akun', [AdminController::class, 'pusatAkun'])->name('admin-pusat-akun');
+    Route::post('admin-pusat-akun-post', [AdminController::class, 'pusatAkunPost'])->name('admin-pusat-akun-post');
+
+    Route::get('admin-penelusuran', [AdminController::class, 'penelusuran'])->name('admin-penelusuran');
+
+    Route::get('logout', [AdminController::class, 'logout'])->name('admin-logout');
 });
-
-
-
-Route::get('admin-pusat-akun', [AdminController::class, 'pusatAkun'])->name('admin-pusat-akun');
-
-Route::get('admin-penelusuran', [AdminController::class, 'penelusuran'])->name('admin-penelusuran');
