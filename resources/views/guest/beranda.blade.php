@@ -29,7 +29,7 @@
 
         {{-- tombol daftar dan masuk --}}
         <div class="border-d-green text-d-green">
-            <div class="absolute uppercase font-aldrich top-36 mt-4 max-md:top-20 max-[375px]:top-24" id="ppdb2">
+            <div class="absolute uppercase font-aldrich top-36 mt-4 max-md:top-28" id="ppdb2">
 
                 <div class="flex justify-center w-screen">
 

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CalonSiswaController;
+use App\Http\Controllers\HeadmasterController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\AdminController;
@@ -44,7 +45,6 @@ Route::prefix('auth-admin')->group(function () {
     Route::post('admin-login', [AuthController::class, 'postLoginAdmin'])->name('auth-admin-login');
 });
 
-
 // Auth headmaster
 Route::prefix('auth-headmaster')->group(function () {
     Route::get('/', [AuthController::class, 'loginHeadmaster'])->name('auth-headmaster');
@@ -84,7 +84,7 @@ Route::prefix('admin')->middleware('auth-admin')->group(function () {
 
     Route::get('admin-beranda', [AdminController::class, 'index'])->name('admin-beranda');
 
-    //     // View by prodi
+    // View by prodi
     Route::get('admin-beranda-tkro', [AdminController::class, 'berandaProdi'])->name('admin-beranda-tkro');
     Route::get('admin-beranda-tbsm', [AdminController::class, 'berandaProdi'])->name('admin-beranda-tbsm');
     Route::get('admin-beranda-tkj', [AdminController::class, 'berandaProdi'])->name('admin-beranda-tkj');
@@ -123,10 +123,19 @@ Route::prefix('admin')->middleware('auth-admin')->group(function () {
     // Informasi
     Route::get('admin-pengaturan-informasi', [AdminController::class, 'pengaturanInformasi'])->name('admin-pengaturan-informasi');
 
+    // pusat akun
     Route::get('admin-pusat-akun', [AdminController::class, 'pusatAkun'])->name('admin-pusat-akun');
     Route::post('admin-pusat-akun-post', [AdminController::class, 'pusatAkunPost'])->name('admin-pusat-akun-post');
 
+    // search
     Route::get('admin-penelusuran', [AdminController::class, 'penelusuran'])->name('admin-penelusuran');
 
+    // logout
     Route::get('logout', [AdminController::class, 'logout'])->name('admin-logout');
+});
+
+Route::prefix('headmaster')->group(function () {
+    Route::get('headmaster-beranda', [HeadmasterController::class, 'index'])->name('headmaster-beranda');
+    Route::get('headmaster-cetak-berkas', [HeadmasterController::class, 'cetakBerkas'])->name('headmaster-cetak-berkas');
+   
 });

@@ -90,17 +90,17 @@ class AuthController extends Controller
         }
     }
 
-    //     public function loginHeadmaster(Request $request)
-    //     {
+    public function loginHeadmaster(Request $request)
+    {
 
-    //         if (Auth::check()) {
-    //             return redirect('headmaster-beranda');
-    //         } else {
-    //             $auth   = $request->route()->getName();
-    //             $data = [
-    //                 'title'             => 'Beranda Admin',
-    //             ];
-    //             return view('auth/login', $data, ['auth' => $auth]);
-    //         }
-    //     }
+        if (Auth::check()) {
+            return redirect('headmaster-beranda');
+        } else {
+            $auth   = $request->route()->getName();
+            $data = [
+                'title'             => 'Beranda Admin',
+            ];
+            return view('auth/login', $data, ['auth' => $auth]);
+        }
+    }
 }

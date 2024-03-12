@@ -117,7 +117,7 @@
                 $("#menu_nav_open").removeClass("max-md:hidden").addClass("max-md:block")
 
                 // overflow di saat nav open
-                $(".overflow-hidden").addClass("max-md:mt-40")
+                $(".overflow-hidden").addClass("max-md:mt-42")
 
                 // navigasi up and down daftar
                 $("#navigasi").addClass("hidden")
@@ -129,7 +129,7 @@
                 $("#menu_nav_open").removeClass("max-md:block").addClass("max-md:hidden")
 
                 // overflow di animasi awan beranda guest
-                $(".overflow-hidden").removeClass("max-md:mt-40")
+                $(".overflow-hidden").removeClass("max-md:mt-42")
 
                 // navigasi up and down daftar
                 $("#navigasi").removeClass("hidden")
