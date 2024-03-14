@@ -88,8 +88,8 @@ class PpdbSmkSeeder extends Seeder
             </div>',
             'wa'            => '082225379187',
             'ig'            => 'smkmaarifdoro',
-            'fb'            => 'SMK Ma\'arif NU Doro',
-            'yt'            => 'Skemandor TV',
+            'fb'            => 'SKEMANDOR.OFFICIAL',
+            'yt'            => 'SkemandorTV',
             'web'           => 'www.smkmaarifnudoro.sch.id',
             'map'           => 'Jl. Raya Doro-Jolotigo, Doro, Kec. Doro, Kab. Pekalongan Prov. Jawa Tengah',
         ]);

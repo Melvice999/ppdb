@@ -113,10 +113,12 @@
                                             </button>
                                         </form>
 
-                                        <button class="hapus-btn" data-url="{{ route('admin-beranda-siswa-delete', ['id' => $siswa->nik]) }}">
+                                        <button class="hapus-btn"
+                                            data-url="{{ route('admin-beranda-siswa-delete', ['id' => $siswa->nik]) }}"
+                                            data-nama="{{ $siswa->nama }}">
                                             <i class="fa-solid fa-trash text-red hover:opacity-70 cursor-pointer"></i>
                                         </button>
-                                        
+
                                     </div>
                                 </td>
                             </tr>
@@ -181,7 +183,6 @@
             </table>
         </div>
     </div>
-    
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -203,8 +204,6 @@
             });
         });
     </script>
-    
-
 
     <script type="module">
         $(document).ready(function() {

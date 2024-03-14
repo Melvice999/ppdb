@@ -89,16 +89,55 @@ class AdminController extends Controller
 
     public function berandaSiswaEdit($id)
     {
+        $nomor_pendaftaran = NoPendaftaranModel::where('nik', $id)->first();
         $siswa = CalonSiswa::where('nik', $id)->first();
         $data = [
-            'siswa'     => $siswa,
-            'title'     => 'Beranda Admin',
+            'no_pendaftaran'    => $nomor_pendaftaran,
+            'siswa'             => $siswa,
+            'title'             => 'Beranda Admin',
         ];
         return view('admin.beranda.siswa-edit', $data);
     }
 
     public function postBerandaSiswaEdit(Request $request, $id)
     {
+        $request->validate([
+            'no_pendaftaran'        => 'unique:no_pendaftaran',
+        ], [
+            'no_pendaftaran.unique' => 'No pendaftaran sudah terdaftar.',
+        ]);
+
+        $existingData = NoPendaftaranModel::where('nik', $id)->first();
+
+        // Jika data dengan nik yang sama sudah ada, maka tidak perlu disimpan lagi
+        if ($existingData) {
+            $existingData->update([
+                'no_pendaftaran'    => $request->no_pendaftaran,
+            ]);
+        } else {
+            // Jika tidak ada data dengan nik yang sama, maka simpan data baru
+            $currentYear = date('Y');
+            $lastNoPendaftaran = NoPendaftaranModel::whereYear('created_at', $currentYear)->max('no_pendaftaran');
+
+            // Mendapatkan nomor urut dari nomor pendaftaran terakhir pada tahun ini
+            $lastNomorUrut = $lastNoPendaftaran ? intval(substr($lastNoPendaftaran, -3)) : 0;
+
+            // Menambahkan 1 pada nomor urut
+            $nomor_urut = $lastNomorUrut + 1;
+
+            // Format nomor urut agar selalu tiga digit
+            $nomor_urut_formatted = sprintf('%03d', $nomor_urut);
+
+            // Membuat nomor pendaftaran baru
+            $no_pendaftaran = $currentYear . '-' . $nomor_urut_formatted;
+
+            NoPendaftaranModel::create([
+                'no_pendaftaran' => $no_pendaftaran,
+                'nik' => $id,
+            ]);
+        }
+
+
         CalonSiswa::where('nik', $id)->update([
             'nik' => $request->nik,
             'kk'    => $request->kk,
@@ -162,22 +201,32 @@ class AdminController extends Controller
             'status' => 'required|in:0,1',
         ]);
 
-        // Lakukan pengecekan apakah nik sudah terdaftar sebelumnya
         $existingData = NoPendaftaranModel::where('nik', $id)->first();
 
         // Jika data dengan nik yang sama sudah ada, maka tidak perlu disimpan lagi
         if ($existingData) {
-            // Tidak melakukan apa pun jika data sudah terdaftar
+            $existingData->update([
+                'no_pendaftaran'    => $request->no_pendaftaran,
+            ]);
         } else {
             // Jika tidak ada data dengan nik yang sama, maka simpan data baru
             $currentYear = date('Y');
             $lastNoPendaftaran = NoPendaftaranModel::whereYear('created_at', $currentYear)->max('no_pendaftaran');
-            $nomor_urut = $lastNoPendaftaran ? $lastNoPendaftaran + 1 : 1;
+
+            // Mendapatkan nomor urut dari nomor pendaftaran terakhir pada tahun ini
+            $lastNomorUrut = $lastNoPendaftaran ? intval(substr($lastNoPendaftaran, -3)) : 0;
+
+            // Menambahkan 1 pada nomor urut
+            $nomor_urut = $lastNomorUrut + 1;
+
+            // Format nomor urut agar selalu tiga digit
             $nomor_urut_formatted = sprintf('%03d', $nomor_urut);
-            $nomor_pendaftaran = $currentYear . '-' . $nomor_urut_formatted;
+
+            // Membuat nomor pendaftaran baru
+            $no_pendaftaran = $currentYear . '-' . $nomor_urut_formatted;
 
             NoPendaftaranModel::create([
-                'nomor_pendaftaran' => $nomor_pendaftaran,
+                'no_pendaftaran' => $no_pendaftaran,
                 'nik' => $id,
             ]);
         }
@@ -202,13 +251,13 @@ class AdminController extends Controller
                 storage_path('app/public/siswa/shun/' . $berkasSiswa->shun),
                 storage_path('app/public/siswa/ijazah/' . $berkasSiswa->ijazah),
             ];
-        
+
             foreach ($hapusFile as $hapus) {
                 if (file_exists($hapus)) {
                     unlink($hapus);
                 }
             }
-        
+
             // Hapus data dari tabel BerkasSiswa
             $berkasSiswa->delete();
         }
@@ -331,16 +380,21 @@ class AdminController extends Controller
 
     public function postPengaturanKontak(Request $request, $id)
     {
+        $input = $request->input('link_map');
+        preg_match('/src="([^"]+)"/', $input, $matches);
+        $url = $matches[1];
+
         $pengaturan    = PengaturanModel::get();
 
         PengaturanModel::where('id', $id)
             ->update([
-                'wa'     => $request->wa,
-                'ig'     => $request->ig,
-                'fb'     => $request->fb,
-                'yt'     => $request->yt,
-                'web'    => $request->web,
-                'map'    => $request->map,
+                'wa'        => $request->wa,
+                'ig'        => $request->ig,
+                'fb'        => $request->fb,
+                'yt'        => $request->yt,
+                'web'       => $request->web,
+                'map'       => $request->map,
+                'link_map'  => $url,
             ]);
 
         $data = [

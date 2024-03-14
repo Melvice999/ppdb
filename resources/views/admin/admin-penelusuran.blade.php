@@ -58,7 +58,9 @@
                                                     class="fa-solid fa-square-check text-d-green hover:opacity-70 cursor-pointer"></i>
                                             </button>
                                         </form>
-                                        <button onclick="openConfirmationModal()">
+                                        <button class="hapus-btn"
+                                            data-url="{{ route('admin-beranda-siswa-delete', ['id' => $siswa->nik]) }}"
+                                            data-nama="{{ $siswa->nama }}">
                                             <i class="fa-solid fa-trash text-red hover:opacity-70 cursor-pointer"></i>
                                         </button>
                                     @endif
@@ -84,36 +86,24 @@
         </div>
     </div>
 
-    @foreach ($calonSiswa as $siswa)
-        <!-- Modal Konfirmasi Delete Data -->
-        <div id="confirmationModal"
-            class="fixed inset-0 z-20 w-full h-full bg-black bg-opacity-50 hidden items-center justify-center">
-            <div class="bg-white p-8 max-w-md rounded">
-                <p class="text-lg font-bold mb-4">Konfirmasi Hapus Data</p>
-                <p class="text-gray-700 mb-4">Apakah Anda yakin ingin menghapus {{ $siswa->nama }}</p>
-                <div class="flex justify-end">
-                    <button onclick="closeConfirmationModal()"
-                        class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded mr-2">
-                        Batal
-                    </button>
-
-                    <a href="{{ route('admin-beranda-siswa-delete', ['id' => $siswa->nik]) }}"
-                        class="bg-red hover:bg-red text-white font-bold py-2 px-4 rounded">
-                        Hapus
-                    </a>
-                </div>
-            </div>
-        </div>
-    @endforeach
-
     <script>
-        function openConfirmationModal() {
-            document.getElementById('confirmationModal').style.display = 'flex';
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const hapusBtns = document.querySelectorAll('.hapus-btn');
+            hapusBtns.forEach(function(btn) {
+                btn.addEventListener('click', function(event) {
+                    event.preventDefault();
 
-        function closeConfirmationModal() {
-            document.getElementById('confirmationModal').style.display = 'none';
-        }
+                    // Ambil nama siswa dari atribut data
+                    const nama = btn.getAttribute('data-nama');
+
+                    // Tampilkan pesan konfirmasi dengan nama siswa
+                    if (confirm('Apakah Anda yakin ingin menghapus data ' + nama + '?')) {
+                        // Arahkan pengguna ke tautan hapus
+                        const url = btn.getAttribute('data-url');
+                        window.location.href = url;
+                    }
+                });
+            });
+        });
     </script>
-    <!-- End Modal Konfirmasi Delete Data -->
 @endsection

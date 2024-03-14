@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('yt');
             $table->string('web');
             $table->string('map');
+            $table->text('link_map');
             $table->timestamps();
         });
     }

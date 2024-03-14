@@ -53,22 +53,16 @@
 
     </div>
 
-    <div class="flex mt-16 max-md:block max-md:w-4/5 max-md:mt-6">
-
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16 max-md:block max-md:w-4/5 max-md:mt-6 max-md:mx-8">
         @foreach ($beranda as $item)
-            <div
-                class="w-1/2 px-10 mx-5 bg-white max-md:w-full max-md:px-10 rounded-md text-justify max-md:mt-7 max-md:mx-12 max-[375px]:mx-6">
-                <div class="text-lg font-bold py-3 no-tailwindcss-base">
-                    {{ $item->judul }}
-                </div>
-                <hr class="text-d-green">
-
-                <div class="pt-3 no-tailwindcss-base">
-                    {!! $item->konten !!}
-                    <br><br>
+            <div class="bg-white rounded-md text-justify max-md:mt-6">
+                <div class="p-6">
+                    <div class="text-lg font-bold mb-3 no-tailwindcss-base">{{ $item->judul }}</div>
+                    <hr class="text-d-green">
+                    <div class="mt-3 no-tailwindcss-base">{!! $item->konten !!}</div>
                 </div>
             </div>
         @endforeach
-
     </div>
+    
 @endsection()

@@ -3,6 +3,17 @@
     <div class=" text-2xl font-medium">
         Admin / Beranda / Siswa / Edit
     </div>
+    @if ($errors->any())
+        <div class="grid mt-6 mx-auto place-items-center">
+            <div class="w-full text-white bg-red rounded-md mb-6">
+                <ul class="p-4">
+                    @foreach ($errors->all() as $error)
+                        <li class="list-disc list-inside">{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    @endif
 
     @if (session('success'))
         <div class="grid mt-6 mx-auto place-items-center">
@@ -27,7 +38,16 @@
     <form action="{{ route('admin-beranda-siswa-edit-post', ['id' => $siswa->nik]) }}" method="POST">
         @csrf
         <div class="grid mt-6 max-md:place-items-center">
+
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full">
+                <label class="w-1/5" for="no_pendaftaran">No Pendaftaran</label><br>
+                <input type="text" name="no_pendaftaran"
+                    value="{{ $no_pendaftaran && $no_pendaftaran->no_pendaftaran ? $no_pendaftaran->no_pendaftaran : '' }}"
+                    placeholder="Masukan No Pendaftaran"
+                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none">
+            </div>
+
+            <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
                 <label class="w-1/5" for="nik">NIK</label><br>
                 <input type="text" name="nik" value="{{ $siswa->nik }}" placeholder="Masukan NIK"
                     class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none">

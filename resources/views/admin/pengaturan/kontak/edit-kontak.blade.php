@@ -98,6 +98,18 @@
                     </td>
                 </tr>
 
+                <tr>
+                    <td class="py-3">
+                        <label for="map">Link Maps</label>
+                    </td>
+                    <td class="border-b border-d-green">
+                        <div class="flex">
+                            :&nbsp; <input type="text" name="link_map" autocomplete="off" value="{{ $item->link_map }}"
+                                placeholder="Masukan link map" class="w-full focus:outline-none bg-l-sky-blue" required>
+                        </div>
+                    </td>
+                </tr>
+
             </table>
         @endforeach
 
