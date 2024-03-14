@@ -82,7 +82,7 @@
                 </td>
             </tr>
 
-            <tr class="" id="openPassword">
+            <tr class="hidden" id="openPassword">
                 <td class="py-3">
                     <label for="ig">Password</label>
                 </td>
@@ -96,7 +96,7 @@
                 </td>
             </tr>
 
-            <tr class="" id="openConfrmPassword">
+            <tr class="hidden" id="openConfrmPassword">
                 <td class="py-3">
                     <label for="fb">Konfirmasi Password</label>
                 </td>
@@ -113,9 +113,9 @@
 
     </form>
 
-    <div class="mt-2 flex items-center">
+    <div class="mt-2 hidden items-center " id="toggleShowPassword">
 
-            <i class="fa-solid fa-toggle-off text-d-green text-3xl me-2" id="toggleShowPassword"></i>
+            <i class="fa-solid fa-toggle-off text-d-green text-3xl me-2"></i>
 
             Lihat Password
 
@@ -127,14 +127,17 @@
                 $("#openEmail").toggleClass("hidden");
                 $("#openPassword").addClass("hidden");
                 $("#openConfrmPassword").addClass("hidden");
+                $("#toggleShowPassword").addClass("hidden");
             });
 
             $("#togglePassword").on("click", function() {
                 $("#openEmail").addClass("hidden");
                 $("#openPassword").toggleClass("hidden");
                 $("#openConfrmPassword").toggleClass("hidden");
+                $("#toggleShowPassword").toggleClass("hidden");
+
             });
-            $("#toggleShowPassword").on("click", function() {
+            $("#toggleShowPassword i").on("click", function() {
                 // Toggle the class on the icon
                 $(this).toggleClass("fa-toggle-off fa-toggle-on");
 

@@ -43,6 +43,11 @@ return [
             'provider' => 'users',
         ],
         // daftarkan agar disimpan ke session
+        'siswa' => [
+            'driver' => 'session',
+            'provider' => 'siswas',
+        ],
+        // daftarkan agar disimpan ke session
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
@@ -80,6 +85,11 @@ return [
             'driver' => 'eloquent',
             'model' => \App\Models\AdminModel::class,
         ],
+        'siswas' => [
+            'driver' => 'eloquent',
+            'model' => \App\Models\AkunSiswa::class,
+        ],
+        
 
         // 'users' => [
         //     'driver' => 'database',

@@ -124,9 +124,10 @@
                     </div>
                 </a>
 
-                <a href="{{ route('siswa-cetak-formulir') }}" class=" max-md:hidden">
+
+                <a href = {{ $user->status === 1 ? (route('siswa-cetak-formulir')) : "#" }} class=" max-md:hidden">
                     <div
-                        class="flex justify-center items-center w-full h-10 rounded bg-white max-md:w-full border-d-green border cursor-pointer hover:bg-d-green hover:text-white">
+                        class="flex justify-center items-center w-full h-10 rounded bg-white max-md:w-full border-d-green border  {{ $user->status === 1 ? 'cursor-pointer' : 'cursor-not-allowed' }} hover:bg-d-green hover:text-white">
                         Cetak Formulir
                     </div>
                 </a>
@@ -140,7 +141,8 @@
             class="w-1/2 mt-2 bg-white max-md:w-full rounded-md  border-d-green border cursor-pointer hover:bg-d-green hover:text-white">
             <div class="grid grid-cols-1 max-md:block">
 
-                <a href="{{ route('siswa-cetak-formulir') }}">
+                 <a href = {{ $user->status === 1 ? (route('siswa-cetak-formulir')) : "#" }}>
+
                     <div class="flex justify-center items-center w-full h-10 rounded">
                         Cetak Formulir
                     </div>

@@ -9,9 +9,10 @@ use App\Models\CalonSiswa;
 use App\Models\PengaturanModel;
 use App\Models\BerandaModel;
 use App\Models\BerkasSiswa;
+use App\Models\NoPendaftaranModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
+use Carbon\Carbon;
 
 
 
@@ -144,6 +145,10 @@ class AdminController extends Controller
         $request->validate([
             'status' => 'required|in:0,1',
         ]);
+
+        // delete no pendaftaran
+
+
         $siswa = CalonSiswa::where('nik', $id);
         $nama = $siswa->where('nik', $id)->first();
 
@@ -156,6 +161,27 @@ class AdminController extends Controller
         $request->validate([
             'status' => 'required|in:0,1',
         ]);
+
+        // Lakukan pengecekan apakah nik sudah terdaftar sebelumnya
+        $existingData = NoPendaftaranModel::where('nik', $id)->first();
+
+        // Jika data dengan nik yang sama sudah ada, maka tidak perlu disimpan lagi
+        if ($existingData) {
+            // Tidak melakukan apa pun jika data sudah terdaftar
+        } else {
+            // Jika tidak ada data dengan nik yang sama, maka simpan data baru
+            $currentYear = date('Y');
+            $lastNoPendaftaran = NoPendaftaranModel::whereYear('created_at', $currentYear)->max('no_pendaftaran');
+            $nomor_urut = $lastNoPendaftaran ? $lastNoPendaftaran + 1 : 1;
+            $nomor_urut_formatted = sprintf('%03d', $nomor_urut);
+            $nomor_pendaftaran = $currentYear . '-' . $nomor_urut_formatted;
+
+            NoPendaftaranModel::create([
+                'nomor_pendaftaran' => $nomor_pendaftaran,
+                'nik' => $id,
+            ]);
+        }
+
         $siswa = CalonSiswa::where('nik', $id);
         $nama = $siswa->where('nik', $id)->first();
 
@@ -167,22 +193,28 @@ class AdminController extends Controller
     {
         $berkasSiswa = BerkasSiswa::where('nik', $id)->first();
 
-        $hapusFile = [
-            storage_path('app/public/siswa/akta/' . $berkasSiswa->akta),
-            storage_path('app/public/siswa/kk/' . $berkasSiswa->kk),
-            storage_path('app/public/siswa/pas-foto/' . $berkasSiswa->pas_foto),
-            storage_path('app/public/siswa/shun/' . $berkasSiswa->shun),
-            storage_path('app/public/siswa/ijazah/' . $berkasSiswa->ijazah),
-        ];
-
-        foreach ($hapusFile as $hapus) {
-            if (file_exists($hapus)) {
-
-                unlink($hapus);
+        // Periksa apakah data ada sebelum mencoba untuk menghapusnya
+        if ($berkasSiswa) {
+            $hapusFile = [
+                storage_path('app/public/siswa/akta/' . $berkasSiswa->akta),
+                storage_path('app/public/siswa/kk/' . $berkasSiswa->kk),
+                storage_path('app/public/siswa/pas-foto/' . $berkasSiswa->pas_foto),
+                storage_path('app/public/siswa/shun/' . $berkasSiswa->shun),
+                storage_path('app/public/siswa/ijazah/' . $berkasSiswa->ijazah),
+            ];
+        
+            foreach ($hapusFile as $hapus) {
+                if (file_exists($hapus)) {
+                    unlink($hapus);
+                }
             }
+        
+            // Hapus data dari tabel BerkasSiswa
+            $berkasSiswa->delete();
         }
-        // dd("behasih");
+
         BerkasSiswa::where('nik', $id)->delete();
+        NoPendaftaranModel::where('nik', $id)->delete();
         AkunSiswa::where('nik', $id)->delete();
         CalonSiswa::where('nik', $id)->delete();
         return redirect()->back()->with('success', 'Data berhasil dihapus');

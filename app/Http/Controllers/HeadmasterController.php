@@ -10,7 +10,13 @@ class HeadmasterController extends Controller
         return view('headmaster.headmaster-beranda');
     }
 
-    public function cetakBerkas()  {
-        return view('headmaster.headmaster-cetak-berkas');
+    public function cetakFormulirSekarang()  {
+        return view('headmaster.cetak.formulir-sekarang');
+    }
+    public function cetakFormulirTahun()  {
+        return view('headmaster.cetak.formulir-tahun');
+    }
+    public function cetakRekapPpdb()  {
+        return view('headmaster.cetak.rekap.cetak-rekap-ppdb');
     }
 }

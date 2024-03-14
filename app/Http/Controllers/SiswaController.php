@@ -14,7 +14,7 @@ class SiswaController extends Controller
 {
  public function index()
  {
-  $user = Auth::user();
+  $user = Auth::guard('siswa')->user();
   $email = $user->email;
 
   $akun = AkunSiswa::where('email', $email)->first();
@@ -33,7 +33,7 @@ class SiswaController extends Controller
 
  public function formulirPendaftaran()
  {
-  $user = Auth::user();
+  $user = Auth::guard('siswa')->user();
   $email = $user->email;
 
   $akun = AkunSiswa::where('email', $email)->first();
@@ -52,7 +52,7 @@ class SiswaController extends Controller
 
  public function pengaturan()
  {
-  $user = Auth::user();
+  $user = Auth::guard('siswa')->user();
   $email = $user->email;
 
   $akun = AkunSiswa::where('email', $email)->first();
@@ -71,7 +71,7 @@ class SiswaController extends Controller
  // Profil
  public function uploadBerkas()
  {
-  $user = Auth::user();
+  $user = Auth::guard('siswa')->user();
   $email = $user->email;
 
   $akun = AkunSiswa::where('email', $email)->first();
@@ -137,7 +137,7 @@ class SiswaController extends Controller
 
  public function updateBerkas()
  {
-  $user = Auth::user();
+  $user = Auth::guard('siswa')->user();
   $email = $user->email;
 
   $akun = AkunSiswa::where('email', $email)->first();
@@ -280,7 +280,7 @@ class SiswaController extends Controller
 
  public function cetakFormulir()
  {
-  $user = Auth::user();
+  $user = Auth::guard('siswa')->user();
   $email = $user->email;
 
   $akun = AkunSiswa::where('email', $email)->first();
@@ -298,7 +298,7 @@ class SiswaController extends Controller
 
  public function pengaturanAkun()
  {
-  $user = Auth::user();
+  $user = Auth::guard('siswa')->user();
   $email = $user->email;
 
   $akun = AkunSiswa::where('email', $email)->first();
@@ -349,7 +349,7 @@ class SiswaController extends Controller
 
  public function logout()
  {
-  Auth::logout();
-  return redirect('auth/siswa');
+  Auth::guard('siswa')->logout();
+  return redirect('auth-siswa');
  }
 }

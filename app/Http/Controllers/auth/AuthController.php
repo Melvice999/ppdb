@@ -12,8 +12,9 @@ class AuthController extends Controller
     public function loginSiswa(Request $request)
     {
 
-        if (Auth::check()) {
+        if (Auth::guard('siswa')->check()) {
             return redirect('siswa/profil');
+
         } else {
             $auth   = $request->route()->getName();
             $data = [
@@ -32,7 +33,7 @@ class AuthController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::guard('siswa')->attempt($credentials)) {
             $request->session()->regenerate();
 
             return redirect()->to(url('siswa/profil'));
@@ -49,6 +50,8 @@ class AuthController extends Controller
         }
     }
 
+
+    
     public function loginAdmin(Request $request)
     {
 

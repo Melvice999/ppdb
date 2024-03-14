@@ -102,7 +102,6 @@ Route::prefix('admin')->middleware('auth-admin')->group(function () {
     Route::get('admin-beranda-siswa-delete/{id?}', [AdminController::class, 'berandaSiswaDelete'])->name('admin-beranda-siswa-delete');
 
     // Admin-Pengaturan
-
     Route::get('admin-pengaturan', [AdminController::class, 'pengaturan'])->name('admin-pengaturan');
     Route::post('admin-pengaturan-update/{id}', [AdminController::class, 'pengaturanUpdate'])->name('admin-pengaturan-update');
 
@@ -136,6 +135,8 @@ Route::prefix('admin')->middleware('auth-admin')->group(function () {
 
 Route::prefix('headmaster')->group(function () {
     Route::get('headmaster-beranda', [HeadmasterController::class, 'index'])->name('headmaster-beranda');
-    Route::get('headmaster-cetak-berkas', [HeadmasterController::class, 'cetakBerkas'])->name('headmaster-cetak-berkas');
+    Route::get('headmaster-cetak-formulir-sekarang', [HeadmasterController::class, 'cetakFormulirSekarang'])->name('headmaster-cetak-formulir-sekarang');
+    Route::get('headmaster-cetak-formulir-tahun', [HeadmasterController::class, 'cetakFormulirTahun'])->name('headmaster-cetak-formulir-tahun');
+    Route::get('headmaster-cetak-rekap-ppdb', [HeadmasterController::class, 'cetakRekapPpdb'])->name('headmaster-cetak-rekap-ppdb');
    
 });
