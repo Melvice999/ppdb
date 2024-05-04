@@ -82,6 +82,8 @@
             <table class="bg-white rounded-lg mt-3 table-auto text-center min-w-full">
                 <thead>
                     <tr class="border-b border-d-green">
+                        <th>No</th>
+                        <th class="py-2 px-4">Status</th>
                         <th class="py-2 px-4">NIK</th>
                         <th class="py-2 px-4">Nama</th>
                         <th class="py-2 px-4">Prodi</th>
@@ -89,9 +91,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($programStudy == 'admin-beranda-tkro' ? $calonSiswaTkro : ($programStudy == 'admin-beranda-tbsm' ? $calonSiswaTbsm : ($programStudy == 'admin-beranda-tkj' ? $calonSiswaTkj : ($programStudy == 'admin-beranda-akl' ? $calonSiswaAkl : []))) as $siswa)
+                    @foreach ($programStudy == 'admin-beranda-tkro' ? $calonSiswaTkro : ($programStudy == 'admin-beranda-tbsm' ? $calonSiswaTbsm : ($programStudy == 'admin-beranda-tkj' ? $calonSiswaTkj : ($programStudy == 'admin-beranda-akl' ? $calonSiswaAkl : []))) as $i => $siswa)
                         @if ($siswa->status === 0)
                             <tr class="border-b border-d-green">
+                                <td>{{ $i + 1 }}</td>
+                                <td class="py-1 my-1 px-2">
+                                    <span
+                                        class="{{ $siswa->notifikasi_admin === 'Pendaftar Baru' ? 'bg-[#FFD700] text-black' : ($siswa->notifikasi_admin === 'Berkas Terupload' ? 'bg-[#008000] text-white' : ($siswa->notifikasi_admin === 'Berkas Update' ? 'bg-[#0000FF] text-white' : ($siswa->notifikasi_admin === 'Siap Ujian' ? 'bg-[#FFA500] text-black' : 'bg-[#808080] text-white'))) }} rounded py-1 px-1">
+                                        {{ $siswa->notifikasi_admin }}
+                                    </span>
+
+                                </td>
+
                                 <td class="py-2 px-4">{{ $siswa->nik }}</td>
                                 <td class="py-2 px-4">{{ $siswa->nama }}</td>
                                 <td class="py-2 px-4">{{ $siswa->prodi }}</td>
@@ -145,6 +156,8 @@
             <table class="bg-white rounded-lg mt-3 table-auto text-center min-w-full">
                 <thead>
                     <tr class="border-b border-d-green">
+                        <th>No</th>
+                        <th class="py-2 px-4">Status</th>
                         <th class="py-2 px-4">NIK</th>
                         <th class="py-2 px-4">Nama</th>
                         <th class="py-2 px-4">Prodi</th>
@@ -152,9 +165,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($programStudy == 'admin-beranda-tkro' ? $calonSiswaTkro : ($programStudy == 'admin-beranda-tbsm' ? $calonSiswaTbsm : ($programStudy == 'admin-beranda-tkj' ? $calonSiswaTkj : ($programStudy == 'admin-beranda-akl' ? $calonSiswaAkl : []))) as $siswa)
+                    @foreach ($programStudy == 'admin-beranda-tkro' ? $calonSiswaTkro : ($programStudy == 'admin-beranda-tbsm' ? $calonSiswaTbsm : ($programStudy == 'admin-beranda-tkj' ? $calonSiswaTkj : ($programStudy == 'admin-beranda-akl' ? $calonSiswaAkl : []))) as $i => $siswa)
                         @if ($siswa->status === 1)
                             <tr class="border-b border-d-green">
+                                <td> {{ $i + 1 }} </td>
+                                <td class="py-1 my-1 px-2">
+                                    <span
+                                        class="{{ $siswa->notifikasi_admin === 'Pendaftar Baru' ? 'bg-[#FFD700] text-black' : ($siswa->notifikasi_admin === 'Berkas Terupload' ? 'bg-[#008000] text-white' : ($siswa->notifikasi_admin === 'Berkas Update' ? 'bg-[#0000FF] text-white' : ($siswa->notifikasi_admin === 'Siap Ujian' ? 'bg-[#FFA500] text-black' : 'bg-[#808080] text-white'))) }} rounded py-1 px-1">
+                                        {{ $siswa->notifikasi_admin }}
+                                    </span>
+
+                                </td>
                                 <td class="py-2 px-4">{{ $siswa->nik }}</td>
                                 <td class="py-2 px-4">{{ $siswa->nama }}</td>
                                 <td class="py-2 px-4">{{ $siswa->prodi }}</td>
@@ -190,10 +211,10 @@
             hapusBtns.forEach(function(btn) {
                 btn.addEventListener('click', function(event) {
                     event.preventDefault();
-    
+
                     // Ambil nama siswa dari atribut data
                     const nama = btn.getAttribute('data-nama');
-    
+
                     // Tampilkan pesan konfirmasi dengan nama siswa
                     if (confirm('Apakah Anda yakin ingin menghapus data ' + nama + '?')) {
                         // Arahkan pengguna ke tautan hapus

@@ -31,6 +31,7 @@
             <table class="bg-white rounded-lg mt-3 table-auto text-center min-w-full">
                 <thead>
                     <tr class="border-b border-d-green">
+                        <th>No</th>
                         <th class="py-2 px-4">NIK</th>
                         <th class="py-2 px-4">Nama</th>
                         <th class="py-2 px-4">Prodi</th>
@@ -38,8 +39,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($calonSiswa as $siswa)
+                    @foreach ($calonSiswa as $i => $siswa)
                         <tr class="border-b border-d-green">
+                            <td>{{$i +1}}</td>
                             <td class="py-2 px-4">{{ $siswa->nik }}</td>
                             <td class="py-2 px-4">{{ $siswa->nama }}</td>
                             <td class="py-2 px-4">{{ $siswa->prodi }}</td>

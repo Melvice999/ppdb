@@ -34,5 +34,20 @@ npm install -g npm
 coba npm run dev jika belum bisa ketikan 
 npm install
 
+_______________________________________
+
+Untuk konfigurasi API wa harap masuk ke web https://fonnte.com/
+dan ubah token fontte di .env 
+FONTTE_API_TOKEN=Ubah_Dengan_Token_Anda
+
+
+
+
+_______________________________________
+
+php artisan storage:link 
 
 jika sudah semua npm run dev dan php artisan serve
+
+
+to run in LAN php artisan serve --host=0.0.0.0 --port=8000

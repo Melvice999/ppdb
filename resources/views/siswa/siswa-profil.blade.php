@@ -13,158 +13,127 @@
         </div>
     @endif
 
+    <div class="flex justify-center mt-3 mx-10 max-md:block">
+        <div class="w-1/2 mt-2 max-md:w-full">
+            <div
+                class="flex justify-center items-center w-full px-2 py-1 rounded max-md:w-full border-d-green border cursor-pointer bg-white text-d-green">
+                {{ $notifikasi->notifikasi }}
+
+            </div>
+        </div>
+    </div>
+
     <div class="flex justify-center mt-6 mx-10 max-md:block">
         <div class="w-1/2 p-10 bg-white max-md:w-full rounded-md">
 
             <div class="grid grid-cols-3 max-md:block">
-                <div class="flex justify-center">
 
-                    <img src="{{ asset($berkas && $berkas->nik ? 'storage/siswa/pas-foto/' . $berkas->pas_foto : 'storage/siswa/pas-foto/foto_profil.png') }}"
-                        alt="foto-siswa" class="w-24 h-36 rounded-3xl">
+                <div class="flex justify-center items-center">
+
+                    <img src="{{ asset('storage/siswa/pas-foto/' . $user->pas_foto) }}" alt="foto-siswa"
+                        class="w-24 h-36 rounded-3xl max-md:mb-5">
                 </div>
 
                 <div class="col-span-2">
 
-                    <div class="grid grid-cols-4 border-b border-d-green border-opacity-60 max-md:block max-md:mt-5">
-                        <div>
+                    <div class="grid grid-cols-4 border-b border-d-green border-opacity-60 max-md:block">
+                        <div class="col-span-2">
+                            No Pendaftaran
+                        </div>
+
+                        <div class="col-span-2">
+                            <span class="max-md:hidden">:</span>
+                            {{ $user->no_pendaftaran }}
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-4 border-b border-d-green border-opacity-60 max-md:block">
+                        <div class="col-span-2">
                             Nama
                         </div>
-                        <div class="max-md:hidden">:</div>
                         <div class="col-span-2">
+                            <span class="max-md:hidden">:</span>
                             {{ $user->nama }}
                         </div>
                     </div>
 
                     <div class="grid grid-cols-4 border-b border-d-green border-opacity-60 max-md:block">
-                        <div>
+                        <div class="col-span-2">
                             Jurusan
                         </div>
-                        <div class="max-md:hidden">:</div>
                         <div class="col-span-2">
+                            <span class="max-md:hidden">:</span>
+
                             {{ $user->prodi }}
                         </div>
                     </div>
 
                     <div class="grid grid-cols-4 border-b border-d-green border-opacity-60 max-md:block">
-                        <div>
+                        <div class="col-span-2">
                             Jenis Kelamin
                         </div>
-                        <div class="max-md:hidden">:</div>
                         <div class="col-span-2">
+                            <span class="max-md:hidden">:</span>
+
                             {{ $user->jenis_kelamin }}
                         </div>
                     </div>
 
                     <div class="grid grid-cols-4 border-b border-d-green border-opacity-60 max-md:block">
-                        <div>
-                            Status
-                        </div>
-                        <div class="max-md:hidden">:</div>
                         <div class="col-span-2">
-                            {{ $user->status === 1 ? 'Siswa' : 'Calon Siswa' }}
+                            Aksi
+                        </div>
+                        <div class="col-span-2 flex">
+                            <span class="max-md:hidden">:&nbsp;</span>
+
+                            {{ $notifikasi->notifikasi === 'Selamat anda lulus ujian pendaftaran' ? '-' : '' }}
+                            <a href="{{ route(
+                                $notifikasi->notifikasi === 'Pendaftaran sedang diproses'
+                                    ? 'siswa-profil'
+                                    : ($notifikasi->notifikasi === 'Selamat anda lulus ujian pendaftaran'
+                                        ? 'siswa-profil'
+                                        : ($notifikasi->notifikasi === 'Lengkapi Berkas'
+                                            ? 'siswa-upload-berkas'
+                                            : ($notifikasi->notifikasi === 'Perbarui Akta Yang Valid' ||
+                                            $notifikasi->notifikasi === 'Perbarui KK Yang Valid' ||
+                                            $notifikasi->notifikasi === 'Perbarui Pas Foto Yang Valid' ||
+                                            $notifikasi->notifikasi === 'Perbarui SHUN Yang Valid' ||
+                                            $notifikasi->notifikasi === 'Perbarui Ijazah Yang Valid' ||
+                                            $notifikasi->notifikasi === 'Perbarui Raport Yang Valid' ||
+                                            $notifikasi->notifikasi === 'Perbarui Transkip Nilai Yang Valid'
+                                                ? 'siswa-update-berkas'
+                                                : 'siswa-cetak-formulir'))),
+                            ) }}"
+                                class="flex">
+
+                                <div
+                                    class="flex justify-center items-center py-1 px-2 my-1 rounded bg-d-green text-white border cursor-pointer hover:bg-white hover:text-d-green {{ $notifikasi->notifikasi === 'Selamat anda lulus ujian pendaftaran' ? 'hidden' : '' }}">
+                                    {{ $notifikasi->notifikasi === 'Pendaftaran sedang diproses'
+                                        ? 'Pendaftaran sedang diproses'
+                                        : ($notifikasi->notifikasi === 'Selamat anda lulus ujian pendaftaran'
+                                            ? ''
+                                            : ($notifikasi->notifikasi === 'Lengkapi Berkas'
+                                                ? 'Upload Berkas'
+                                                : ($notifikasi->notifikasi === 'Perbarui Akta Yang Valid' ||
+                                                $notifikasi->notifikasi === 'Perbarui KK Yang Valid' ||
+                                                $notifikasi->notifikasi === 'Perbarui Pas Foto Yang Valid' ||
+                                                $notifikasi->notifikasi === 'Perbarui SHUN Yang Valid' ||
+                                                $notifikasi->notifikasi === 'Perbarui Ijazah Yang Valid' ||
+                                                $notifikasi->notifikasi === 'Perbarui Raport Yang Valid' ||
+                                                $notifikasi->notifikasi === 'Perbarui Transkip Nilai Yang Valid'
+                                                    ? 'Update Berkas'
+                                                    : 'Cetak Formulir'))) }}
+                                </div>
+                            </a>
+
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-4 border-b border-d-green border-opacity-60 max-md:block">
-                        <div>
-                            No
-                        </div>
-                        <div class="max-md:hidden">:</div>
-                        <div class="col-span-2">
-                            PPDB-XXXX-XXXX
-                        </div>
-                    </div>
 
                 </div>
             </div>
 
         </div>
 
-    </div>
-
-    <div
-        class="{{ $berkas && $berkas->akta ? 'hidden' : 'flex' }} justify-center mt-3 mx-10 max-md:{{ $berkas && $berkas->akta ? 'hidden' : 'block' }}">
-        <div class="w-1/2 mt-2 max-md:w-full">
-            <div class="grid grid-cols-1 gap-6 max-md:grid-cols-1">
-
-                <a href="{{ route('siswa-upload-berkas') }}">
-                    <div
-                        class="flex justify-center items-center w-full h-10 rounded bg-white max-md:w-full border-d-green border cursor-pointer hover:bg-d-green hover:text-white">
-                        Lengkapi Berkas
-                    </div>
-                </a>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="{{ $berkas && $berkas->akta ? 'flex mt-4' : 'hidden' }} mt-2 justify-center mx-10">
-        <div
-            class="w-1/2 bg-white max-md:w-full rounded-md  border-d-green border cursor-pointer hover:bg-d-green hover:text-white">
-            <div class="grid grid-cols-1 max-md:block">
-
-                <a href="{{ route('siswa-update-berkas') }}">
-                    <div class="flex justify-center items-center w-full h-10 rounded">
-                        Lihat Berkas
-                    </div>
-                </a>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="flex justify-center mt-1 mx-10 max-md:block">
-        <div class="w-1/2 mt-2 max-md:w-full">
-            <div class="grid grid-cols-2 gap-6 max-md:grid-cols-1">
-
-                <a href="{{ route('siswa-formulir-pendaftaran') }}">
-                    <div
-                        class="flex justify-center items-center w-full h-10 rounded bg-white max-md:w-full border-d-green border cursor-pointer hover:bg-d-green hover:text-white">
-                        Lihat Formulir
-                    </div>
-                </a>
-
-
-                <a href = {{ $user->status === 1 ? (route('siswa-cetak-formulir')) : "#" }} class=" max-md:hidden">
-                    <div
-                        class="flex justify-center items-center w-full h-10 rounded bg-white max-md:w-full border-d-green border  {{ $user->status === 1 ? 'cursor-pointer' : 'cursor-not-allowed' }} hover:bg-d-green hover:text-white">
-                        Cetak Formulir
-                    </div>
-                </a>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="hidden justify-center mx-10 max-md:flex">
-        <div
-            class="w-1/2 mt-2 bg-white max-md:w-full rounded-md  border-d-green border cursor-pointer hover:bg-d-green hover:text-white">
-            <div class="grid grid-cols-1 max-md:block">
-
-                 <a href = {{ $user->status === 1 ? (route('siswa-cetak-formulir')) : "#" }}>
-
-                    <div class="flex justify-center items-center w-full h-10 rounded">
-                        Cetak Formulir
-                    </div>
-                </a>
-
-            </div>
-        </div>
-    </div>
-
-
-    <div class="flex justify-center mt-1 mx-10 max-md:block">
-        <div
-            class="w-1/2 mt-2 bg-white max-md:w-full rounded-md  border-d-green border cursor-pointer hover:bg-d-green hover:text-white">
-            <div class="grid grid-cols-1 max-md:block">
-
-                <a href="{{ route('siswa-pengaturan-akun') }}">
-                    <div class="flex justify-center items-center w-full h-10 rounded">
-                        Pengaturan Akun
-                    </div>
-                </a>
-
-            </div>
-        </div>
     </div>
 @endsection

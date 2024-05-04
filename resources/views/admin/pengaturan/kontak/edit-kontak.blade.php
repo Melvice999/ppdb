@@ -88,7 +88,7 @@
 
                 <tr>
                     <td class="py-3">
-                        <label for="map">Maps</label>
+                        <label for="map">Map</label>
                     </td>
                     <td class="border-b border-d-green">
                         <div class="flex">
@@ -100,7 +100,7 @@
 
                 <tr>
                     <td class="py-3">
-                        <label for="map">Link Maps</label>
+                        <label for="map">Link Map</label>
                     </td>
                     <td class="border-b border-d-green">
                         <div class="flex">

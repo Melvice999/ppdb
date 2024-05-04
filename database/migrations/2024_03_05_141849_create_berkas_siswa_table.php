@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('berkas_siswa', function (Blueprint $table) {
             $table->id();
             $table->string('nik');
-            $table->string('akta');
-            $table->string('kk');
-            $table->string('pas_foto');
-            $table->string('shun');
-            $table->string('ijazah');
+            $table->string('akta')->nullable();
+            $table->string('kk')->nullable();
+            $table->string('shun')->nullable();
+            $table->string('ijazah')->nullable();
+            $table->string('raport')->nullable();
+            $table->string('transkip_nilai')->nullable();
             $table->timestamps();
 
             $table->foreign('nik')->references('nik')->on('calon_siswa');

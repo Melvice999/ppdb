@@ -14,42 +14,26 @@ return new class extends Migration
     {
         Schema::create('calon_siswa', function (Blueprint $table) {
             $table->string('nik')->primary();
-            $table->string('kk');
+            $table->string('no_pendaftaran');
+            $table->string('password');
             $table->string('nama');
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
             $table->string('no_hp');
-            $table->string('desa');
+            $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->string('rt');
             $table->string('rw');
             $table->string('provinsi');
             $table->string('kecamatan');
             $table->string('kabupaten');
-            $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
-            $table->enum('warga_negara', ['WNI', 'WNA']);
+            $table->string('desa');
             $table->string('kode_pos')->nullable();;
-            $table->enum('prodi', ['TBSM', 'TKRO', 'TKJ', 'AKL']);
-            $table->enum('batik', ['S', 'M', 'L', 'XL', 'XXL']);
-            $table->enum('olahraga', ['S', 'M', 'L', 'XL', 'XXL']);
-            $table->enum('wearpack', ['S', 'M', 'L', 'XL', 'XXL']);
-            $table->string('asal_sekolah');
-            $table->string('tahun_lulus');
-            $table->string('nama_ayah');
-            $table->string('nama_ibu');
-            $table->string('no_hp_wali');
-            $table->string('desa_wali');
-            $table->string('rt_wali');
-            $table->string('rw_wali');
-            $table->string('provinsi_wali');
-            $table->string('kecamatan_wali');
-            $table->string('kabupaten_wali');
-            $table->string('kode_pos_wali')->nullable();;
-            $table->string('pekerjaan_wali');
-            $table->string('pendidikan_wali');
-            $table->string('info_sekolah');
             $table->year('tahun_daftar')->default(DB::raw('YEAR(NOW())'));
             $table->integer('status')->default(0);
+            $table->enum('notifikasi_admin', ['Pendaftar Baru', 'Berkas Terupload', 'Berkas Update', 'Siap Ujian', 'Lulus Ujian']);
 
+
+            $table->rememberToken();
             $table->timestamps();
         });
     }

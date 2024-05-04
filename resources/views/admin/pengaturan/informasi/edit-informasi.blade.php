@@ -4,7 +4,7 @@
 
     <div class="w-full text-2xl font-medium">
         Admin / Pengaturan / Informasi</div>
-    <form action="" method="POST">
+    <form action="{{ route('admin-pengaturan-informasi-post', ['id' => $informasi->id]) }}" method="POST">
         @csrf
         <div class="flex justify-between mt-10 mb-4">
             <div class="max-md:me-6">Edit Pengaturan Informasi PPDB Tahun {{ now()->year }}</div>

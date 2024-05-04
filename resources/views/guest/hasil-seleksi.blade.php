@@ -37,8 +37,8 @@
             {{-- {{ $siswa }} --}}
 
             <div class="w-1/2 px-10 bg-white max-md:px-10 max-md:w-full rounded-md text-justify max-md:mt-7 max-sm:px-3">
-                <div class="text-lg font-bold text-center py-4">
-                    Belum ada informasi pendaftaran
+                <div class="text-center py-4">
+                    Hasil Seleksi Belum Tersedia
                 </div>
             </div>
         </div>

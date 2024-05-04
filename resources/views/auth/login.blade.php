@@ -5,12 +5,30 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ asset('assets/img/logo_smk.png') }}" type="image/x-icon">
+    <title>Login
+        {{ $auth === 'auth-siswa'
+            ? 'Siswa'
+            : ($auth === 'auth-admin'
+                ? 'Admin'
+                : ($auth === 'auth-headmaster'
+                    ? 'Headmaster'
+                    : 'Akun PPDB')) }}
+    </title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Aldrich&display=swap');
         @import url('https://fonts.cdnfonts.com/css/sen');
+
+        @layer base {
+
+            input[type="number"]::-webkit-inner-spin-button,
+            input[type="number"]::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+        }
     </style>
 </head>
 
@@ -31,7 +49,7 @@
 
             {{-- Pesan Sukses --}}
             @if (session('success'))
-                <ul class="bg-d-green text-white p-3 rounded text-sm">
+                <ul class="bg-d-green text-white p-3 text-center rounded text-sm">
                     <li> {{ session('success') }} </li>
                     <li> {{ session('sukses') }} </li>
                 </ul>
@@ -68,21 +86,44 @@
                 @csrf
 
                 <div class="mt-10">
-                    {{-- Email --}}
-                    <div class="mt-4">Email</div>
-                    <div class="relative ">
+                    @if ($auth === 'auth-admin' or $auth === 'auth-headmaster')
+                        {{-- Email --}}
+                        <div class="mt-4">Email</div>
+                        <div class="relative ">
 
-                        {{-- Icon Email --}}
-                        <div class="absolute pointer-events-none ">
-                            <i class="fa-solid fa-envelope text-d-green"></i>
+                            {{-- Icon Email --}}
+                            <div class="absolute pointer-events-none ">
+                                <i class="fa-solid fa-envelope text-d-green"></i>
+                            </div>
+
+                            {{-- Input Email --}}
+                            <input type="Email" name="email" placeholder="Masukan email" value="{{ old('email') }}"
+                                class="border-b border-[#000842] focus:border-[#000842]  outline-none w-full mb-2 pl-6"
+                                required>
+
                         </div>
+                    @endif
 
-                        {{-- Input Email --}}
-                        <input type="Email" name="email" placeholder="Masukan email"
-                            class="border-b border-[#000842] focus:border-[#000842]  outline-none w-full mb-2 pl-6"
-                            required>
+                    @if ($auth === 'auth-siswa')
+                        {{-- NIK --}}
+                        <div class="mt-4">NIK</div>
+                        <div class="relative ">
 
-                    </div>
+                            {{-- Icon NIK --}}
+                            <div class="absolute pointer-events-none ">
+                                <i class="fa-solid fa-user text-d-green"></i>
+                            </div>
+
+                            {{-- Input NIK --}}
+                            <input type="number" name="nik" placeholder="Masukan NIK" value="{{ old('nik') }}"
+                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                maxlength="16"
+                                class="border-b border-[#000842] focus:border-[#000842]  outline-none w-full mb-2 pl-5"
+                                required>
+
+                        </div>
+                    @endif
+
                     {{-- Password --}}
                     <div class="mt-4">Password</div>
                     <div class="relative">
@@ -113,11 +154,11 @@
             </form>
 
             @if ($auth === 'auth-siswa')
-                <div class="mt-5 relative text-right">
-                    <div class="absolute">
-                        <a href="{{ route('registrasi-siswa.index') }}">Registrasi</a>
+                <div class="mt-5 relative text-r">
+                    <div class="">
+                        <a href="{{ route('daftar') }}">Belum daftar? <span class="text-blue underline"> Segera
+                                Daftar</span></a>
                     </div>
-                    <a href="">Lupa Password?</a>
                 </div>
             @endif
 

@@ -22,6 +22,7 @@
         }
     </style>
 </head>
+
 <body class="font-sen bg-d-green">
     <div class="flex items-center justify-center min-h-screen">
         <div class="bg-white outline outline-d-green rounded p-6 max-md:mx-10">
@@ -31,6 +32,12 @@
                     @foreach ($errors->all() as $error)
                         <li class="list-disc list-inside">{{ $error }}</li>
                     @endforeach
+                </ul>
+                <br>
+            @endif
+            @if (session('success'))
+                <ul class="bg-d-green text-white p-3 rounded text-sm">
+                    <li> {{ session('success') }} </li>
                 </ul>
                 <br>
             @endif

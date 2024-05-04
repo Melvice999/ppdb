@@ -1,5 +1,6 @@
 @extends('layouts.guest-layout')
 @section('content')
+
     @if ($pendaftaran->pendaftaran === 1)
         {{-- Pesan Error --}}
         @if ($errors->any())
@@ -17,47 +18,105 @@
             </div>
         @endif
 
-        <form action="{{ route('calon-siswa.store') }}" method="POST">
+        {{-- Modal Preview Image --}}
+        <div class="hidden w-full h-full bg-black bg-opacity-20 top-0" id="divPreviewImage">
+            <div class="flex w-full h-full justify-center items-center">
+
+                <div class="fixed flex justify-center items-center top-3.5 px-2 right-28 mr-3 cursor-pointer hover:bg-l-sky-blue hover:bg-opacity-10 rounded-full"
+                    onclick="closePreviewImage()">
+                    <i class="fa-solid fa-xmark text-white text-xl"></i>
+                </div>
+
+                <div class="bg-white p-4 mx-auto" style="width: 400px; height: 600px;">
+                    <img src="" alt="Pratinjau Gambar" id="previewImage" class="w-full h-full object-cover">
+                </div>
+
+            </div>
+        </div>
+
+
+        <form action="{{ route('calon-siswa.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
+
             <div class="grid mt-6 ml-10 mr-10 place-items-center">
 
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full">
                     <label for="nik">NIK</label><br>
                     <input type="number" name="nik" value="{{ old('nik') }}"
                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                        maxlength="16" placeholder="Masukan NIK" class="border-b w-full focus:outline-none">
+                        maxlength="16" placeholder="Masukan NIK" class="border-b w-full focus:outline-none" required>
                 </div>
 
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
-                    <label for="kk">No KK</label><br>
-                    <input type="number" name="kk" value="{{ old('kk') }}"
-                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                        maxlength="16" placeholder="Masukan No KK" class="border-b w-full focus:outline-none">
+                    <label for="password">Password</label><br>
+                    <div class="flex justify-between items-center mb-2">
+
+                        <input type="password" name="password" value="{{ old('password') }}" id="PW"
+                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                            maxlength="16" placeholder="Masukan password" class="border-b w-full focus:outline-none"
+                            required>
+                        <i class="fa-solid fa-eye text-xl text-d-green ms-2 cursor-pointer p-2" id="togglePW"></i>
+                    </div>
+
+                    <span class="text-grey">
+                        <li>Password minimal 6 karakter</li>
+                        <li>Password harus diingat untuk proses cetak formulir</li>
+                    </span>
+
                 </div>
 
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
                     <label for="nama">Nama Lengkap</label><br>
                     <input type="text" name="nama" value="{{ old('nama') }}" placeholder="Masukan Nama Lengkap"
-                        class="border-b w-full focus:outline-none">
+                        class="border-b w-full focus:outline-none" required>
+                </div>
+
+                <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
+                    <label for="jenis_kelamin">Jenis Kelamin</label><br>
+                    <select name="jenis_kelamin" class="mt-1 w-full py-2 focus:outline-none border-b cursor-pointer"
+                        required>
+                        <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}> Laki-laki
+                        </option>
+                        <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan
+                        </option>
+                    </select>
                 </div>
 
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
                     <label for="tempat_lahir">Tempat Lahir</label><br>
                     <input type="text" name="tempat_lahir" value="{{ old('tempat_lahir') }}"
-                        placeholder="Masukan Tempat Lahir" class="border-b w-full focus:outline-none">
+                        placeholder="Masukan Tempat Lahir" class="border-b w-full focus:outline-none" required>
                 </div>
 
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
                     <label for="tanggal_lahir">Tanggal Lahir</label><br>
                     <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}"
-                        class="border-b w-full focus:outline-none">
+                        class="border-b w-full focus:outline-none" required>
                 </div>
 
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
                     <label for="no_hp">No Hp</label><br>
                     <input type="number" name="no_hp" value="{{ old('no_hp') }}"
                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                        maxlength="15" placeholder="Masukan No Hp" class="border-b w-full focus:outline-none">
+                        maxlength="15" placeholder="Masukan No Hp" class="border-b w-full focus:outline-none mb-2" required>
+
+                    <span class="text-grey">
+                        <li>Gunakan nomor whatsapp untuk menerima kode OTP</li>
+                    </span>
+                </div>
+
+                <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
+                    <label for="rt">RT</label><br>
+                    <input type="number" name="rt" value="{{ old('rt') }}"
+                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                        maxlength="3" placeholder="Masukan RT" class="border-b w-full focus:outline-none" required>
+                </div>
+
+                <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
+                    <label for="rw">RW</label><br>
+                    <input type="number" name="rw" value="{{ old('rw') }}"
+                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                        maxlength="3" placeholder="Masukan RW" class="border-b w-full focus:outline-none" required>
                 </div>
 
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
@@ -95,43 +154,64 @@
                     </select>
                 </div>
 
+                <div class="flex cursor-pointer justify-end items-center w-1/2 max-md:w-full" id="toggleLangkahI">
+
+                    <button type="submit"
+                        class="mt-6 py-2 px-7 rounded-2xl bg-white border border-d-green hover:bg-d-green hover:text-white">
+                        Berikutnya
+                    </button>
+
+                </div>
+            </div>
+        </form>
+
+        {{-- <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
+            <div class="flex justify-between items-center w-full">
+                <label for="otp" class="w-full">OTP</label>
+                <div class="w-full text-center cursor-pointer border border-d-green rounded-xl">
+                    Request Ulang Otp</div>
+            </div>
+            <input type="number" name="otp" value="{{ old('otp') }}" placeholder="Masukan OTP"
+                class="border-b w-full focus:outline-none" required>
+        </div> --}}
+
+        {{-- jika no hp sudah terdaftar maka masuk ke otp
+            
+            setelah otp berhasil baru bisa akses form detail calon siswa --}}
+        {{-- <form action="{{ route('calon-siswa.store-detail-calon-siswa') }}" method="POST" enctype="multipart/form-data"> --}}
+        {{-- @csrf
+        <div id="langkahII" class="hidden">
+
+            <div class="grid mt-6 ml-10 mr-10 place-items-center">
+
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
-                    <label for="rt">RT</label><br>
-                    <input type="number" name="rt" value="{{ old('rt') }}"
-                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                        maxlength="3" placeholder="Masukan RT" class="border-b w-full focus:outline-none">
+                    <label for="pas_foto">Pas Foto 3x4</label><br>
+                    <div class="flex justify-between items-center mb-2">
+                        <input type="file" class="border-b w-full focus:outline-none" accept=".jpg, .png, .jpeg"
+                            onchange="validateFileSize(this, 2)" id="inputPasFoto" name="pas_foto" required>
+                        <div onclick="buttonPasFoto()"
+                            class="border py-1 px-2 border-d-green rounded ml-2 cursor-pointer hover:bg-d-green hover:text-white">
+                            Lihat
+                        </div>
+                    </div>
+                    <span class="text-grey text-end">Pastikan background berwarna merah </span>
                 </div>
 
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
-                    <label for="rw">RW</label><br>
-                    <input type="number" name="rw" value="{{ old('rw') }}"
-                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                        maxlength="3" placeholder="Masukan RW" class="border-b w-full focus:outline-none">
-                </div>
-
-                <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
-                    <label for="jenis_kelamin">Jenis Kelamin</label><br>
-                    <select name="jenis_kelamin" class="mt-1 w-full py-2 focus:outline-none border-b cursor-pointer">
-                        <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}> Laki-laki
+                    <label for="jalur_pendaftaran">Jalur Pendaftaran</label><br>
+                    <select name="jalur_pendaftaran" class="mt-1 w-full py-2 focus:outline-none border-b cursor-pointer"
+                        required>
+                        <option value="Reguler" {{ old('jalur_pendaftaran') == 'Reguler' ? 'selected' : '' }}>Reguler
                         </option>
-                        <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan
-                        </option>
-                    </select>
-                </div>
-
-                <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
-                    <label for="warga_negara">Warga Negara</label><br>
-                    <select name="warga_negara" class="mt-1 w-full py-2 focus:outline-none border-b cursor-pointer">
-                        <option value="WNI" {{ old('warga_negara') == 'WNI' ? 'selected' : '' }}> WNI
-                        </option>
-                        <option value="WNA" {{ old('warga_negara') == 'WNA' ? 'selected' : '' }}>WNA
+                        <option value="Prestasi" {{ old('jalur_pendaftaran') == 'Prestasi' ? 'selected' : '' }}>
+                            Prestasi
                         </option>
                     </select>
                 </div>
 
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
                     <label for="prodi">Program Studi</label><br>
-                    <select name="prodi" class="mt-1 w-full py-2 focus:outline-none border-b cursor-pointer">
+                    <select name="prodi" class="mt-1 w-full py-2 focus:outline-none border-b cursor-pointer" required>
                         <option value="TBSM" {{ old('prodi') == 'TBSM' ? 'selected' : '' }}> TBSM
                         </option>
                         <option value="TKRO" {{ old('prodi') == 'TKRO' ? 'selected' : '' }}>TKRO
@@ -144,40 +224,8 @@
                 </div>
 
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
-                    <label for="batik">Ukuran Batik</label><br>
-                    <select name="batik" class="mt-1 w-full py-2 focus:outline-none border-b cursor-pointer">
-                        <option value="S" {{ old('batik') == 'S' ? 'selected' : '' }}> S
-                        </option>
-                        <option value="M" {{ old('batik') == 'M' ? 'selected' : '' }}>M
-                        </option>
-                        <option value="L" {{ old('batik') == 'L' ? 'selected' : '' }}>L
-                        </option>
-                        <option value="XL" {{ old('batik') == 'XL' ? 'selected' : '' }}>XL
-                        </option>
-                        <option value="XXL" {{ old('batik') == 'XXL' ? 'selected' : '' }}>XXL
-                        </option>
-                    </select>
-                </div>
-
-                <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
-                    <label for="olahraga">Ukuran Olahraga</label><br>
-                    <select name="olahraga" class="mt-1 w-full py-2 focus:outline-none border-b cursor-pointer">
-                        <option value="S" {{ old('olahraga') == 'S' ? 'selected' : '' }}> S
-                        </option>
-                        <option value="M" {{ old('olahraga') == 'M' ? 'selected' : '' }}>M
-                        </option>
-                        <option value="L" {{ old('olahraga') == 'L' ? 'selected' : '' }}>L
-                        </option>
-                        <option value="XL" {{ old('olahraga') == 'XL' ? 'selected' : '' }}>XL
-                        </option>
-                        <option value="XXL" {{ old('olahraga') == 'XXL' ? 'selected' : '' }}>XXL
-                        </option>
-                    </select>
-                </div>
-
-                <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
-                    <label for="wearpack">Ukuran Wearpack</label><br>
-                    <select name="wearpack" class="mt-1 w-full py-2 focus:outline-none border-b cursor-pointer">
+                    <label for="wearpack">Ukuran Wearpack/Baju</label><br>
+                    <select name="wearpack" class="mt-1 w-full py-2 focus:outline-none border-b cursor-pointer" required>
                         <option value="S" {{ old('wearpack') == 'S' ? 'selected' : '' }}> S
                         </option>
                         <option value="M" {{ old('wearpack') == 'M' ? 'selected' : '' }}>M
@@ -194,7 +242,7 @@
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
                     <label for="asal_sekolah">Asal Sekolah</label><br>
                     <input type="text" name="asal_sekolah" value="{{ old('asal_sekolah') }}"
-                        placeholder="Masukan Nama Asal Sekolah" class="border-b w-full focus:outline-none">
+                        placeholder="Masukan Nama Asal Sekolah" class="border-b w-full focus:outline-none" required>
                 </div>
 
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
@@ -202,103 +250,73 @@
                     <input type="number" name="tahun_lulus"
                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                         maxlength="4" value="{{ old('tahun_lulus') }}" placeholder="Masukan Tahun Lulus"
-                        class="border-b w-full focus:outline-none">
+                        class="border-b w-full focus:outline-none" required>
                 </div>
+
+                <div class="flex cursor-pointer w-1/2 max-md:w-full">
+                    <a href="#up" class="flex justify-between w-full">
+                        <div id="toggleLangkahIISebelumnya"
+                            class="mt-6 py-2 px-7 rounded-2xl bg-white border border-d-green hover:bg-d-green hover:text-white">
+                            Sebelumnya
+                        </div>
+
+                        <div id="toggleLangkahIIBerikutnya"
+                            class="mt-6 py-2 px-7 rounded-2xl bg-white border border-d-green hover:bg-d-green hover:text-white">
+                            Berikutnya
+                        </div>
+                    </a>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div id="langkahIII" class="hidden">
+
+            <div class="grid mt-6 ml-10 mr-10 place-items-center">
 
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
                     <label for="nama_ayah">Nama Ayah</label><br>
                     <input type="text" name="nama_ayah" value="{{ old('nama_ayah') }}"
-                        placeholder="Masukan Nama Ayah" class="border-b w-full focus:outline-none">
+                        placeholder="Masukan Nama Ayah" class="border-b w-full focus:outline-none" required>
                 </div>
 
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
                     <label for="nama_ibu">Nama Ibu</label><br>
                     <input type="text" name="nama_ibu" value="{{ old('nama_ibu') }}" placeholder="Masukan Nama Ibu"
-                        class="border-b w-full focus:outline-none">
+                        class="border-b w-full focus:outline-none" required>
                 </div>
 
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
                     <label for="no_hp_wali">No Hp Wali</label><br>
                     <input type="number" name="no_hp_wali" value="{{ old('no_hp_wali') }}"
                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                        maxlength="15" placeholder="Masukan No Hp Wali" class="border-b w-full focus:outline-none">
-                </div>
-
-                <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
-                    <label for="provinsi_wali">Provinsi Wali</label><br>
-                    <select name="provinsi_wali" class="mt-1 w-full py-2 focus:outline-none border-b cursor-pointer"
-                        id="provinsi_wali" required>
-                    </select>
-                </div>
-
-                <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
-                    <label for="kabupaten_wali">Kabupaten Wali / Kota</label><br>
-                    <select name="kabupaten_wali" class="mt-1 w-full py-2 focus:outline-none border-b cursor-pointer"
-                        id="kabupaten_wali" required>
-                    </select>
-                </div>
-
-                <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
-                    <label for="kecamatan_wali">Kecamatan Wali</label><br>
-                    <select name="kecamatan_wali" class="mt-1 w-full py-2 focus:outline-none border-b cursor-pointer"
-                        id="kecamatan_wali" required>
-                    </select>
-                </div>
-
-                <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
-                    <label for="desa_wali">Desa Wali</label><br>
-                    <select name="desa_wali" class="mt-1 w-full py-2 focus:outline-none border-b cursor-pointer"
-                        id="desa_wali" required>
-                    </select>
-                </div>
-
-                <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
-                    <label for="kode_pos">Kode Pos Wali</label><br>
-                    <select name="kode_pos_wali" class="mt-1 w-full py-2 focus:outline-none border-b cursor-pointer"
-                        id="kode_pos_wali">
-                    </select>
-                </div>
-
-                <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
-                    <label for="rt_wali">RT Wali</label><br>
-                    <input type="number" name="rt_wali" value="{{ old('rt_wali') }}"
-                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                        maxlength="3" placeholder="Masukan RT Wali" class="border-b w-full focus:outline-none">
-                </div>
-
-                <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
-                    <label for="rw_wali">RW Wali</label><br>
-                    <input type="number" name="rw_wali" value="{{ old('rw_wali') }}"
-                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                        maxlength="3" placeholder="Masukan RW Wali" class="border-b w-full focus:outline-none">
+                        maxlength="15" placeholder="Masukan No Hp Wali" class="border-b w-full focus:outline-none"
+                        required>
                 </div>
 
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
                     <label for="pekerjaan_wali">Pekerjaan Wali</label><br>
                     <input type="text" name="pekerjaan_wali" value="{{ old('pekerjaan_wali') }}"
-                        placeholder="Masukan Pekerjaan Wali" class="border-b w-full focus:outline-none">
+                        placeholder="Masukan Pekerjaan Wali" class="border-b w-full focus:outline-none" required>
                 </div>
 
-                <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
-                    <label for="pendidikan_wali">Pendidikan Wali</label><br>
-                    <input type="text" name="pendidikan_wali" value="{{ old('pendidikan_wali') }}"
-                        placeholder="Masukan Pendidikan Wali" class="border-b w-full focus:outline-none">
-                </div>
+                <div class="text-end w-1/2 flex justify-between max-md:w-full">
+                    <a href="#up">
+                        <div id="toggleLangkahIIISebelumnya"
+                            class="mt-6 py-2 px-7 rounded-2xl bg-white border border-d-green hover:bg-d-green hover:text-white">
+                            Sebelumnya
+                        </div>
 
-                <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
-                    <label for="info_sekolah">Info Sekolah</label><br>
-                    <input type="text" name="info_sekolah" value="{{ old('info_sekolah') }}"
-                        placeholder="Mendapatkan Informasi Sekolah Melalui" class="border-b w-full focus:outline-none">
-                </div>
-
-                <div class="text-end w-1/2 max-md:w-full">
+                    </a>
                     <button
                         class="mt-6 py-2 px-7 rounded-2xl bg-white border border-d-green hover:bg-d-green hover:text-white">
                         Selesai
                     </button>
                 </div>
             </div>
-        </form>
+        </div> --}}
+        {{-- </form> --}}
 
         <script type="module">
             $(document).ready(function() {
@@ -306,6 +324,86 @@
                 $("#clsError").click(function() {
                     $("#clsErrors").addClass("hidden");
                 });
+
+                $("#togglePW").on("click", function() {
+                    let passwordInput = $("#PW");
+                    let type = $("#PW").attr("type") === "password" ? "text" : "password";
+                    passwordInput.attr("type", type);
+
+                    if (type === "password") {
+                        $("#togglePW").removeClass("fa-eye-slash").addClass("fa-eye");
+                    } else {
+                        $("#togglePW").removeClass("fa-eye").addClass("fa-eye-slash");
+                    }
+                });
+
+                // $("#toggleLangkahI").on("click", function() {
+                //     if (validateForm('#langkahI')) {
+                //         $("#langkahII").removeClass("hidden");
+                //         $("#langkahI").addClass("hidden");
+                //         $("#langkahIII").addClass("hidden");
+                //     }
+                // });
+
+                // $("#toggleLangkahIISebelumnya").on("click", function() {
+                //     $("#langkahI").removeClass("hidden");
+                //     $("#langkahII").addClass("hidden");
+                //     $("#langkahIII").addClass("hidden");
+                // });
+
+                // $("#toggleLangkahIIBerikutnya").on("click", function() {
+                //     if (validateForm('#langkahII')) {
+                //         $("#langkahI").addClass("hidden");
+                //         $("#langkahII").addClass("hidden");
+                //         $("#langkahIII").removeClass("hidden");
+                //     }
+                // });
+
+                // $("#toggleLangkahIIISebelumnya").on("click", function() {
+                //     $("#langkahI").addClass("hidden");
+                //     $("#langkahII").removeClass("hidden");
+                //     $("#langkahIII").addClass("hidden");
+                // });
+
+                function validateForm(formId) {
+                    var isValid = true;
+                    $(formId + ' input[required]').each(function() {
+                        if ($(this).val() === '') {
+                            isValid = false;
+                            return false; // Stop the loop if one required field is empty
+                        }
+                    });
+                    if (!isValid) {
+                        alert('Silakan lengkapi input sebelum melanjutkan.');
+                    }
+                    return isValid;
+                }
+
+
+                // Tampilkan Pas Foto
+                window.buttonPasFoto = function() {
+                    let inputPasFoto = $('#inputPasFoto')[0];
+                    let divPreviewImage = $('#divPreviewImage');
+                    let previewImage = $('#previewImage');
+
+                    let filePasFoto = inputPasFoto.files[0];
+                    let readerPasFoto = new FileReader();
+
+                    readerPasFoto.onloadend = function() {
+                        previewImage.attr('src', readerPasFoto.result);
+                        divPreviewImage.removeClass('hidden').addClass('fixed');
+                    };
+
+                    if (filePasFoto) {
+                        readerPasFoto.readAsDataURL(filePasFoto);
+                    }
+                }
+
+                // Close Modal Image
+                window.closePreviewImage = function() {
+                    let divPreviewImage = $('#divPreviewImage');
+                    divPreviewImage.removeClass('fixed').addClass('hidden');
+                }
 
                 // Fungsi untuk mengambil dan mengisi opsi dropdown
                 function populateDropdown(url, dropdown, placeholder) {
@@ -412,49 +510,16 @@
                     });
                 }
 
-                // Fungsi untuk menangani perubahan pada dropdown provinsi wali
-                function onProvinceChangeWali() {
-                    let selectedProvinsiIdWali = $('#provinsi_wali').val();
-                    let kabupatenURLWali =
-                        `https://alamat.thecloudalert.com/api/kabkota/get/?d_provinsi_id=${selectedProvinsiIdWali}`;
-                    populateDropdownWali(kabupatenURLWali, '#kabupaten_wali', 'Pilih Kabupaten/Kota');
-                }
-
-                // Fungsi untuk menangani perubahan pada dropdown kabupaten wali
-                function onKabupatenChangeWali() {
-                    let selectedKabupatenIdWali = $('#kabupaten_wali').val();
-                    let kecamatanURLWali =
-                        `https://alamat.thecloudalert.com/api/kecamatan/get/?d_kabkota_id=${selectedKabupatenIdWali}`;
-                    populateDropdownWali(kecamatanURLWali, '#kecamatan_wali', 'Pilih Kecamatan');
-                }
-
-                // Fungsi untuk menangani perubahan pada dropdown kecamatan wali
-                function onKecamatanChangeWali() {
-                    let selectedKecamatanIdWali = $('#kecamatan_wali').val();
-                    let desaURLWali =
-                        `https://alamat.thecloudalert.com/api/kelurahan/get/?d_kecamatan_id=${selectedKecamatanIdWali}`;
-                    populateDropdownWali(desaURLWali, '#desa_wali', 'Pilih Desa');
-                }
-
-                // Fungsi untuk menangani perubahan pada dropdown desa wali
-                function onDesaChangeWali() {
-                    let selectedKabupatenIdWali = $('#kabupaten_wali').val();
-                    let selectedKecamatanIdWali = $('#kecamatan_wali').val();
-                    let kodePosURLWali =
-                        `https://alamat.thecloudalert.com/api/kodepos/get/?d_kabkota_id=${selectedKabupatenIdWali}&d_kecamatan_id=${selectedKecamatanIdWali}`;
-
-                    populateDropdown(kodePosURLWali, '#kode_pos_wali', 'Pilih Kode Pos');
-                }
-
-                // Ambil dan isi dropdown provinsi wali pada saat halaman dimuat.
-                populateDropdownWali("https://alamat.thecloudalert.com/api/provinsi/get/", '#provinsi_wali',
-                    'Pilih Provinsi');
-
-                // Set up event listeners untuk setiap perubahan dropdown wali
-                $('#provinsi_wali').on('change', onProvinceChangeWali);
-                $('#kabupaten_wali').on('change', onKabupatenChangeWali);
-                $('#kecamatan_wali').on('change', onKecamatanChangeWali);
-                $('#desa_wali').on('change', onDesaChangeWali);
+                // Alert Max File Size
+                window.validateFileSize = function(input, maxSizeInMB) {
+                    if (input.files.length > 0) {
+                        let fileSize = input.files[0].size / (1024 * 1024); // Convert to MB
+                        if (fileSize > maxSizeInMB) {
+                            alert(`Ukuran maksimal file ${maxSizeInMB} MB.`);
+                            input.value = ''; // Clear the file input
+                        }
+                    }
+                };
 
             });
         </script>
@@ -464,8 +529,8 @@
             {{-- {{ $siswa }} --}}
 
             <div class="w-1/2 px-10 bg-white max-md:w-full max-md:px-10 rounded-md text-justify max-md:mt-7 max-sm:px-3">
-                <div class="text-lg font-bold text-center py-4">
-                    Belum ada informasi pendaftaran
+                <div class="text-center py-4">
+                    Pendaftaran Belum Tersedia
                 </div>
             </div>
         </div>

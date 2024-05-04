@@ -12,7 +12,6 @@ class NoPendaftaranModel extends Model
   protected $primaryKey = 'no_pendaftaran';
   protected $fillable = [
     'nik',
-    'no_pendaftaran',
   ];
   protected $keyType = 'string';
 }

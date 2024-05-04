@@ -31,6 +31,8 @@
             <table class="bg-white rounded-lg mt-3 table-auto text-center min-w-full">
                 <thead>
                     <tr class="border-b border-d-green">
+                        <th>No</th>
+                        <th class="py-2 px-4">Status</th>
                         <th class="py-2 px-4">NIK</th>
                         <th class="py-2 px-4">Nama</th>
                         <th class="py-2 px-4">Prodi</th>
@@ -38,8 +40,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($programStudy == 'admin-beranda-sudah-tervalidasi' ? $status1 : ($programStudy == 'admin-beranda-belum-tervalidasi' ? $status0 : []) as $siswa)
+                    @foreach ($programStudy == 'admin-beranda-sudah-tervalidasi' ? $status1 : ($programStudy == 'admin-beranda-belum-tervalidasi' ? $status0 : []) as $i => $siswa)
                         <tr class="border-b border-d-green">
+                            <td> {{ $i + 1 }} </td>
+                            <td class="py-1 my-1 px-2">
+                                <span
+                                    class="{{ $siswa->notifikasi_admin === 'Pendaftar Baru' ? 'bg-[#FFD700] text-black' : ($siswa->notifikasi_admin === 'Berkas Terupload' ? 'bg-[#008000] text-white' : ($siswa->notifikasi_admin === 'Berkas Update' ? 'bg-[#0000FF] text-white' : ($siswa->notifikasi_admin === 'Siap Ujian' ? 'bg-[#FFA500] text-black' : 'bg-[#808080] text-white'))) }} rounded py-1 px-1">
+                                    {{ $siswa->notifikasi_admin }}
+                                </span>
+
+                            </td>
                             <td class="py-2 px-4">{{ $siswa->nik }}</td>
                             <td class="py-2 px-4">{{ $siswa->nama }}</td>
                             <td class="py-2 px-4">{{ $siswa->prodi }}</td>
@@ -54,6 +64,7 @@
                                             method="POST">
                                             @csrf
                                             <input type="hidden" name="status" value="{{ $siswa->status }} ">
+
                                             <button type="submit">
                                                 <i
                                                     class="fa-solid fa-square-check text-d-green hover:opacity-70 cursor-pointer"></i>

@@ -28,9 +28,15 @@ Route::prefix('/')->group(function () {
     Route::get('informasi-pendaftaran', [CalonSiswaController::class, 'informasi'])->name('informasi-pendaftaran');
     // Daftar Formulir Calon Siswa
     Route::post('calon-siswa/store', [CalonSiswaController::class, 'store'])->name('calon-siswa.store');
+    Route::get('daftar/otp/{nik?}/{no_hp?}', [CalonSiswaController::class, 'otp'])->name('daftar/otp');
+    Route::post('daftar/otp-reset', [CalonSiswaController::class, 'otpReset'])->name('daftar/otp-reset');
+    Route::post('daftar/otp-post', [CalonSiswaController::class, 'otpPost'])->name('daftar/otp-post');
+
+    Route::get('daftar/detail-calon-siswa/{nik?}/{no_hp?}/{otp?}', [CalonSiswaController::class, 'detailCalonSiswa'])->name('daftar/detail-calon-siswa');
+    Route::post('daftar/detail-calon-siswa-post', [CalonSiswaController::class, 'detailCalonSiswaPost'])->name('daftar/detail-calon-siswa-post');
     // Registrasi Akun Siswa
-    Route::get('registrasi-siswa/index', [RegisterController::class, 'index'])->name('registrasi-siswa.index');
-    Route::post('registrasi-akun/create', [RegisterController::class, 'register'])->name('registrasi-akun.create');
+    // Route::get('registrasi-siswa/index', [RegisterController::class, 'index'])->name('registrasi-siswa.index');
+    // Route::post('registrasi-akun/create', [RegisterController::class, 'register'])->name('registrasi-akun.create');
 });
 
 // Auth siswa
@@ -69,11 +75,12 @@ Route::prefix('siswa')->middleware('auth-siswa')->group(function () {
     Route::post('update-berkas-pas-foto-post/{id?}', [SiswaController::class, 'updateBerkasPasFotoPost'])->name('siswa-update-berkas-pas-foto-post');
     Route::post('update-berkas-shun-post/{id?}', [SiswaController::class, 'updateBerkasShunPost'])->name('siswa-update-berkas-shun-post');
     Route::post('update-berkas-ijazah-post/{id?}', [SiswaController::class, 'updateBerkasIjazahPost'])->name('siswa-update-berkas-ijazah-post');
+    Route::post('update-berkas-raport-post/{id?}', [SiswaController::class, 'updateBerkasRaportPost'])->name('siswa-update-berkas-raport-post');
+    Route::post('update-berkas-transkip-nilai-post/{id?}', [SiswaController::class, 'updateBerkasTranskipNilaiPost'])->name('siswa-update-berkas-transkip-nilai-post');
 
     Route::get('cetak-formulir', [SiswaController::class, 'cetakFormulir'])->name('siswa-cetak-formulir');
 
     Route::get('pengaturan-akun', [SiswaController::class, 'pengaturanAkun'])->name('siswa-pengaturan-akun');
-    Route::post('pengaturan-email-post', [SiswaController::class, 'pengaturanEmailPost'])->name('siswa-pengaturan-email-post');
     Route::post('pengaturan-password-post', [SiswaController::class, 'pengaturanPasswordPost'])->name('siswa-pengaturan-password-post');
 
     Route::get('logout', [SiswaController::class, 'logout'])->name('siswa-logout');
@@ -121,6 +128,7 @@ Route::prefix('admin')->middleware('auth-admin')->group(function () {
 
     // Informasi
     Route::get('admin-pengaturan-informasi', [AdminController::class, 'pengaturanInformasi'])->name('admin-pengaturan-informasi');
+    Route::post('admin-pengaturan-informasi-post/{id?}', [AdminController::class, 'pengaturanInformasiPost'])->name('admin-pengaturan-informasi-post');
 
     // pusat akun
     Route::get('admin-pusat-akun', [AdminController::class, 'pusatAkun'])->name('admin-pusat-akun');
@@ -133,10 +141,30 @@ Route::prefix('admin')->middleware('auth-admin')->group(function () {
     Route::get('logout', [AdminController::class, 'logout'])->name('admin-logout');
 });
 
-Route::prefix('headmaster')->group(function () {
+Route::prefix('headmaster')->middleware('auth-headmaster')->group(function () {
     Route::get('headmaster-beranda', [HeadmasterController::class, 'index'])->name('headmaster-beranda');
-    Route::get('headmaster-cetak-formulir-sekarang', [HeadmasterController::class, 'cetakFormulirSekarang'])->name('headmaster-cetak-formulir-sekarang');
-    Route::get('headmaster-cetak-formulir-tahun', [HeadmasterController::class, 'cetakFormulirTahun'])->name('headmaster-cetak-formulir-tahun');
-    Route::get('headmaster-cetak-rekap-ppdb', [HeadmasterController::class, 'cetakRekapPpdb'])->name('headmaster-cetak-rekap-ppdb');
-   
+    Route::get('headmaster-formulir-tahun', [HeadmasterController::class, 'formulirTahun'])->name('headmaster-formulir-tahun');
+    Route::get('headmaster-rekap-ppdb', [HeadmasterController::class, 'rekapPpdb'])->name('headmaster-rekap-ppdb');
+
+    // tahun daftar
+    Route::get('headmaster-cetak-formulir-tahun/{id?}', [HeadmasterController::class, 'cetakFormulirTahun'])->name('headmaster-cetak-formulir-tahun');
+
+    // formulir
+    Route::get('headmaster-cetak-formulir-siswa/{id?}', [HeadmasterController::class, 'cetakFormulirSiswa'])->name('headmaster-cetak-formulir-siswa');
+    Route::post('headmaster-cetak-formulir-siswa-post/{id?}', [HeadmasterController::class, 'cetakFormulirSiswaPost'])->name('headmaster-cetak-formulir-siswa-post');
+
+    // rekap
+    Route::get('headmaster-cetak-rekap-tahun/{id?}', [HeadmasterController::class, 'cetakRekapTahun'])->name('headmaster-cetak-rekap-tahun');
+    Route::post('headmaster-cetak-rekap-tahun-post/{id?}', [HeadmasterController::class, 'cetakRekapTahunPost'])->name('headmaster-cetak-rekap-tahun-post');
+
+
+    // pusat akun
+    Route::get('headmaster-pusat-akun', [HeadmasterController::class, 'pusatAkun'])->name('headmaster-pusat-akun');
+    Route::post('headmaster-pusat-akun-post', [HeadmasterController::class, 'pusatAkunPost'])->name('headmaster-pusat-akun-post');
+
+    // search
+    Route::get('headmaster-penelusuran', [HeadmasterController::class, 'penelusuran'])->name('headmaster-penelusuran');
+
+    // logout
+    Route::get('logout', [HeadmasterController::class, 'logout'])->name('headmaster-logout');
 });

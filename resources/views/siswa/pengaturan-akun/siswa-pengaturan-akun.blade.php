@@ -37,48 +37,6 @@
 
         <div class="flex justify-center">
             <div class="w-1/2 grid grid-cols-1 max-md:w-full mt-2 bg-white rounded border border-d-green">
-                <div class="flex justify-between items-center ps-2 cursor-pointer" id="ubahEmail">
-                    <div class="w-full">
-                        <i class="fa-solid fa-envelope me-3 text-d-green"></i>
-                        Ubah Email
-                    </div>
-                    <div class="w-1/5 py-3 my-0.5 me-0.5 rounded-r cursor-pointer flex justify-center bg-d-green">
-                        <i class="fa-solid fa-pen-to-square flex justify-center items-center text-white"></i>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        {{-- Input email  --}}
-        <form action="{{ route('siswa-pengaturan-email-post') }}" method="POST">
-            @csrf
-
-            <input type="hidden" value="{{ $akun->nik }}" name="nik">
-
-            <div class="hidden" id="opeEmail">
-                <div class="flex justify-center mb-3">
-                    <div class="w-1/2 grid grid-cols-1 max-md:w-full mt-2 bg-white rounded border border-d-green">
-
-                        <div class="flex justify-between items-center ps-2">
-
-                            <input type="email" placeholder="Masukan email" name="email"
-                                class="w-full ps-2 focus:outline-none" value="{{ $akun->email }}" required>
-
-                            <button
-                                class="w-1/5 py-3 my-0.5 me-0.5 rounded-r cursor-pointer flex justify-center bg-d-green">
-                                <i class="fa-solid fa-paper-plane text-white"></i>
-                            </button>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-
-
-        <div class="flex justify-center">
-            <div class="w-1/2 grid grid-cols-1 max-md:w-full mt-2 bg-white rounded border border-d-green">
                 <div class="flex justify-between items-center ps-2 cursor-pointer" id="ubahPassword">
                     <div class="w-full">
                         <i class="fa-solid fa-lock me-3 text-d-green"></i>
@@ -96,7 +54,7 @@
         <form action="{{ route('siswa-pengaturan-password-post') }}" method="POST">
             @csrf
 
-            <input type="hidden" value="{{ $akun->nik }}" name="nik">
+            <input type="hidden" value="{{ $user->nik }}" name="nik">
 
             <div class="hidden" id="openPassword">
                 <div class="flex justify-center">
@@ -164,11 +122,7 @@
     <script type="module">
         $(document).ready(function() {
 
-            // Tampilkan ubah email
-            $("#ubahEmail").on("click", function() {
-                $("#opeEmail").toggleClass("hidden")
-            });
-
+          
             // Tampilkan ubah password
             $("#ubahPassword").on("click", function() {
                 $("#openPassword").toggleClass("hidden")

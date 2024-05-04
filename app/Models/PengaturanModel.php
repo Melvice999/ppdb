@@ -9,4 +9,9 @@ class PengaturanModel extends Model
 {
     use HasFactory;
     protected $table = "pengaturan";
+
+    protected $fillable = [
+        'informasi',
+        'j_informasi',
+      ];
 }

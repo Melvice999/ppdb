@@ -41,7 +41,7 @@
 
     @include('navbar.guest-navbar')
 
-    <div class="overflow-hidden min-h-screen relative">
+    <div class="overflow-hidden min-h-screen relative" id="content">
         @yield('content')
     </div>
 
@@ -127,7 +127,7 @@
                 $("#menu_nav_open").removeClass("max-md:hidden").addClass("max-md:block")
 
                 // overflow di saat nav open
-                $(".overflow-hidden").addClass("max-md:mt-40")
+                $("#content").addClass("max-md:mt-32")
 
                 // navigasi up and down daftar
                 $("#navigasi").addClass("hidden")
@@ -139,7 +139,7 @@
                 $("#menu_nav_open").removeClass("max-md:block").addClass("max-md:hidden")
 
                 // overflow di animasi awan beranda guest
-                $(".overflow-hidden").removeClass("max-md:mt-40")
+                $("#content").removeClass("max-md:mt-32")
 
                 // navigasi up and down daftar
                 $("#navigasi").removeClass("hidden")

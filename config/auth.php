@@ -52,6 +52,10 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
+        'headmaster' => [
+            'driver' => 'session',
+            'provider' => 'headmasters',
+        ],
     ],
 
     /*
@@ -76,10 +80,6 @@ return [
         //     'driver' => 'eloquent',
         //     'model' => App\Models\User::class,
         // ],
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => \App\Models\AkunSiswa::class,
-        ],
 
         'admins' => [
             'driver' => 'eloquent',
@@ -87,7 +87,11 @@ return [
         ],
         'siswas' => [
             'driver' => 'eloquent',
-            'model' => \App\Models\AkunSiswa::class,
+            'model' => \App\Models\CalonSiswa::class,
+        ],
+        'headmasters' => [
+            'driver' => 'eloquent',
+            'model' => \App\Models\HeadmasterModel::class,
         ],
         
 

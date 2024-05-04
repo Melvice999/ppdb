@@ -6,9 +6,26 @@
     @php
         $startYear = now()->year;
         $endYear = $startYear - 4;
+
         $yearRange = range($endYear, $startYear);
+
         $labels = json_encode($yearRange);
+
+        use App\Models\CalonSiswa; // Pastikan Anda mengimpor namespace model jika belum melakukannya
+
+        // Hitung jumlah calon siswa untuk setiap tahun
+        $pertama = CalonSiswa::where('notifikasi_admin', 'Lulus Ujian')->where('tahun_daftar', $startYear - 4)->count();
+        $kedua = CalonSiswa::where('notifikasi_admin', 'Lulus Ujian')->where('tahun_daftar', $startYear - 3)->count();
+        $ketiga = CalonSiswa::where('notifikasi_admin', 'Lulus Ujian')->where('tahun_daftar', $startYear - 2)->count();
+        $keempat = CalonSiswa::where('notifikasi_admin', 'Lulus Ujian')->where('tahun_daftar', $startYear - 1)->count();
+        $kelima = CalonSiswa::where('notifikasi_admin', 'Lulus Ujian')->where('tahun_daftar', $startYear)->count();
+
+        // Format data untuk grafik
+        $dataFromDatabase = [$pertama, $kedua, $ketiga, $keempat, $kelima];
+
+        $dataFormatted = json_encode($dataFromDatabase);
     @endphp
+
 
     <div class="w-full mt-10">
         PPDB Tahun {{ $endYear }} - {{ $startYear }}
@@ -25,7 +42,7 @@
                 labels: {!! $labels !!},
                 datasets: [{
                     label: '',
-                    data: [12, 19, 3, 5, 2, 3],
+                    data: {!! $dataFormatted !!},
                     borderWidth: 2,
                     backgroundColor: 'rgba(115, 202, 24, 0.2)',
                     borderColor: 'rgba(115, 202, 24)',

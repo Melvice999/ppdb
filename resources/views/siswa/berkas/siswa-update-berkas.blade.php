@@ -54,7 +54,7 @@
                     <div class="w-1/2 grid grid-cols-3 max-md:w-full mt-2 bg-white">
 
                         <div class="py-2 ps-2 border-t border-l border-b border-d-green rounded-tl rounded-bl">
-                            Akta
+                            File harus berformat pdf
                         </div>
 
                         <div class="border-d-green border focus:outline-none flex justify-center items-center">
@@ -98,7 +98,6 @@
                         Lihat
                     </div>
                 </div>
-
             </div>
 
             {{-- Input KK on click --}}
@@ -112,28 +111,29 @@
                     <div class="w-1/2 grid grid-cols-3 max-md:w-full mt-2 bg-white">
 
                         <div class="py-2 ps-2 border-t border-l border-b border-d-green rounded-tl rounded-bl">
-                            KK
+                            File harus berformat pdf
                         </div>
 
                         <div class="border-d-green border focus:outline-none flex justify-center items-center">
-                            <input type="file" class="w-full ps-2" accept=".pdf" name="kk" onchange="validateFileSize(this, 1.5)"
-                                id="inputKk" required>
+                            <input type="file" class="w-full ps-2" accept=".pdf" name="kk"
+                                onchange="validateFileSize(this, 1.5)" id="inputKk" required>
                         </div>
 
                         <div
-                            class="grid grid-cols-2 items-center cursor-pointer border-d-green border-t border-r border-b rounded-tr rounded-br">
+                            class="grid grid-cols-2 items-center border-d-green border-t border-r border-b rounded-tr rounded-br">
 
-                            <div class="border-r h-full flex justify-center items-center" id="lihatKk">
+                            <div class="border-r h-full flex justify-center items-center cursor-pointer" id="lihatKk">
                                 <i class="fa-solid fa-eye text-blue"></i>
                             </div>
 
-                            <button class=" h-full flex justify-center items-center">
+                            <button class=" h-full flex justify-center items-center cursor-pointer">
                                 <i class="fa-solid fa-paper-plane text-d-green"></i>
                             </button>
 
                         </div>
 
                     </div>
+
                 </div>
             </form>
 
@@ -167,22 +167,22 @@
                     <div class="w-1/2 grid grid-cols-3 max-md:w-full mt-2 bg-white">
 
                         <div class="py-2 ps-2 border-t border-l border-b border-d-green rounded-tl rounded-bl">
-                            Pas Foto
+                            Pas Foto 3x4
                         </div>
 
                         <div class="border-d-green border focus:outline-none flex justify-center items-center">
                             <input type="file" class="w-full ps-2" accept=".jpg, .png, .jpeg" name="pas_foto"
-                                onchange="validateFileSize(this, 1.5)" id="inputPasFoto" required>
+                                onchange="validateFileSize(this, 2)" id="inputPasFoto" required>
                         </div>
 
                         <div
-                            class="grid grid-cols-2 items-center cursor-pointer border-d-green border-t border-r border-b rounded-tr rounded-br">
+                            class="grid grid-cols-2 items-center border-d-green border-t border-r border-b rounded-tr rounded-br">
 
-                            <div class="border-r h-full flex justify-center items-center" id="lihatPasFoto">
+                            <div class="border-r h-full flex justify-center items-center cursor-pointer" id="lihatPasFoto">
                                 <i class="fa-solid fa-eye text-blue"></i>
                             </div>
 
-                            <button class=" h-full flex justify-center items-center">
+                            <button class=" h-full flex justify-center items-center cursor-pointer">
                                 <i class="fa-solid fa-paper-plane text-d-green"></i>
                             </button>
 
@@ -222,7 +222,7 @@
                     <div class="w-1/2 grid grid-cols-3 max-md:w-full mt-2 bg-white">
 
                         <div class="py-2 ps-2 border-t border-l border-b border-d-green rounded-tl rounded-bl">
-                            SHUN
+                            File harus berformat pdf
                         </div>
 
                         <div class="border-d-green border focus:outline-none flex justify-center items-center">
@@ -231,13 +231,13 @@
                         </div>
 
                         <div
-                            class="grid grid-cols-2 items-center cursor-pointer border-d-green border-t border-r border-b rounded-tr rounded-br">
+                            class="grid grid-cols-2 items-center border-d-green border-t border-r border-b rounded-tr rounded-br">
 
-                            <div class="border-r h-full flex justify-center items-center" id="lihatShun">
+                            <div class="border-r h-full flex justify-center items-center cursor-pointer" id="lihatShun">
                                 <i class="fa-solid fa-eye text-blue"></i>
                             </div>
 
-                            <button class=" h-full flex justify-center items-center">
+                            <button class=" h-full flex justify-center items-center cursor-pointer">
                                 <i class="fa-solid fa-paper-plane text-d-green"></i>
                             </button>
 
@@ -277,7 +277,7 @@
                     <div class="w-1/2 grid grid-cols-3 max-md:w-full mt-2 bg-white">
 
                         <div class="py-2 ps-2 border-t border-l border-b border-d-green rounded-tl rounded-bl">
-                            Ijazah
+                            File harus berformat pdf
                         </div>
 
                         <div class="border-d-green border focus:outline-none flex justify-center items-center">
@@ -286,12 +286,121 @@
                         </div>
 
                         <div
-                            class="grid grid-cols-2 items-center cursor-pointer border-d-green border-t border-r border-b rounded-tr rounded-br">
+                            class="grid grid-cols-2 items-center border-d-green border-t border-r border-b rounded-tr rounded-br">
 
-                            <div class="border-r h-full flex justify-center items-center" id="lihatIjazah">
+                            <div class="border-r h-full flex justify-center items-center cursor-pointer" id="lihatIjazah">
                                 <i class="fa-solid fa-eye text-blue"></i>
                             </div>
-                            <button class=" h-full flex justify-center items-center">
+                            <button class=" h-full flex justify-center items-center cursor-pointer">
+                                <i class="fa-solid fa-paper-plane text-d-green"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+
+            {{-- Raport --}}
+            <div class="flex justify-center">
+                <div class="w-1/2  grid grid-cols-3 max-md:w-full mt-2 bg-white">
+                    <div class="py-2 ps-2 border-t border-l border-b border-d-green rounded-tl rounded-bl">
+                        Raport
+                    </div>
+
+                    <div class="border-d-green border focus:outline-none cursor-pointer flex justify-center items-center"
+                        id="toggleRaport">
+                        Ubah
+                    </div>
+                    <div class="flex items-center cursor-pointer justify-center border-d-green border-t border-r border-b rounded-tr rounded-br"
+                        id="lihatRaportLama">
+                        Lihat
+                    </div>
+                </div>
+
+            </div>
+
+            {{-- Input Raport on click --}}
+            <form action="{{ route('siswa-update-berkas-raport-post', ['id' => $user->nik]) }}" method="POST"
+                enctype="multipart/form-data">
+                @csrf
+
+                <input type="hidden" value="{{ $berkas->raport }}" name="raportLama">
+
+                <div class="hidden justify-center mb-5" id="triggerRaport">
+                    <div class="w-1/2 grid grid-cols-3 max-md:w-full mt-2 bg-white">
+
+                        <div class="py-2 ps-2 border-t border-l border-b border-d-green rounded-tl rounded-bl">
+                            File harus berformat pdf
+                        </div>
+
+                        <div class="border-d-green border focus:outline-none flex justify-center items-center">
+                            <input type="file" class="w-full ps-2" accept=".pdf" name="raport"
+                                onchange="validateFileSize(this, 1.5)" id="inputRaport" required>
+                        </div>
+
+                        <div
+                            class="grid grid-cols-2 items-center border-d-green border-t border-r border-b rounded-tr rounded-br">
+
+                            <div class="border-r h-full flex justify-center items-center cursor-pointer" id="lihatRaport">
+                                <i class="fa-solid fa-eye text-blue"></i>
+                            </div>
+                            <button class=" h-full flex justify-center items-center cursor-pointer">
+                                <i class="fa-solid fa-paper-plane text-d-green"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+
+            {{-- Transkip Nilai --}}
+            <div class="flex justify-center">
+                <div class="w-1/2  grid grid-cols-3 max-md:w-full mt-2 bg-white">
+                    <div class="py-2 ps-2 border-t border-l border-b border-d-green rounded-tl rounded-bl">
+                        Transkip Nilai
+                    </div>
+
+                    <div class="border-d-green border focus:outline-none cursor-pointer flex justify-center items-center"
+                        id="toggleTranskipNilai">
+                        Ubah
+                    </div>
+                    <div class="flex items-center cursor-pointer justify-center border-d-green border-t border-r border-b rounded-tr rounded-br"
+                        id="lihatTranskipNilaiLama">
+                        Lihat
+                    </div>
+                </div>
+
+            </div>
+
+            {{-- Input Transkip Nilai on click --}}
+            <form action="{{ route('siswa-update-berkas-transkip-nilai-post', ['id' => $user->nik]) }}" method="POST"
+                enctype="multipart/form-data">
+                @csrf
+
+                <input type="hidden" value="{{ $berkas->transkip_nilai }}" name="transkipNilaiLama">
+
+                <div class="hidden justify-center mb-5" id="triggerTranskipNilai">
+                    <div class="w-1/2 grid grid-cols-3 max-md:w-full mt-2 bg-white">
+
+                        <div class="py-2 ps-2 border-t border-l border-b border-d-green rounded-tl rounded-bl">
+                            File harus berformat pdf
+                        </div>
+
+                        <div class="border-d-green border focus:outline-none flex justify-center items-center">
+                            <input type="file" class="w-full ps-2" accept=".pdf" name="transkip_nilai"
+                                onchange="validateFileSize(this, 1.5)" id="inputTranskipNilai" required>
+                        </div>
+
+                        <div
+                            class="grid grid-cols-2 items-center border-d-green border-t border-r border-b rounded-tr rounded-br">
+
+                            <div class="border-r h-full flex justify-center items-center cursor-pointer"
+                                id="lihatTranskipNilai">
+                                <i class="fa-solid fa-eye text-blue"></i>
+                            </div>
+                            <button class=" h-full flex justify-center items-center cursor-pointer">
                                 <i class="fa-solid fa-paper-plane text-d-green"></i>
                             </button>
 
@@ -307,12 +416,12 @@
         <div class="hidden top-0 justify-center items-center bg-black bg-opacity-40 w-screen h-screen"
             id="previewBerkasLama">
 
-            <iframe class="fixed w-full h-full top-0" src="">
-            </iframe>
+            <embed class="fixed w-full h-full top-0" src="">
 
-            <div class="fixed top-2 right-28 mr-1 mt-0.5 flex justify-center items-center hover:bg-white hover:bg-opacity-10 rounded-full px-2.5 py-1 cursor-pointer"
+
+            <div class="fixed top-2 right-28 mr-1 mt-0.5 flex justify-center items-center hover:bg-white hover:bg-opacity-10 rounded-full px-2.5 py-1 cursor-pointer max-md:right-0"
                 id="closePreviewBerkasLama">
-                <i class="fa-solid fa-xmark text-white text-xl"></i>
+                <i class="fa-solid fa-xmark text-white text-xl max-md:text-black"></i>
             </div>
 
         </div>
@@ -338,9 +447,9 @@
         <div class="hidden w-full h-full bg-black bg-opacity-20 top-0" id="divPreviewPDF">
             <div class="flex w-full h-full justify-center items-center">
 
-                <div class="fixed flex justify-center items-center top-3.5 px-2 right-28 mr-3 cursor-pointer hover:bg-l-sky-blue hover:bg-opacity-10 rounded-full"
+                <div class="fixed flex justify-center items-center top-3.5 px-2 right-28 mr-3 cursor-pointer hover:bg-l-sky-blue hover:bg-opacity-10 rounded-full max-md:right-0"
                     id="closePreviewPDF">
-                    <i class="fa-solid fa-xmark text-white text-xl"></i>
+                    <i class="fa-solid fa-xmark text-white text-xl max-md:text-black"></i>
                 </div>
 
                 <div class="w-full h-full">
@@ -392,7 +501,7 @@
                     $("#previewBerkasLama").removeClass("hidden").addClass("fixed");
 
                     // Mengubah isi src
-                    $("#previewBerkasLama iframe").attr("src",
+                    $("#previewBerkasLama embed").attr("src",
                         "data:application/pdf;base64,{{ base64_encode(file_get_contents('storage/siswa/akta/' . $berkas->akta)) }}"
                     )
                 });
@@ -422,7 +531,7 @@
                     $("#previewBerkasLama").removeClass("hidden").addClass("fixed");
 
                     // Mengubah isi src
-                    $("#previewBerkasLama iframe").attr("src",
+                    $("#previewBerkasLama embed").attr("src",
                         "data:application/pdf;base64,{{ base64_encode(file_get_contents('storage/siswa/kk/' . $berkas->kk)) }}"
                     )
                 });
@@ -452,7 +561,7 @@
 
                     // Mengubah isi src
                     $("#previewImageLama img").addClass().attr("src",
-                        "{{ asset('storage/siswa/pas-foto/' . $berkas->pas_foto) }}"
+                        "{{ asset('storage/siswa/pas-foto/' . $user->pas_foto) }}"
                     )
 
                     // Remove Modal
@@ -490,7 +599,7 @@
                     $("#previewBerkasLama").removeClass("hidden").addClass("fixed");
 
                     // Mengubah isi src
-                    $("#previewBerkasLama iframe").attr("src",
+                    $("#previewBerkasLama embed").attr("src",
                         "data:application/pdf;base64,{{ base64_encode(file_get_contents('storage/siswa/shun/' . $berkas->shun)) }}"
                     )
                 });
@@ -519,7 +628,7 @@
                     $("#previewBerkasLama").removeClass("hidden").addClass("fixed");
 
                     // Mengubah isi src
-                    $("#previewBerkasLama iframe").attr("src",
+                    $("#previewBerkasLama embed").attr("src",
                         "data:application/pdf;base64,{{ base64_encode(file_get_contents('storage/siswa/ijazah/' . $berkas->ijazah)) }}"
                     )
                 });
@@ -539,6 +648,64 @@
                     }
                 });
 
+                // Toggle Raport
+                $("#toggleRaport").on("click", function() {
+                    $("#triggerRaport").toggleClass("hidden flex");
+                });
+
+                $("#lihatRaportLama").on("click", function() {
+                    $("#previewBerkasLama").removeClass("hidden").addClass("fixed");
+
+                    // Mengubah isi src
+                    $("#previewBerkasLama embed").attr("src",
+                        "data:application/pdf;base64,{{ base64_encode(file_get_contents('storage/siswa/raport/' . $berkas->raport)) }}"
+                    )
+                });
+
+                // Tampilkan Update Raport
+                $("#lihatRaport").on("click", function() {
+
+                    let readerRaport = new FileReader();
+
+                    readerRaport.onloadend = function() {
+                        $('#previewPDF').attr('src', readerRaport.result);
+                        $('#divPreviewPDF').removeClass('hidden').addClass('fixed');
+                    };
+
+                    if ($('#inputRaport')[0].files[0]) {
+                        readerRaport.readAsDataURL($('#inputRaport')[0].files[0]);
+                    }
+                });
+
+                // Toggle TranskipNilai
+                $("#toggleTranskipNilai").on("click", function() {
+                    $("#triggerTranskipNilai").toggleClass("hidden flex");
+                });
+
+                $("#lihatTranskipNilaiLama").on("click", function() {
+                    $("#previewBerkasLama").removeClass("hidden").addClass("fixed");
+
+                    // Mengubah isi src
+                    $("#previewBerkasLama embed").attr("src",
+                        "data:application/pdf;base64,{{ base64_encode(file_get_contents('storage/siswa/transkip-nilai/' . $berkas->transkip_nilai)) }}"
+                    )
+                });
+
+                // Tampilkan Update TranskipNilai
+                $("#lihatTranskipNilai").on("click", function() {
+
+                    let readerTranskipNilai = new FileReader();
+
+                    readerTranskipNilai.onloadend = function() {
+                        $('#previewPDF').attr('src', readerTranskipNilai.result);
+                        $('#divPreviewPDF').removeClass('hidden').addClass('fixed');
+                    };
+
+                    if ($('#inputTranskipNilai')[0].files[0]) {
+                        readerTranskipNilai.readAsDataURL($('#inputTranskipNilai')[0].files[0]);
+                    }
+                });
+
                 // Alert Max File Size
                 window.validateFileSize = function(input, maxSizeInMB) {
                     if (input.files.length > 0) {
@@ -549,6 +716,18 @@
                         }
                     }
                 };
+                // Alert jika file yang diunggah bukan PDF
+                $('form').on('change', 'input[type="file"][accept=".pdf"]', function() {
+                    let inputFile = $(this);
+                    let fileType = inputFile.prop('files')[0].type;
+
+                    if (fileType !== 'application/pdf') {
+                        alert('File yang Anda unggah harus berformat PDF.');
+                        inputFile.val('');
+                        return false;
+                    }
+                });
+
             });
         </script>
     @endif

@@ -23,9 +23,9 @@
         <div class="hidden w-full h-full bg-black bg-opacity-20 top-0" id="divPreviewPDF">
             <div class="flex w-full h-full justify-center items-center">
 
-                <div class="fixed flex justify-center items-center top-3.5 px-2 right-28 mr-3 cursor-pointer hover:bg-l-sky-blue hover:bg-opacity-10 rounded-full"
+                <div class="fixed flex justify-center items-center top-3.5 px-2 right-28 mr-3 cursor-pointer hover:bg-l-sky-blue hover:bg-opacity-10 rounded-full max-md:right-0"
                     onclick="closePreviewPDF()">
-                    <i class="fa-solid fa-xmark text-white text-xl"></i>
+                    <i class="fa-solid fa-xmark text-white text-xl max-md:text-black"></i>
                 </div>
 
                 <div class="w-full h-full">
@@ -106,27 +106,6 @@
                     <div class="w-1/2 flex max-md:w-full mt-2 bg-white">
                         <div
                             class="py-2 w-1/3 ps-2 border-t border-l border-b border-d-green rounded-tl rounded-bl max-md:w-2/5">
-                            Pas Foto
-                        </div>
-
-                        <div
-                            class="border-d-green border focus:outline-none w-3/5 max-md:w-2/5 flex justify-center items-center">
-                            <input type="file" class="w-full ps-2" accept=".jpg, .png, .jpeg"
-                                onchange="validateFileSize(this, 1.5)" id="inputPasFoto" name="pas_foto" required>
-                        </div>
-                        <label
-                            class="flex items-center cursor-pointer justify-center border-d-green border-t border-r border-b rounded-tr rounded-br w-1/5"
-                            onclick="buttonPasFoto()">
-                            Lihat
-                        </label>
-                    </div>
-
-                </div>
-
-                <div class="flex justify-center">
-                    <div class="w-1/2 flex max-md:w-full mt-2 bg-white">
-                        <div
-                            class="py-2 w-1/3 ps-2 border-t border-l border-b border-d-green rounded-tl rounded-bl max-md:w-2/5">
                             SHUN
                         </div>
 
@@ -165,6 +144,49 @@
 
                 </div>
 
+                <div class="flex justify-center">
+                    <div class="w-1/2 flex max-md:w-full mt-2 bg-white">
+                        <div
+                            class="py-2 w-1/3 ps-2 border-t border-l border-b border-d-green rounded-tl rounded-bl max-md:w-2/5">
+                            Raport
+                        </div>
+
+                        <div
+                            class="border-d-green border focus:outline-none w-3/5 max-md:w-2/5 flex justify-center items-center">
+                            <input type="file" class="w-full ps-2" accept=".pdf" onchange="validateFileSize(this, 1.5)"
+                                id="inputRaport" name="raport" required>
+                        </div>
+                        <label
+                            class="flex items-center cursor-pointer justify-center border-d-green border-t border-r border-b rounded-tr rounded-br w-1/5"
+                            onclick="buttonRaport()">
+                            Lihat
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="flex justify-center">
+                    <div class="w-1/2 flex max-md:w-full mt-2 bg-white">
+                        <div
+                            class="py-2 w-1/3 ps-2 border-t border-l border-b border-d-green rounded-tl rounded-bl max-md:w-2/5">
+                            Transkip Nilai
+                        </div>
+
+                        <div
+                            class="border-d-green border focus:outline-none w-3/5 max-md:w-2/5 flex justify-center items-center">
+                            <input type="file" class="w-full ps-2" accept=".pdf"
+                                onchange="validateFileSize(this, 1.5)" id="inputTranskipNilai" name="transkip_nilai"
+                                required>
+                        </div>
+                        <label
+                            class="flex items-center cursor-pointer justify-center border-d-green border-t border-r border-b rounded-tr rounded-br w-1/5"
+                            onclick="buttonTranskipNilai()">
+                            Lihat
+                        </label>
+                    </div>
+
+                </div>
+
                 <div class="flex justify-center mt-5">
                     <div class="w-1/2 text-end max-md:w-full mt-2">
                         <button
@@ -178,6 +200,16 @@
 
         </div>
 
+    </div>
+    <div class="{{ $berkas && $berkas->nik ? '' : 'hidden' }}">
+        <div class="flex justify-center mt-3 mx-10 max-md:block">
+            <div class="w-1/2 mt-2 max-md:w-full">
+                <div
+                    class="flex justify-center items-center w-full px-2 py-1 rounded max-md:w-full border-d-green border cursor-pointer bg-white text-d-green">
+                    Berkas sudah terupload tunggu konfirmasi admin
+                </div>
+            </div>
+        </div>
     </div>
 
     <script type="module">
@@ -221,25 +253,6 @@
                 }
             }
 
-            // Tampilkan Pas Foto
-            window.buttonPasFoto = function() {
-                let inputPasFoto = $('#inputPasFoto')[0];
-                let divPreviewImage = $('#divPreviewImage');
-                let previewImage = $('#previewImage');
-
-                let filePasFoto = inputPasFoto.files[0];
-                let readerPasFoto = new FileReader();
-
-                readerPasFoto.onloadend = function() {
-                    previewImage.attr('src', readerPasFoto.result);
-                    divPreviewImage.removeClass('hidden').addClass('fixed');
-                };
-
-                if (filePasFoto) {
-                    readerPasFoto.readAsDataURL(filePasFoto);
-                }
-            }
-
 
             // Tampilkan SHUN
             window.buttonShun = function() {
@@ -279,6 +292,44 @@
                 }
             }
 
+            // Tampilkan Raport
+            window.buttonRaport = function() {
+                let inputRaport = $('#inputRaport')[0];
+                let divPreviewPDF = $('#divPreviewPDF');
+                let previewPDF = $('#previewPDF');
+
+                let fileRaport = inputRaport.files[0];
+                let readerRaport = new FileReader();
+
+                readerRaport.onloadend = function() {
+                    previewPDF.attr('src', readerRaport.result);
+                    divPreviewPDF.removeClass('hidden').addClass('fixed');
+                };
+
+                if (fileRaport) {
+                    readerRaport.readAsDataURL(fileRaport);
+                }
+            }
+
+            // Tampilkan TranskipNilai
+            window.buttonTranskipNilai = function() {
+                let inputTranskipNilai = $('#inputTranskipNilai')[0];
+                let divPreviewPDF = $('#divPreviewPDF');
+                let previewPDF = $('#previewPDF');
+
+                let fileTranskipNilai = inputTranskipNilai.files[0];
+                let readerTranskipNilai = new FileReader();
+
+                readerTranskipNilai.onloadend = function() {
+                    previewPDF.attr('src', readerTranskipNilai.result);
+                    divPreviewPDF.removeClass('hidden').addClass('fixed');
+                };
+
+                if (fileTranskipNilai) {
+                    readerTranskipNilai.readAsDataURL(fileTranskipNilai);
+                }
+            }
+
             // Close Modal PDF
             window.closePreviewPDF = function() {
                 let divPreviewPDF = $('#divPreviewPDF');
@@ -301,6 +352,19 @@
                     }
                 }
             };
+            // Alert jika file yang diunggah bukan PDF
+            $('form').on('change', 'input[type="file"][accept=".pdf"]', function() {
+                let inputFile = $(this);
+                let fileType = inputFile.prop('files')[0].type;
+
+                if (fileType !== 'application/pdf') {
+                    alert('File yang Anda unggah harus berformat PDF.');
+                    inputFile.val('');
+                    return false;
+                }
+            });
+
+
 
         });
     </script>

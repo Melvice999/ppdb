@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\BerandaModel;
+use App\Models\BerkasSiswa;
 use Illuminate\Http\Request;
 use App\Models\CalonSiswa;
+use App\Models\NoPendaftaranModel;
+use App\Models\NotifikasiAdminModel;
+use App\Models\NotifikasiModel;
+use App\Models\OtpModel;
 use App\Models\PengaturanModel;
+use App\Models\PenilaianModel;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+
 
 class CalonSiswaController extends Controller
 {
@@ -46,12 +54,31 @@ class CalonSiswaController extends Controller
         // Validasi input 
         $request->validate([
             'nik'       => 'min:16|unique:calon_siswa|',
-            'kk'        => 'min:16',
+            'no_hp'       => 'unique:calon_siswa|',
+            'password'  => 'required|min:6'
         ], [
             'nik.unique'    => 'NIK Telah terdaftar',
             'nik.min'       => 'Panjang NIK minimal 16 karakter',
-            'kk.min'        => 'Panjang KK minimal 16 karakter',
+            'no_hp.unique'  => 'No Hp Telah terdaftar',
+            'password.min'  => 'Password minimal 6 karakter.',
         ]);
+
+        // no_pendaftaran
+        $currentYear = date('Y');
+        $lastNoPendaftaran = CalonSiswa::whereYear('created_at', $currentYear)->max('no_pendaftaran');
+        // Mendapatkan nomor urut dari nomor pendaftaran terakhir pada tahun ini
+        $lastNomorUrut = $lastNoPendaftaran ? intval(substr($lastNoPendaftaran, -3)) : 0;
+        // Menambahkan 1 pada nomor urut
+        $nomor_urut = $lastNomorUrut + 1;
+        // Format nomor urut agar selalu tiga digit
+        $nomor_urut_formatted = sprintf('%03d', $nomor_urut);
+        // Membuat nomor pendaftaran baru
+        $no_pendaftaran = $currentYear . '-' . $nomor_urut_formatted;
+
+        // pas_foto
+        // $pasFoto = $request->file('pas_foto');
+        // $pasFotoName = $request->nik . '-Pas-Foto.png';
+        // $pasFoto->storeAs('siswa/pas-foto', $pasFotoName, 'public');
 
         // Function to fetch data and extract text value based on ID
         function fetchAndExtractText($url, $idField, $selectedId, $targetTextKey)
@@ -83,13 +110,13 @@ class CalonSiswaController extends Controller
 
         $siswa = [
             'nik' => $request->nik,
-            'kk' => $request->kk,
+            'no_pendaftaran' => $no_pendaftaran,
+            'password' => Hash::make($request->password),
             'nama' => $request->nama,
             'tempat_lahir' => $request->tempat_lahir,
             'tanggal_lahir' => $request->tanggal_lahir,
             'no_hp' => $request->no_hp,
             'jenis_kelamin' => $request->jenis_kelamin,
-            'warga_negara' => $request->warga_negara,
             'rt' => $request->rt,
             'rw' => $request->rw,
             'provinsi' => $textValueProvinsi,
@@ -97,43 +124,223 @@ class CalonSiswaController extends Controller
             'kecamatan' => $textValueKecamatan,
             'desa' => $textValueDesa,
             'kode_pos' => $textValueKodePos,
-            'prodi' => $request->prodi,
-            'batik' => $request->batik,
-            'olahraga' => $request->olahraga,
-            'wearpack' => $request->wearpack,
-            'asal_sekolah' => $request->asal_sekolah,
-            'tahun_lulus' => $request->tahun_lulus,
-            'nama_ayah' => $request->nama_ayah,
-            'nama_ibu' => $request->nama_ibu,
-            'no_hp_wali' => $request->no_hp_wali,
-            'rt_wali' => $request->rt_wali,
-            'rw_wali' => $request->rw_wali,
-            'provinsi_wali' => $textValueProvinsiWali,
-            'kabupaten_wali' => $textValueKabupatenWali,
-            'kecamatan_wali' => $textValueKecamatanWali,
-            'desa_wali' => $textValueDesaWali,
-            'kode_pos_wali' => $textValueKodePosWali,
-            'pekerjaan_wali' => $request->pekerjaan_wali,
-            'pendidikan_wali' => $request->pendidikan_wali,
-            'info_sekolah' => $request->info_sekolah,
+            'notifikasi_admin' => 'Pendaftar Baru',
+
+            // detail calon siswa
+            // 'pas_foto' => $pasFotoName,
+            // 'prodi' => $request->prodi,
+            // 'wearpack' => $request->wearpack,
+            // 'asal_sekolah' => $request->asal_sekolah,
+            // 'tahun_lulus' => $request->tahun_lulus,
+            // 'jalur_pendaftaran' => $request->jalur_pendaftaran,
+            // 'nama_ayah' => $request->nama_ayah,
+            // 'nama_ibu' => $request->nama_ibu,
+            // 'no_hp_wali' => $request->no_hp_wali,
+            // 'pekerjaan_wali' => $request->pekerjaan_wali,
+
+
+
         ];
 
         CalonSiswa::create($siswa);
+        NotifikasiModel::create(['notifikasi' => 'Pendaftaran sedang diproses', 'nik' => $request->nik]);
+        PenilaianModel::create(['nik' => $request->nik]);
 
-        $informasi    = PengaturanModel::select('j_informasi', 'informasi')->first();
+        // // start api whatsapp
+        // $otp = mt_rand(100000, 999999);
+        // $waktu = now()->toDateTimeString();
+
+        // OtpModel::create([
+        //     'nik' => $request->nik,
+        //     'otp' => $otp,
+        //     'waktu' => $waktu,
+        // ]);
+
+        // $target = $request->no_hp;
+        // $message = "Selamat datang di PPDB SMK Maarif NU Doro. Kode OTP Anda adalah 
+
+        // " . $otp .
+
+        //     "Kode OTP yang telah Anda terima hanya akan berlaku untuk 10 menit. Mohon untuk tidak memberikan kode ini kepada siapapun. Terima kasih atas kerjasama Anda. ";
+
+        // $token = env('FONTTE_API_TOKEN');
+
+        // $ch = curl_init();
+
+        // curl_setopt_array($ch, array(
+        //     CURLOPT_URL => 'https://api.fonnte.com/send',
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => '',
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => 'POST',
+        //     CURLOPT_POSTFIELDS => array(
+        //         'target' => $target,
+        //         'message' => $message,
+        //     ),
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Authorization: ' . $token
+        //     ),
+        //     CURLOPT_SSL_VERIFYPEER => false,
+        // ));
+        // curl_exec($ch);
+
+        // curl_close($ch);
+        // // end api whatsapp
+
+        return redirect()->to(url('daftar/otp/' . $request->nik . '/' . $request->no_hp));
+
+        // return redirect()->to(url('auth-siswa'))->with('success', 'Selamat anda berhasil mendaftar')
+        //     ->with('sukses', 'silahkan login');
+    }
+
+    public function otp(Request $request)
+    {
+        $noHp = $request->route('no_hp');
+        $nik = $request->route('nik');
+
+        // Mencari calon siswa berdasarkan no hp dan nik
+        $calonSiswa = CalonSiswa::where('no_hp', $noHp)->where('nik', $nik)->first();
+
+        // Jika calon siswa tidak ditemukan, tampilkan error 404
+        if (!$calonSiswa) {
+            abort(404);
+        }
+
+        $pendaftaran = PengaturanModel::select('pendaftaran')->first();
 
         $beranda = BerandaModel::where('status', 1)->get();
         $hasil_seleksi = PengaturanModel::select('hasil_seleksi')->first();
         $pengaturan = PengaturanModel::get();
         $data = [
+            'calonSiswa'        => $calonSiswa,
             'beranda'           => $beranda,
             'pengaturan'        => $pengaturan,
             'hasil_seleksi'     => $hasil_seleksi,
-            'informasi'         => $informasi,
-            'title'             => "Informasi | PPDB SMK Ma'arif NU Doro",
+            'pendaftaran'       => $pendaftaran,
+            'title'             => "Formulir Pendaftaran | PPDB SMK Ma'arif NU Doro",
         ];
 
-        return redirect()->to(url('informasi-pendaftaran'))->with('success', 'Data berhasil disimpan');
+        return view('guest/daftar/otp', $data);
+    }
+
+    public function otpRequest(Request $request)
+    {
+        // if (condition) {
+        //     # code...
+        // }
+        $nik = $request->nik;
+        OtpModel::where('nik', $nik)->delete();
+
+        // start api whatsapp
+        $otp = mt_rand(100000, 999999);
+        $waktu = now()->toDateTimeString();
+
+        OtpModel::create([
+            'nik' => $request->nik,
+            'otp' => $otp,
+            'waktu' => $waktu,
+        ]);
+
+        $target = $request->no_hp;
+        $message = "PPDB SMK Maarif NU Doro. Kode OTP Anda adalah 
+          
+          " . $otp .
+
+            "Kode OTP yang telah Anda terima hanya akan berlaku untuk 10 menit. Mohon untuk tidak memberikan kode ini kepada siapapun. Terima kasih atas kerjasama Anda. ";
+
+        $token = env('FONTTE_API_TOKEN');
+
+        $ch = curl_init();
+
+        curl_setopt_array($ch, array(
+            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'target' => $target,
+                'message' => $message,
+            ),
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: ' . $token
+            ),
+            CURLOPT_SSL_VERIFYPEER => false,
+        ));
+        curl_exec($ch);
+
+        curl_close($ch);
+        // end api whatsapp
+        return redirect()->back()->with('success', 'Kode OTP telah dikirim ke nomor WhatsApp ' . $request->no_hp);
+    }
+
+    public function otpPost(Request $request)
+    {
+
+        $otp = OtpModel::where('nik', $request->nik)
+            ->where('otp', $request->otp)
+            ->first();
+
+        if ($otp) {
+            // Cek apakah OTP masih berlaku (misalnya, batas waktu 10 menit)
+            $waktuOtp = strtotime($otp->waktu);
+            $waktuSekarang = time();
+
+            if ($waktuSekarang - $waktuOtp <= 600) { // 600 detik = 10 menit
+                $nik = $request->nik;
+                $no_hp = $request->no_hp;
+                $kodeOtp = $request->otp;
+                // OTP valid
+                return redirect()->to(url('daftar/detail-calon-siswa/' . $nik . '/' . $no_hp . '/' . $kodeOtp));
+            } else {
+                // OTP kedaluwarsa
+                return redirect()->back()->with('error', 'OTP kaledaluwarsa');
+            }
+        } else {
+            // OTP tidak valid
+            return redirect()->back()->with('error', 'OTP tidak valid');
+        }
+    }
+
+    public function detailCalonSiswa(Request $request)
+    {
+        $otp = OtpModel::where('otp', $request->route('otp'))->first();
+
+        if (!$otp) {
+            abort(404);
+        }
+
+
+        $calonSiswa = CalonSiswa::where('nik', $request->route('nik'))->first();
+        $otp = OtpModel::where('nik', $calonSiswa->nik)->first();
+
+        $pendaftaran = PengaturanModel::select('pendaftaran')->first();
+
+        $beranda = BerandaModel::where('status', 1)->get();
+        $hasil_seleksi = PengaturanModel::select('hasil_seleksi')->first();
+        $pengaturan = PengaturanModel::get();
+        $data = [
+            'calonSiswa'        => $calonSiswa,
+            'otp'               => $otp,
+            'beranda'           => $beranda,
+            'pengaturan'        => $pengaturan,
+            'hasil_seleksi'     => $hasil_seleksi,
+            'pendaftaran'       => $pendaftaran,
+            'title'             => "Formulir Pendaftaran | PPDB SMK Ma'arif NU Doro",
+        ];
+
+        return view('guest/daftar/detail-calon-siswa', $data);
+    }
+
+    public function detailCalonSiswaPost()  {
+        // save data tambahan calonsiswa dengan save wali
+        // redirect ke login
     }
 
     public function informasi()
@@ -156,7 +363,7 @@ class CalonSiswaController extends Controller
 
     public function hasilSeleksi()
     {
-        $siswa    = CalonSiswa::where('status', '1')->where('tahun_daftar', now()->year)->get();
+        $siswa    = CalonSiswa::where('status', '1')->orderBy('prodi', 'desc')->where('tahun_daftar', now()->year)->get();
 
         $beranda = BerandaModel::where('status', 1)->get();
         $hasil_seleksi = PengaturanModel::select('hasil_seleksi')->first();

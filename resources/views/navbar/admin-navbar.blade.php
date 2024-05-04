@@ -30,7 +30,7 @@
 
                 <form action="{{ route('admin-penelusuran') }}" method="GET">
                     <div class="flex mt-3">
-                        <button type="submit" class="border border-l-sky-blue">
+                        <button type="submit" class=" ">
                             <i class="fa-solid fa-magnifying-glass text-lg me-3 text-d-green"></i>
                         </button>
                         <input type="text" name="search" placeholder="Cari..."

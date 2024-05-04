@@ -13,8 +13,9 @@ class BerkasSiswa extends Model
     protected $fillable = [
         'akta',
         'kk',
-        'pas_foto',
         'shun',
         'ijazah',
+        'raport',
+        'transkip_nilai'
     ];
 }

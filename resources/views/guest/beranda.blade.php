@@ -41,7 +41,7 @@
                         </a>
                         <a href="{{ route('auth-siswa') }}"
                             class="w-48 h-10 flex justify-center items-center border rounded border-d-green bg-white cursor-pointer max-md:mt-4">
-                            Login
+                            Masuk
                         </a>
 
                     </div>

@@ -28,7 +28,7 @@
         <ul class="mt-5 max-md:hidden ">
             <li class="mt-3 h-14 px-4 bg-l-sky-blue rounded-2xl border border-l-sky-blue">
 
-                {{-- <form action="{{ route('admin-penelusuran') }}" method="GET"> --}}
+                <form action="{{ route('headmaster-penelusuran') }}" method="GET">
                 <div class="flex mt-3">
                     <button type="submit" class="border border-l-sky-blue">
                         <i class="fa-solid fa-magnifying-glass text-lg text-d-green"></i>
@@ -40,49 +40,41 @@
             </li>
 
             <a href="{{ route('headmaster-beranda') }}">
-                <li class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 rounded-2xl">
+                <li
+                    class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 rounded-2xl  {{ $title === 'Beranda Kepala Sekolah' ? 'bg-l-sky-blue text-d-green' : 'hover:bg-white hover:text-d-green' }}">
                     <i class="fa-solid fa-house text-lg"></i>
                     <span class="whitespace-nowrap">&nbsp;&nbsp;&nbsp; Beranda</span>
                 </li>
             </a>
 
-            {{-- <a href="{{ route('headmaster-cetak-berkas') }}"> --}}
-            <li class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 rounded-2xl cursor-pointer"
+            <li class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 rounded-2xl cursor-pointer {{ $title === 'Beranda Admin' ? 'bg-l-sky-blue text-d-green' : 'hover:bg-white hover:text-d-green' }}"
                 id="toggleCetakBerkas">
                 <i class="fa-solid fa-print text-lg"></i>
                 <span class="whitespace-nowrap">&nbsp;&nbsp;&nbsp; Cetak Berkas</span>
 
                 <i class="fa-solid fa-caret-down ms-4" id="iconToggleCetakBerkas"></i>
             </li>
-            {{-- </a> --}}
 
-            <div class="hidden" id="menuCetakBerkas">
-                <a href="{{ route('headmaster-cetak-formulir-sekarang') }}">
-                    <li class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 rounded-2xl">
-                        <div class="flex items-center">
-                            <i class="fa-regular fa-file"></i>
+            <div class="{{ ($title === 'Cetak Rekap PPDB' or $title === 'Cetak Formulir') ? '' : 'hidden' }}"
+                id="menuCetakBerkas">
 
-                            <span class="ms-2">
-                                Formulir {{ now()->year }}
-                            </span>
-                        </div>
-                    </li>
-                </a>
 
-                <a href="{{ route('headmaster-cetak-formulir-tahun') }}">
-                    <li class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 rounded-2xl">
+                <a href="{{ route('headmaster-formulir-tahun') }}">
+                    <li
+                        class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 rounded-2xl  {{ $title === 'Cetak Formulir' ? 'bg-l-sky-blue text-d-green' : 'hover:bg-white hover:text-d-green' }}">
                         <div class="flex items-center">
                             <i class="fa-regular fa-calendar"></i>
 
                             <span class="ms-2">
-                                Formulir Tahun
+                                Formulir
                             </span>
                         </div>
                     </li>
                 </a>
 
-                <a href="{{ route('headmaster-cetak-rekap-ppdb') }}">
-                    <li class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 rounded-2xl">
+                <a href="{{ route('headmaster-rekap-ppdb') }}">
+                    <li
+                        class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 rounded-2xl  {{ $title === 'Cetak Rekap PPDB' ? 'bg-l-sky-blue text-d-green' : 'hover:bg-white hover:text-d-green' }}">
                         <div class="flex items-center">
                             <i class="fa-solid fa-table"></i>
 
@@ -95,20 +87,21 @@
 
             </div>
 
-            {{-- <a href="{{ route('admin-pusat-akun') }}"> --}}
-            <li class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 rounded-2xl">
-                <i class="fa-solid fa-user text-lg"></i>
-                <span class="whitespace-nowrap">&nbsp;&nbsp;&nbsp; Pusat Akun</span>
-            </li>
+            <a href="{{ route('headmaster-pusat-akun') }}">
+                <li
+                    class="border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 rounded-2xl {{ $title === 'Pusat Akun' ? 'bg-l-sky-blue text-d-green' : 'hover:bg-white hover:text-d-green' }}">
+                    <i class="fa-solid fa-user text-lg"></i>
+                    <span class="whitespace-nowrap">&nbsp;&nbsp;&nbsp; Pusat Akun</span>
+                </li>
             </a>
 
-            {{-- <a href="{{ route('admin-logout') }}"> --}}
-            <li class="absolute border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 hover:bg-white hover:text-d-green rounded-2xl bottom-5  w-4/5 max-md:w-full max-md:relative max-md:bottom-0 max-md:mt-6 mb-3"
-                id="logout">
-                <i class="fa-solid fa-right-from-bracket text-lg"></i>
-                <span>&nbsp;&nbsp;&nbsp;
-                    Logout</span>
-            </li>
+            <a href="{{ route('headmaster-logout') }}">
+                <li class="absolute border border-opacity-50 border-white flex items-center mt-3 h-14 px-4 hover:bg-white hover:text-d-green rounded-2xl bottom-5  w-4/5 max-md:w-full max-md:relative max-md:bottom-0 max-md:mt-6 mb-3"
+                    id="logout">
+                    <i class="fa-solid fa-right-from-bracket text-lg"></i>
+                    <span>&nbsp;&nbsp;&nbsp;
+                        Logout</span>
+                </li>
             </a>
 
         </ul>
