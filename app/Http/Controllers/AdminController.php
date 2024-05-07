@@ -466,9 +466,10 @@ class AdminController extends Controller
         }
 
         $request->validate([
-            'nik'       => 'min:16',
+            'nik'       => 'min:16|max:16',
         ], [
-            'nik.min'       => 'Panjang NIK minimal 16 karakter',
+            'nik.min'       => 'Panjang NIK harus 16 karakter',
+            'nik.max'       => 'Panjang NIK harus 16 karakter',
         ]);
 
         PenilaianModel::where('nik', $id)->update([
@@ -499,7 +500,6 @@ class AdminController extends Controller
         }
 
         CalonSiswa::where('nik', $id)->update([
-            'nik' => $request->nik,
             'no_pendaftaran' => $request->no_pendaftaran,
             'nama' => $request->nama,
             'tempat_lahir' => $request->tempat_lahir,
@@ -540,7 +540,7 @@ class AdminController extends Controller
         $siswa = CalonSiswa::where('nik', $id);
         $nama = $siswa->where('nik', $id)->first();
 
-        CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Pendaftar Baru']);
+        CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Berkas Terupdate']);
         $siswa->update(['status' => 0]);
 
         return redirect()->back()->with('success', 'Status ' . $nama->nama . ' berhasil diperbarui');
@@ -557,8 +557,6 @@ class AdminController extends Controller
         ]);
 
         $nama = $siswa->where('nik', $id)->first();
-        CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Lulus Ujian']);
-
 
         $siswa->update(['status' => 1]);
         return redirect()->back()->with('success', 'Status ' . $nama->nama . ' berhasil diperbarui');
@@ -568,7 +566,6 @@ class AdminController extends Controller
     {
         $berkasSiswa = BerkasSiswa::where('nik', $id)->first();
         $user = CalonSiswa::where('nik', $id)->first();
-
 
         // Periksa apakah data ada sebelum mencoba untuk menghapusnya
         if ($berkasSiswa) {

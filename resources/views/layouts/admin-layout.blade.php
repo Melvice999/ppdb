@@ -29,6 +29,7 @@
 
     <section class="mt-0 ml-60 h-screen py-3 px-10 max-md:mt-20 max-md:ml-0 max-md:w-full">
         @yield('content')
+        <div class="pt-10"></div>
     </section>
 </body>
 

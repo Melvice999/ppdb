@@ -39,13 +39,12 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($user->sortBy('no_pendaftaran') as $i => $item)
-
+                @foreach ($user->sortBy(['detailCalonSiswa.prodi', 'nama']) as $item)
                     <tr>
-                        <td class="border px-2">{{ $i + 1 }}</td>
+                        <td class="border px-2 nomor-urut"></td>
                         <td class="border px-2">{{ $item->no_pendaftaran }}</td>
                         <td class="border px-2">{{ $item->nama }}</td>
-                        <td class="border px-2">{{ $item->prodi }}</td>
+                        <td class="border px-2">{{ $item->detailCalonSiswa->prodi }}</td>
                         <td class="border px-2">{{ $item->jenis_kelamin }}</td>
                         <td class="border px-2">{{ $item->tempat_lahir }}, {{ $item->tanggal_lahir }}</td>
                         <td class="border px-2">{{ $item->no_hp }}</td>
@@ -60,10 +59,29 @@
 
 
         @php
-            $cakl = App\Models\CalonSiswa::where('tahun_daftar', $tahun)->where('prodi', 'akl')->count();
-            $ctbsm = App\Models\CalonSiswa::where('tahun_daftar', $tahun)->where('prodi', 'tbsm')->count();
-            $ctkro = App\Models\CalonSiswa::where('tahun_daftar', $tahun)->where('prodi', 'tkro')->count();
-            $ctkj = App\Models\CalonSiswa::where('tahun_daftar', $tahun)->where('prodi', 'tkj')->count();
+            $cakl = App\Models\CalonSiswa::whereHas('detailCalonSiswa', function ($query) {
+                $query->where('prodi', 'AKL');
+            })
+                ->where('tahun_daftar', $tahun)
+                ->count();
+
+            $ctbsm = App\Models\CalonSiswa::whereHas('detailCalonSiswa', function ($query) {
+                $query->where('prodi', 'TBSM');
+            })
+                ->where('tahun_daftar', $tahun)
+                ->count();
+
+            $ctkro = App\Models\CalonSiswa::whereHas('detailCalonSiswa', function ($query) {
+                $query->where('prodi', 'TKRO');
+            })
+                ->where('tahun_daftar', $tahun)
+                ->count();
+
+            $ctkj = App\Models\CalonSiswa::whereHas('detailCalonSiswa', function ($query) {
+                $query->where('prodi', 'TKJ');
+            })
+                ->where('tahun_daftar', $tahun)
+                ->count();
         @endphp
 
     </div>
@@ -103,4 +121,12 @@
             </tr>
         </tbody>
     </table>
+
+    <script>
+        const nomorUrutElementsUnverify = document.querySelectorAll('.nomor-urut')
+        // Loop melalui semua elemen dan atur nomor urut
+        nomorUrutElementsUnverify.forEach((element, index) => {
+            element.textContent = index + 1;
+        });
+    </script>
 @endsection

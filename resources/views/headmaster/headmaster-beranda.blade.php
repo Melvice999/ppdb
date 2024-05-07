@@ -14,11 +14,11 @@
         use App\Models\CalonSiswa; // Pastikan Anda mengimpor namespace model jika belum melakukannya
 
         // Hitung jumlah calon siswa untuk setiap tahun
-        $pertama = CalonSiswa::where('notifikasi_admin', 'Lulus Ujian')->where('tahun_daftar', $startYear - 4)->count();
-        $kedua = CalonSiswa::where('notifikasi_admin', 'Lulus Ujian')->where('tahun_daftar', $startYear - 3)->count();
-        $ketiga = CalonSiswa::where('notifikasi_admin', 'Lulus Ujian')->where('tahun_daftar', $startYear - 2)->count();
-        $keempat = CalonSiswa::where('notifikasi_admin', 'Lulus Ujian')->where('tahun_daftar', $startYear - 1)->count();
-        $kelima = CalonSiswa::where('notifikasi_admin', 'Lulus Ujian')->where('tahun_daftar', $startYear)->count();
+        $pertama = CalonSiswa::where('notifikasi_admin', 'Pendaftaran Selesai')->where('tahun_daftar', $startYear - 4)->count();
+        $kedua = CalonSiswa::where('notifikasi_admin', 'Pendaftaran Selesai')->where('tahun_daftar', $startYear - 3)->count();
+        $ketiga = CalonSiswa::where('notifikasi_admin', 'Pendaftaran Selesai')->where('tahun_daftar', $startYear - 2)->count();
+        $keempat = CalonSiswa::where('notifikasi_admin', 'Pendaftaran Selesai')->where('tahun_daftar', $startYear - 1)->count();
+        $kelima = CalonSiswa::where('notifikasi_admin', 'Pendaftaran Selesai')->where('tahun_daftar', $startYear)->count();
 
         // Format data untuk grafik
         $dataFromDatabase = [$pertama, $kedua, $ketiga, $keempat, $kelima];

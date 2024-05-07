@@ -145,7 +145,8 @@
 
                         <option
                             class="{{ $siswa->notifikasi_admin == 'Siap Ujian' || $siswa->notifikasi_admin == 'Tidak Lulus Ujian' ? '' : 'hidden' }}"
-                            value="Lengkapi Berkas" {{ $siswa->notifikasi_admin == 'Lulus Ujian' || $siswa->notifikasi_admin == 'Lengkapi Berkas' ? 'selected' : '' }}>
+                            value="Lengkapi Berkas"
+                            {{ $siswa->notifikasi_admin == 'Lulus Ujian' || $siswa->notifikasi_admin == 'Lengkapi Berkas' ? 'selected' : '' }}>
                             Lulus
                             Ujian & Lengkapi Berkas
                         </option>
@@ -213,7 +214,7 @@
                         <option
                             class="{{ $siswa->notifikasi_admin == 'Berkas Terupload' || $siswa->notifikasi_admin == 'Berkas Terupdate' ? '' : 'hidden' }}"
                             value="Pendaftaran Selesai"
-                            {{ $siswa->notifikasi_admin == 'Pendaftaran Selesai' || $siswa->notifikasi_admin == 'Berkas Terupload' ? 'selected' : '' }}>
+                            {{ $siswa->notifikasi_admin == 'Pendaftaran Selesai' || $siswa->notifikasi_admin == 'Berkas Terupload' || $siswa->notifikasi_admin == 'Berkas Terupdate' ? 'selected' : '' }}>
                             Pendaftaran Selesai
                         </option>
 
@@ -337,13 +338,16 @@
                 <label class="w-1/5" for="no_pendaftaran">No Pendaftaran</label><br>
                 <input type="text" name="no_pendaftaran" value="{{ $siswa->no_pendaftaran }}"
                     placeholder="Masukan No Pendaftaran"
-                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
+                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off"
+                    required>
             </div>
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
                 <label class="w-1/5" for="nik">NIK</label><br>
                 <input type="number" name="nik" value="{{ $siswa->nik }}" placeholder="Masukan NIK"
-                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
+                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                    maxlength="16" class="py-2 border text-grey border-d-green w-full ps-2 rounded-xl focus:outline-none"
+                    autocomplete="off" required disabled>
             </div>
 
 
@@ -357,7 +361,8 @@
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
                 <label class="w-1/5" for="nama">Nama Lengkap</label><br>
                 <input type="text" name="nama" value="{{ $siswa->nama }}" placeholder="Masukan Nama Lengkap"
-                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
+                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off"
+                    required>
             </div>
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
@@ -375,19 +380,23 @@
                 <label class="w-1/5" for="tempat_lahir">Tempat Lahir</label><br>
                 <input type="text" name="tempat_lahir" value="{{ $siswa->tempat_lahir }}"
                     placeholder="Masukan Tempat Lahir"
-                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
+                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off"
+                    required>
             </div>
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
                 <label class="w-1/5" for="tanggal_lahir">Tanggal Lahir</label><br>
                 <input type="date" name="tanggal_lahir" value="{{ $siswa->tanggal_lahir }}"
-                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
+                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off"
+                    required>
             </div>
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
                 <label class="w-1/5" for="no_hp">No Hp</label><br>
                 <input type="number" name="no_hp" value="{{ $siswa->no_hp }}" placeholder="Masukan No Hp"
-                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
+                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                    maxlength="16" class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none"
+                    autocomplete="off" required>
             </div>
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
@@ -423,13 +432,15 @@
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
                 <label class="w-1/5" for="rt">RT</label><br>
                 <input type="number" name="rt" value="{{ $siswa->rt }}" placeholder="Masukan RT"
-                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
+                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off"
+                    required>
             </div>
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
                 <label class="w-1/5" for="rw">RW</label><br>
                 <input type="number" name="rw" value="{{ $siswa->rw }}" placeholder="Masukan RW"
-                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
+                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off"
+                    required>
             </div>
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
@@ -479,42 +490,49 @@
                 <label class="w-1/5" for="asal_sekolah">Asal Sekolah</label><br>
                 <input type="text" name="asal_sekolah" value="{{ $siswa->detailCalonSiswa->asal_sekolah }}"
                     placeholder="Masukan Nama Asal Sekolah"
-                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
+                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off"
+                    required>
             </div>
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
                 <label class="w-1/5" for="tahun_lulus">Tahun Lulus</label><br>
                 <input type="number" name="tahun_lulus" value="{{ $siswa->detailCalonSiswa->tahun_lulus }}"
                     placeholder="Masukan Tahun Lulus"
-                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
+                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off"
+                    required>
             </div>
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
                 <label class="w-1/5" for="nama_ayah">Nama Ayah</label><br>
                 <input type="text" name="nama_ayah" value="{{ $siswa->detailCalonSiswa->nama_ayah }}"
                     placeholder="Masukan Nama Ayah"
-                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
+                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off"
+                    required>
             </div>
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
                 <label class="w-1/5" for="nama_ibu">Nama Ibu</label><br>
                 <input type="text" name="nama_ibu" value="{{ $siswa->detailCalonSiswa->nama_ibu }}"
                     placeholder="Masukan Nama Ibu"
-                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
+                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off"
+                    required>
             </div>
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
                 <label class="w-1/5" for="no_hp_wali">No Hp Wali</label><br>
                 <input type="number" name="no_hp_wali" value="{{ $siswa->detailCalonSiswa->no_hp_wali }}"
                     placeholder="Masukan No Hp Wali"
-                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
+                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                    maxlength="16" class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none"
+                    autocomplete="off" required>
             </div>
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
                 <label class="w-1/5" for="pekerjaan_wali">Pekerjaan Wali</label><br>
                 <input type="text" name="pekerjaan_wali" value="{{ $siswa->detailCalonSiswa->pekerjaan_wali }}"
                     placeholder="Masukan Pekerjaan Wali"
-                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
+                    class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off"
+                    required>
             </div>
 
         </div>

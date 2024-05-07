@@ -43,6 +43,7 @@ class CalonSiswa extends Model implements Authenticatable
     {
         return $query->whereHas('detailCalonSiswa', function ($query) use ($keyword) {
             $query->where('nik', 'like', '%' . $keyword . '%')
+                ->orWhere('no_pendaftaran', 'like', '%' . $keyword . '%')
                 ->orWhere('nama', 'like', '%' . $keyword . '%')
                 ->orWhere('desa', 'like', '%' . $keyword . '%')
                 ->orWhere('kecamatan', 'like', '%' . $keyword . '%')
@@ -54,6 +55,7 @@ class CalonSiswa extends Model implements Authenticatable
     {
         return $query->whereHas('detailCalonSiswa', function ($query) use ($keyword) {
             $query->where('nik', 'like', '%' . $keyword . '%')
+                ->orWhere('no_pendaftaran', 'like', '%' . $keyword . '%')
                 ->orWhere('nama', 'like', '%' . $keyword . '%')
                 ->orWhere('desa', 'like', '%' . $keyword . '%')
                 ->orWhere('kecamatan', 'like', '%' . $keyword . '%')

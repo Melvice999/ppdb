@@ -44,7 +44,11 @@
                     <label for="nik">NIK</label><br>
                     <input type="number" name="nik" value="{{ old('nik') }}"
                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                        maxlength="16" placeholder="Masukan NIK" class="border-b w-full focus:outline-none" required>
+                        maxlength="16" placeholder="Masukan NIK" class="border-b w-full focus:outline-none mb-4" required>
+
+                        <span class="text-grey">
+                            <li>Pastikan Anda memasukkan NIK yang valid </li>
+                        </span>
                 </div>
 
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
@@ -95,7 +99,7 @@
                 </div>
 
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
-                    <label for="no_hp">No Hp</label><br>
+                    <label for="no_hp">No WhatsApp</label><br>
                     <input type="number" name="no_hp" value="{{ old('no_hp') }}"
                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                         maxlength="15" placeholder="Masukan No Hp" class="border-b w-full focus:outline-none mb-2" required>

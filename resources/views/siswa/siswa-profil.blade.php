@@ -76,31 +76,16 @@
                         </div>
                         <div class="col-span-4 flex">
 
-                            {{-- 
-                               'Pendaftar Baru'
-                                'Cetak Formulir'
-                                'Formulir Tercetak'
-                                'Siap Ujian'
-                                'Ujian Selesai'
-                                'Lulus Ujian'
-                                'Lengkapi Berkas'
-                                'Berkas Terupload'
-                                'Masukan Akta Yang Valid'
-                                'Masukan KK Yang Valid'
-                                'Masukan SHUN Yang Valid'
-                                'Masukan Ijazah Yang Valid'
-                                'Masukan Raport Yang Valid'
-                                'Masukan Transkip Nilai Yang Valid'
-                                'Masukan Pas Foto Yang Valid'
-                                'Berkas Terupdate'
-                                'Pendaftaran Selesai'
-                            --}}
-
-                            {{-- {{ $user->notifikasi_admin === 'Lulus Ujian' ? '-' : '' }} --}}
-
                             <a href="{{ route(
                                 match ($user->notifikasi_admin) {
-                                    'Pendaftar Baru', 'Siap Ujian', 'Lulus Ujian', 'Tidak Lulus Ujian', 'Berkas Terupload', 'Berkas Terupdate' => 'siswa-profil',
+                                    'Pendaftar Baru',
+                                    'Siap Ujian',
+                                    'Lulus Ujian',
+                                    'Tidak Lulus Ujian',
+                                    'Berkas Terupload',
+                                    'Berkas Terupdate',
+                                    'Pendaftaran Selesai'
+                                        => 'siswa-profil',
                             
                                     'Masukan Pas Foto Yang Valid' => 'siswa-pengaturan-akun',
                             
@@ -114,16 +99,7 @@
                                     'Masukan Ijazah Yang Valid',
                                     'Masukan Raport Yang Valid',
                                     'Masukan Transkip Nilai Yang Valid'
-                                        => 'siswa-update-berkas', // 'Berkas Terupload' => 'siswa-upload-berkas',
-                                    // 'Perbarui Akta Yang Valid',
-                                    // 'Perbarui KK Yang Valid',
-                                    // 'Perbarui Pas Foto Yang Valid',
-                                    // 'Perbarui SHUN Yang Valid',
-                                    // 'Perbarui Ijazah Yang Valid',
-                                    // 'Perbarui Raport Yang Valid',
-                                    // 'Perbarui Transkip Nilai Yang Valid'
-                                    //     => 'siswa-update-berkas',
-                                    // default => 'siswa-cetak-formulir',
+                                        => 'siswa-update-berkas',
                                 },
                             ) }}"
                                 class="flex">
@@ -167,7 +143,6 @@
                                             tunggu admin menverifikasi berkas anda
                                         @break
 
-                                        
                                         @case('Berkas Terupdate')
                                             Berkas terupdate <br>
                                             tunggu admin menverifikasi berkas anda
@@ -197,27 +172,9 @@
                                             Masukan Transkip Nilai Yang Valid
                                         @break
 
-                                        {{-- @case('Lengkapi Berkas')
-                                            Upload Berkas
+                                        @case('Pendaftaran Selesai')
+                                            Pendaftaran Selesai
                                         @break
-
-                                        @case('Perbarui Akta Yang Valid')
-                                        @case('Perbarui KK Yang Valid')
-
-                                        @case('Perbarui Pas Foto Yang Valid')
-                                        @case('Perbarui SHUN Yang Valid')
-
-                                        @case('Perbarui Ijazah Yang Valid')
-                                        @case('Perbarui Raport Yang Valid')
-
-                                        @case('Perbarui Transkip Nilai Yang Valid')
-                                            Update Berkas
-                                        @break
-
-                                        @default
-                                            @if ($user->notifikasi_admin !== 'Selamat anda lulus ujian pendaftaran')
-                                                Cetak Formulir
-                                            @endif --}}
                                     @endswitch
                                 </div>
 

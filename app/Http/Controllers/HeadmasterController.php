@@ -38,29 +38,37 @@ class HeadmasterController extends Controller
 
     public function cetakFormulirTahun($id)
     {
-        $tkj = CalonSiswa::where('notifikasi_admin', 'Lulus Ujian')
+        $tkj = CalonSiswa::whereHas('detailCalonSiswa', function ($query) {
+            $query->where('prodi', 'TKJ');
+        })
+            ->where('notifikasi_admin', 'Pendaftaran Selesai')
             ->where('tahun_daftar', $id)
-            ->where('prodi', 'TKJ')
+            ->orderBy('nama', 'asc')
+            ->get();
+        $tbsm = CalonSiswa::whereHas('detailCalonSiswa', function ($query) {
+            $query->where('prodi', 'TBSM');
+        })
+            ->where('notifikasi_admin', 'Pendaftaran Selesai')
+            ->where('tahun_daftar', $id)
             ->orderBy('nama', 'asc')
             ->get();
 
-        $tbsm = CalonSiswa::where('notifikasi_admin', 'Lulus Ujian')
+        $akl = CalonSiswa::whereHas('detailCalonSiswa', function ($query) {
+            $query->where('prodi', 'AKL');
+        })
+            ->where('notifikasi_admin', 'Pendaftaran Selesai')
             ->where('tahun_daftar', $id)
-            ->where('prodi', 'TBSM')
             ->orderBy('nama', 'asc')
             ->get();
 
-        $tkro = CalonSiswa::where('notifikasi_admin', 'Lulus Ujian')
+        $tkro = CalonSiswa::whereHas('detailCalonSiswa', function ($query) {
+            $query->where('prodi', 'TKRO');
+        })
+            ->where('notifikasi_admin', 'Pendaftaran Selesai')
             ->where('tahun_daftar', $id)
-            ->where('prodi', 'TKRO')
             ->orderBy('nama', 'asc')
             ->get();
 
-        $akl = CalonSiswa::where('notifikasi_admin', 'Lulus Ujian')
-            ->where('tahun_daftar', $id)
-            ->where('prodi', 'AKL')
-            ->orderBy('nama', 'asc')
-            ->get();
 
         $data = [
             'tahun'     => $id,
@@ -81,7 +89,7 @@ class HeadmasterController extends Controller
     public function cetakFormulirSiswa($id)
     {
 
-        $user = CalonSiswa::where('nik', $id)->where('notifikasi_admin', 'Lulus Ujian')->first();
+        $user = CalonSiswa::where('nik', $id)->where('notifikasi_admin', 'Pendaftaran Selesai')->first();
         $penilaian = PenilaianModel::where('nik', $id)->first();
 
         $data = [
@@ -95,7 +103,7 @@ class HeadmasterController extends Controller
 
     public function cetakFormulirSiswaPost($id)
     {
-        $user = CalonSiswa::where('nik', $id)->where('notifikasi_admin', 'Lulus Ujian')->first();
+        $user = CalonSiswa::where('nik', $id)->where('notifikasi_admin', 'Pendaftaran Selesai')->first();
         $penilaian = PenilaianModel::where('nik', $id)->first();
 
         $data = [
@@ -130,7 +138,7 @@ class HeadmasterController extends Controller
 
     public function rekapPpdb()
     {
-        $tahun = CalonSiswa::where('notifikasi_admin', 'Lulus Ujian')->select('tahun_daftar')->groupBy('tahun_daftar')->get();
+        $tahun = CalonSiswa::where('notifikasi_admin', 'Pendaftaran Selesai')->select('tahun_daftar')->groupBy('tahun_daftar')->get();
 
         $data = [
             'tahun'     => $tahun,
@@ -142,7 +150,9 @@ class HeadmasterController extends Controller
 
     public function cetakRekapTahun($id)
     {
-        $user = CalonSiswa::where('tahun_daftar', $id)->where('notifikasi_admin', 'Lulus Ujian')->orderBy('prodi', 'asc')->get();
+        $user = CalonSiswa::whereHas('detailCalonSiswa', function ($query) {
+            $query->orderBy('prodi', 'asc');
+        })->where('tahun_daftar', $id)->where('notifikasi_admin', 'Pendaftaran Selesai')->get();
         $data = [
             'tahun'     => $id,
             'user'     => $user,
@@ -154,7 +164,7 @@ class HeadmasterController extends Controller
 
     public function cetakRekapTahunPost($id)
     {
-        $user = CalonSiswa::where('tahun_daftar', $id)->where('notifikasi_admin', 'Lulus Ujian')->orderBy('prodi', 'asc')->get();
+        $user = CalonSiswa::where('tahun_daftar', $id)->where('notifikasi_admin', 'Pendaftaran Selesai')->orderBy('prodi', 'asc')->get();
         $data = [
             'tahun'     => $id,
             'user'     => $user,
@@ -233,7 +243,7 @@ class HeadmasterController extends Controller
     public function penelusuran(Request $request)
     {
         $keyword = $request->input('search');
-        $calonSiswa = CalonSiswa::headmaster($keyword)->where('notifikasi_admin', 'Lulus Ujian')->orderBy('nama', 'asc')->get();
+        $calonSiswa = CalonSiswa::headmaster($keyword)->where('notifikasi_admin', 'Pendaftaran Selesai')->orderBy('nama', 'asc')->get();
 
         $data = [
             'hasil' => $request->search,

@@ -8,7 +8,7 @@
     <div class="grid grid-cols-4 w-full gap-10 mt-10 max-md:grid-cols-1 max-lg:grid-cols-2">
         @foreach ($tahun as $item)
             @php
-                $jumlahPendaftar = App\Models\CalonSiswa::where('tahun_daftar', $item->tahun_daftar)->where('notifikasi_admin', 'Lulus Ujian')->count();
+                $jumlahPendaftar = App\Models\CalonSiswa::where('tahun_daftar', $item->tahun_daftar)->where('notifikasi_admin', 'Pendaftaran Selesai')->count();
             @endphp
 
             <a href="{{ route('headmaster-cetak-formulir-tahun', ['id' => $item->tahun_daftar]) }}"

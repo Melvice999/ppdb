@@ -20,7 +20,7 @@ class FakerSeeder extends Seeder
 
         for ($i = 0; $i < 200; $i++) {
             // Generate unique nik
-            $nik = $faker->unique()->numerify('##############');
+            $nik = $faker->unique()->numerify('3###############');
 
             // Insert data into calon_siswa table
             DB::table('calon_siswa')->insert([
@@ -39,10 +39,11 @@ class FakerSeeder extends Seeder
                 'kabupaten' => $faker->city,
                 'desa' => $faker->city,
                 'kode_pos' => $faker->postcode,
-                'status' => 0,
-                'notifikasi_admin' => 'Pendaftar Baru',
+                'status' => 1,
+                'notifikasi_admin' => 'Pendaftaran Selesai',
                 'created_at' => now(),
                 'updated_at' => now(),
+                'tahun_daftar' => $faker->randomElement(['2021', '2022', '2023', '2024']),
             ]);
 
             // Insert data into otp table
@@ -69,6 +70,19 @@ class FakerSeeder extends Seeder
                 'pekerjaan_wali' => $faker->jobTitle,
                 'created_at' => now(),
                 'updated_at' => now(),
+            ]);
+
+              // Insert data into otp table
+              DB::table('otp')->insert([
+                'nik' => $nik,
+                'otp' => $faker->numerify('#####'),
+                'waktu' => $faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d H:i:s'),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            DB::table('penilaian')->insert([
+                'nik' => $nik,
             ]);
         }
     }

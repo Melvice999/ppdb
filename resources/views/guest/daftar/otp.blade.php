@@ -35,10 +35,10 @@
 
             <div class="hidden mt-6 ml-10 mr-10 place-items-center" id="noHpLama">
                 <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
-                    <label for="no_hp">No Hp Yang Valid</label><br>
+                    <label for="no_hp">No WhatsApp Yang Valid</label><br>
                     <input type="number" name="no_hp_baru" value="{{ old('no_hp') }}"
                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                        maxlength="15" placeholder="Masukan No Hp Yang Valid"
+                        maxlength="15" placeholder="Masukan No WhatsApp Yang Valid"
                         class="border-b w-full focus:outline-none mb-2" required>
 
                     <span class="text-grey">
@@ -98,7 +98,7 @@
             let no_hp = document.getElementById('no_hp').value;
             let nik = document.getElementById('nik').value;
 
-            if (confirm("Apakah No Hp " + no_hp + " sudah benar?")) {
+            if (confirm("Apakah No WhatsApp " + no_hp + " sudah benar?")) {
                 let data = {
                     no_hp: no_hp,
                     nik: nik
