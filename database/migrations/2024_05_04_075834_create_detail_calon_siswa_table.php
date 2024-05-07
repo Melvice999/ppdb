@@ -20,6 +20,10 @@ return new class extends Migration
             $table->enum('wearpack', ['S', 'M', 'L', 'XL', 'XXL']);
             $table->string('asal_sekolah');
             $table->string('tahun_lulus');
+            $table->string('nama_ayah');
+            $table->string('nama_ibu');
+            $table->string('no_hp_wali');
+            $table->string('pekerjaan_wali');
             $table->timestamps();
 
 

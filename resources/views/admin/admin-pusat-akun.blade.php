@@ -40,7 +40,7 @@
 
         <div class="grid grid-cols-2 w-full gap-10 mt-3 max-md:grid-cols-1">
 
-            <div class="grid w-full bg-d-green text-white rounded-lg p-3" id="toggleEmail">
+            <div class="grid w-full bg-d-green text-white rounded-lg p-3 cursor-pointer" id="toggleEmail">
                 <div class="flex">
                     <i class="fa-solid fa-envelope border-e me-4 flex justify-center items-center w-14 text-xl"></i>
                     <div class="py-2 flex w-full">
@@ -53,7 +53,7 @@
                 </div>
             </div>
 
-            <div class="grid w-full bg-d-green text-white rounded-lg p-3" id="togglePassword">
+            <div class="grid w-full bg-d-green text-white rounded-lg p-3 cursor-pointer" id="togglePassword">
                 <div class="flex">
                     <i class="fa-solid fa-lock border-e me-4 flex justify-center items-center w-14 text-xl"></i>
                     <div class="py-2 flex w-full">
@@ -62,7 +62,6 @@
                         </div>
                     </div>
                     <i class="fa-solid fa-pen-to-square border-s flex justify-center items-center w-14 text-xl"></i>
-
                 </div>
             </div>
 

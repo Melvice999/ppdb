@@ -1,8 +1,6 @@
 @extends('layouts.guest-layout')
 @section('content')
 
-    <input type="text" name="nik" class="hidden" value="{{ $otp->otp }}">
-
     @if ($pendaftaran->pendaftaran === 1)
         {{-- Pesan Error --}}
         @if ($errors->any())
@@ -39,7 +37,7 @@
 
         <form action="{{ route('daftar/detail-calon-siswa-post') }}" method="POST" enctype="multipart/form-data">
             @csrf
-
+            <input type="text" name="nik" class="hidden" value="{{ $nik->nik }}">
             <div id="langkahII">
 
                 <div class="grid mt-6 ml-10 mr-10 place-items-center">

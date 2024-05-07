@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CalonSiswa;
 // use App\Models\AkunSiswa;
 use App\Models\BerkasSiswa;
+use App\Models\DetailCalonSiswaModel;
 use App\Models\NotifikasiModel;
 use App\Models\PenilaianModel;
 use Illuminate\Support\Facades\Auth;
@@ -26,14 +27,19 @@ class SiswaController extends Controller
 
 
     $user = CalonSiswa::where('nik', $nik)->first();
-    $notifikasi = NotifikasiModel::where('nik', $nik)->first();
+    $detailUser = DetailCalonSiswaModel::where('nik', $nik)->first();
+
+    if (!$detailUser) {
+      abort(404);
+    }
+
     $berkas = BerkasSiswa::where('nik', $nik)->first();
 
 
     $data = [
-      'notifikasi'    => $notifikasi,
-      'title' => 'Profil ' . $user->nama,
-      'berkas' => $berkas,
+      'detailUser'  => $detailUser,
+      'title'       => 'Profil ' . $user->nama,
+      'berkas'      => $berkas,
     ];
 
     return view('siswa/siswa-profil', $data, ['user' => $user]);
@@ -45,11 +51,13 @@ class SiswaController extends Controller
     $nik = $user->nik;
 
     $user = CalonSiswa::where('nik', $nik)->first();
+    $detailUser = DetailCalonSiswaModel::where('nik', $nik)->first();
     $berkas = BerkasSiswa::where('nik', $nik)->first();
     $penilaian = PenilaianModel::where('nik', $nik)->first();
 
 
     $data = [
+      'detailUser' => $detailUser,
       'title' => 'Formulir Pendaftaran ' . $user->nama,
       'penilaian' => $penilaian,
       'berkas' => $berkas,
@@ -74,7 +82,70 @@ class SiswaController extends Controller
     return view('siswa/siswa-pengaturan', $data, ['user' => $user]);
   }
 
-  // Profil
+  public function cetakFormulir()
+  {
+    $user = Auth::guard('siswa')->user();
+    $nik = $user->nik;
+
+    $user = CalonSiswa::where('nik', $nik)->first();
+    $detailUser = DetailCalonSiswaModel::where('nik', $nik)->first();
+    $berkas = BerkasSiswa::where('nik', $nik)->first();
+    $penilaian = PenilaianModel::where('nik', $nik)->first();
+
+    CalonSiswa::where('nik', $nik)->update(['notifikasi_admin' => 'Siap Ujian']);
+
+    // mengirimkan notif ke whatsapp
+
+    $data = [
+      'title' => 'Pratinjau Formulir ' . $user->nama,
+      'penilaian' => $penilaian,
+      'berkas' => $berkas,
+      'user'  => $user,
+      'detailUser' => $detailUser
+    ];
+
+    // Generate PDF content
+    $options = new Options();
+    $options->set('defaultFont', 'Arial');
+    $dompdf = new Dompdf($options);
+    $html = view('siswa.cetak-formulir.siswa-cetak-formulir', $data)->render();
+
+    // Load HTML content
+    $dompdf->loadHtml($html);
+
+    // Render PDF (optional: set Paper size and orientation)
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+
+    // Get PDF content
+    $pdfContent = $dompdf->output();
+
+    // Create response with PDF content for download
+    $response = new Response($pdfContent);
+    $response->header('Content-Type', 'application/pdf');
+    $response->header('Content-Disposition', 'attachment; filename="formulir_' . $user->nama . '.pdf"');
+
+    return $response;
+  }
+
+
+  public function pengaturanAkun()
+  {
+    $user = Auth::guard('siswa')->user();
+    $nik = $user->nik;
+
+    $user = CalonSiswa::where('nik', $nik)->first();
+    $berkas = BerkasSiswa::where('nik', $nik)->first();
+
+    $data = [
+      'user'   => $user,
+      'title' => 'Pengaturan Akun ' . $user->nama,
+      'berkas' => $berkas,
+    ];
+
+    return view('siswa/pengaturan-akun/siswa-pengaturan-akun', $data, ['user' => $user]);
+  }
+
   public function uploadBerkas()
   {
     $user = Auth::guard('siswa')->user();
@@ -131,12 +202,12 @@ class SiswaController extends Controller
     CalonSiswa::where('nik', $nik)->update(['notifikasi_admin' => 'Berkas Terupload']);
 
     // Save akta ke folder storage/app/public/siswa
-    $akta->storeAs('siswa/akta', $aktaName, 'public');
-    $kk->storeAs('siswa/kk', $kkName, 'public');
-    $shun->storeAs('siswa/shun', $shunName, 'public');
-    $ijazah->storeAs('siswa/ijazah', $ijazahName, 'public');
-    $raport->storeAs('siswa/raport', $raportName, 'public');
-    $transkip_nilai->storeAs('siswa/transkip-nilai', $transkipNilaiName, 'public');
+    $akta->storeAs('siswa/' . date('Y') . '/' . $request->nik, $aktaName, 'public');
+    $kk->storeAs('siswa/' . date('Y') . '/' . $request->nik, $kkName, 'public');
+    $shun->storeAs('siswa/' . date('Y') . '/' . $request->nik, $shunName, 'public');
+    $ijazah->storeAs('siswa/' . date('Y') . '/' . $request->nik, $ijazahName, 'public');
+    $raport->storeAs('siswa/' . date('Y') . '/' . $request->nik, $raportName, 'public');
+    $transkip_nilai->storeAs('siswa/' . date('Y') . '/' . $request->nik, $transkipNilaiName, 'public');
 
     return redirect()->to(url('siswa/profil'))->with('success', 'Berkas berhasil diupload');
   }
@@ -161,6 +232,7 @@ class SiswaController extends Controller
   public function updateBerkasAktaPost(Request $request, $id)
   {
     $berkasSiswa = BerkasSiswa::where('nik', $id)->first();
+    $user = CalonSiswa::where('nik', $id)->first();
 
     if ($request->hasFile('akta')) {
       // Hapus berkas lama jika ada
@@ -172,14 +244,14 @@ class SiswaController extends Controller
       $aktaName = $id . '-Akta.pdf';
 
       // Simpan berkas baru
-      $request->file('akta')->storeAS('siswa/akta', $aktaName, 'public');
+      $request->file('akta')->storeAS('siswa/' . $user->tahun_daftar . '/' . $user->nik, $aktaName, 'public');
     }
 
     BerkasSiswa::where('nik', $id)->update([
       'akta' => $aktaName,
     ]);
 
-    CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Berkas Update']);
+    CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Berkas Terupdate']);
 
     return redirect()->back()->with('success', 'Akta berhasil diupdate.');
   }
@@ -187,6 +259,7 @@ class SiswaController extends Controller
   public function updateBerkasKKPost(Request $request, $id)
   {
     $berkasSiswa = BerkasSiswa::where('nik', $id)->first();
+    $user = CalonSiswa::where('nik', $id)->first();
 
     if ($request->hasFile('kk')) {
       // Hapus berkas lama jika ada
@@ -198,13 +271,13 @@ class SiswaController extends Controller
       $kkName = $id . '-KK.pdf';
 
       // Simpan berkas baru
-      $request->file('kk')->storeAS('siswa/kk', $kkName, 'public');
+      $request->file('kk')->storeAS('siswa/' . $user->tahun_daftar . '/' . $user->nik, $kkName, 'public');
     }
 
     BerkasSiswa::where('nik', $id)->update([
       'kk' => $kkName,
     ]);
-    CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Berkas Update']);
+    CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Berkas Terupdate']);
 
 
     return redirect()->back()->with('success', 'KK berhasil diupdate.');
@@ -213,6 +286,7 @@ class SiswaController extends Controller
   public function updateBerkasPasFotoPost(Request $request, $id)
   {
     $berkasSiswa = CalonSiswa::where('nik', $id)->first();
+    $user = CalonSiswa::where('nik', $id)->first();
 
     if ($request->hasFile('pas_foto')) {
       // Hapus berkas lama jika ada
@@ -228,14 +302,15 @@ class SiswaController extends Controller
       $pasFotoName = $id . '-Pas-Foto.png';
 
       // Simpan berkas baru
-      $request->file('pas_foto')->storeAS('siswa/pas-foto', $pasFotoName, 'public');
+
+      $request->file('pas_foto')->storeAS('siswa/' . $user->tahun_daftar . '/' . $user->nik, $pasFotoName, 'public');
     }
 
-    CalonSiswa::where('nik', $id)->update([
+    DetailCalonSiswaModel::where('nik', $id)->update([
       'pas_foto' => $pasFotoName,
     ]);
 
-    CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Berkas Update']);
+    CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Pendaftar Baru']);
 
     return redirect()->back()->with('success', 'Foto berhasil diupdate.');
   }
@@ -243,6 +318,7 @@ class SiswaController extends Controller
   public function updateBerkasShunPost(Request $request, $id)
   {
     $berkasSiswa = BerkasSiswa::where('nik', $id)->first();
+    $user = CalonSiswa::where('nik', $id)->first();
 
     if ($request->hasFile('shun')) {
       // Hapus berkas lama jika ada
@@ -254,14 +330,14 @@ class SiswaController extends Controller
       $shunName = $id . '-SHUN.pdf';
 
       // Simpan berkas baru
-      $request->file('shun')->storeAS('siswa/shun', $shunName, 'public');
+      $request->file('shun')->storeAS('siswa/' . $user->tahun_daftar . '/' . $user->nik, $shunName, 'public');
     }
 
     BerkasSiswa::where('nik', $id)->update([
       'shun' => $shunName,
     ]);
 
-    CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Berkas Update']);
+    CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Berkas Terupdate']);
 
     return redirect()->back()->with('success', 'SHUN berhasil diupdate.');
   }
@@ -269,6 +345,7 @@ class SiswaController extends Controller
   public function updateBerkasIjazahPost(Request $request, $id)
   {
     $berkasSiswa = BerkasSiswa::where('nik', $id)->first();
+    $user = CalonSiswa::where('nik', $id)->first();
 
     if ($request->hasFile('ijazah')) {
       // Hapus berkas lama jika ada
@@ -280,14 +357,14 @@ class SiswaController extends Controller
       $ijazahName = $id . '-Ijazah.pdf';
 
       // Simpan berkas baru
-      $request->file('ijazah')->storeAS('siswa/ijazah', $ijazahName, 'public');
+      $request->file('ijazah')->storeAS('siswa/' . $user->tahun_daftar . '/' . $user->nik, $ijazahName, 'public');
     }
 
     BerkasSiswa::where('nik', $id)->update([
       'ijazah' => $ijazahName,
     ]);
 
-    CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Berkas Update']);
+    CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Berkas Terupdate']);
 
     return redirect()->back()->with('success', 'Ijazah berhasil diupdate.');
   }
@@ -295,6 +372,7 @@ class SiswaController extends Controller
   public function updateBerkasRaportPost(Request $request, $id)
   {
     $berkasSiswa = BerkasSiswa::where('nik', $id)->first();
+    $user = CalonSiswa::where('nik', $id)->first();
 
     if ($request->hasFile('raport')) {
       // Hapus berkas lama jika ada
@@ -306,14 +384,14 @@ class SiswaController extends Controller
       $raportName = $id . '-Raport.pdf';
 
       // Simpan berkas baru
-      $request->file('raport')->storeAS('siswa/raport', $raportName, 'public');
+      $request->file('raport')->storeAS('siswa/' . $user->tahun_daftar . '/' . $user->nik  , $raportName, 'public');
     }
 
     BerkasSiswa::where('nik', $id)->update([
       'raport' => $raportName,
     ]);
 
-    CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Berkas Update']);
+    CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Berkas Terupdate']);
 
     return redirect()->back()->with('success', 'Raport berhasil diupdate.');
   }
@@ -321,6 +399,7 @@ class SiswaController extends Controller
   public function updateBerkasTranskipNilaiPost(Request $request, $id)
   {
     $berkasSiswa = BerkasSiswa::where('nik', $id)->first();
+    $user = CalonSiswa::where('nik', $id)->first();
 
     if ($request->hasFile('transkip_nilai')) {
       // Hapus berkas lama jika ada
@@ -332,79 +411,17 @@ class SiswaController extends Controller
       $transkipNilaiName = $id . '-TranskipNilai.pdf';
 
       // Simpan berkas baru
-      $request->file('transkip_nilai')->storeAS('siswa/transkip-nilai', $transkipNilaiName, 'public');
+      $request->file('transkip_nilai')->storeAS('siswa/' . $user->tahun_daftar . '/' . $user->nik  , $transkipNilaiName, 'public');
     }
 
     BerkasSiswa::where('nik', $id)->update([
       'transkip_nilai' => $transkipNilaiName,
     ]);
 
-    CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Berkas Update']);
+    CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Berkas Terupdate']);
 
     return redirect()->back()->with('success', 'Transkip Nilai berhasil diupdate.');
   }
-
-
-  public function cetakFormulir()
-  {
-    $user = Auth::guard('siswa')->user();
-    $nik = $user->nik;
-
-    $user = CalonSiswa::where('nik', $nik)->first();
-    $berkas = BerkasSiswa::where('nik', $nik)->first();
-    $penilaian = PenilaianModel::where('nik', $nik)->first();
-
-    CalonSiswa::where('nik', $nik)->update(['notifikasi_admin' => 'Siap Ujian']);
-
-    $data = [
-      'title' => 'Pratinjau Formulir ' . $user->nama,
-      'penilaian' => $penilaian,
-      'berkas' => $berkas,
-      'user'  => $user,
-    ];
-
-    // Generate PDF content
-    $options = new Options();
-    $options->set('defaultFont', 'Arial');
-    $dompdf = new Dompdf($options);
-    $html = view('siswa.cetak-formulir.siswa-cetak-formulir', $data)->render();
-
-    // Load HTML content
-    $dompdf->loadHtml($html);
-
-    // Render PDF (optional: set Paper size and orientation)
-    $dompdf->setPaper('A4', 'portrait');
-    $dompdf->render();
-
-    // Get PDF content
-    $pdfContent = $dompdf->output();
-
-    // Create response with PDF content for download
-    $response = new Response($pdfContent);
-    $response->header('Content-Type', 'application/pdf');
-    $response->header('Content-Disposition', 'attachment; filename="formulir_' . $user->nama . '.pdf"');
-
-    return $response;
-  }
-
-
-  public function pengaturanAkun()
-  {
-    $user = Auth::guard('siswa')->user();
-    $nik = $user->nik;
-
-    $user = CalonSiswa::where('nik', $nik)->first();
-    $berkas = BerkasSiswa::where('nik', $nik)->first();
-
-    $data = [
-      'user'   => $user,
-      'title' => 'Pengaturan Akun ' . $user->nama,
-      'berkas' => $berkas,
-    ];
-
-    return view('siswa/pengaturan-akun/siswa-pengaturan-akun', $data, ['user' => $user]);
-  }
-
 
   public function pengaturanPasswordPost(Request $request)
   {

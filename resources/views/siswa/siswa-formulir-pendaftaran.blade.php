@@ -22,8 +22,18 @@
         }
     </style>
 
+    <div
+        class="flex justify-center mt-2 mx-10 max-md:block {{ $user->notifikasi_admin === 'Cetak Formulir' || $user->notifikasi_admin === 'Siap Ujian' ? '' : 'hidden max-md:hidden' }}">
+        <div class="flex justify-end w-1/2 max-md:w-full">
+            <a href="{{ route('siswa-cetak-formulir') }}">
+                <div class="border bg-d-green text-white px-2 py-1 rounded cursor-pointer">
+                    Cetak
+                </div>
+            </a>
+        </div>
+    </div>
 
-    <div class="flex justify-center mt-6 mx-10 max-md:block">
+    <div class="flex justify-center mt-2 mx-10 max-md:block">
         <div class="header w-1/2  max-md:w-full rounded-md overflow-x-auto">
             <table style="width: 100%; border-collapse: collapse;">
                 <tr class="">
@@ -51,7 +61,7 @@
             <div class="w-full">
 
                 <div class="flex justify-between max-md:block max-md:text-center max-md:mb-1">
-                    <div>Jalur Pendaftaran : {{ $user->jalur_pendaftaran }}</div>
+                    <div>Jalur Pendaftaran : {{ $detailUser->jalur_pendaftaran }}</div>
                     <div>No Pendaftaran : {{ $user->no_pendaftaran }}</div>
 
                 </div>
@@ -59,7 +69,7 @@
                 <div class="flex items-center max-md:block">
                     <div class="flex justify-center items-center">
                         <div class="passport-photo">
-                            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(storage_path('app/public/siswa/pas-foto/' . $user->pas_foto))) }}"
+                            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(storage_path('app/public/siswa/' . $user->tahun_daftar . '/' . $user->nik . '/' . $detailUser->pas_foto))) }}"
                                 alt="Foto Passport">
                         </div>
                     </div>
@@ -162,7 +172,7 @@
                                     Kode Pos
                                 </td>
                                 <td>
-                                    <span class="max-md:hidden">&nbsp;&nbsp;&nbsp;:</span> {{ $user->kode_pos }}
+                                    <span class="max-md:hidden">&nbsp;&nbsp;&nbsp;:</span> {{ $detailUser->kode_pos }}
                                 </td>
                             </tr>
 
@@ -192,13 +202,13 @@
                             </td>
                             <td>
                                 <span class="max-md:hidden">&nbsp;&nbsp;&nbsp;:</span>
-                                {{ $user->prodi == 'TKRO'
+                                {{ $detailUser->prodi == 'TKRO'
                                     ? 'Teknik Kendaraan Ringan Otomotif'
-                                    : ($user->prodi == 'TKJ'
+                                    : ($detailUser->prodi == 'TKJ'
                                         ? 'Teknik Komputer dan Jaringan'
-                                        : ($user->prodi == 'AKL'
+                                        : ($detailUser->prodi == 'AKL'
                                             ? 'Akuntansi dan Keuangan Lembaga'
-                                            : ($user->prodi == 'TBSM'
+                                            : ($detailUser->prodi == 'TBSM'
                                                 ? 'Teknik dan Bisnis Sepeda Motor'
                                                 : 'Prodi Tidak Diketahui'))) }}
 
@@ -210,7 +220,7 @@
                                 Ukuran Wearpack / Baju
                             </td>
                             <td>
-                                <span class="max-md:hidden">&nbsp;&nbsp;&nbsp;:</span> {{ $user->wearpack }}
+                                <span class="max-md:hidden">&nbsp;&nbsp;&nbsp;:</span> {{ $detailUser->wearpack }}
                             </td>
                         </tr>
 
@@ -229,7 +239,7 @@
                             </td>
                             <td>
                                 <span class="max-md:hidden">&nbsp;&nbsp;&nbsp;:</span>
-                                {{ $user->asal_sekolah }}
+                                {{ $detailUser->asal_sekolah }}
 
                             </td>
                         </tr>
@@ -239,7 +249,7 @@
                                 Tahun Lulus
                             </td>
                             <td>
-                                <span class="max-md:hidden">&nbsp;&nbsp;&nbsp;:</span> {{ $user->tahun_lulus }}
+                                <span class="max-md:hidden">&nbsp;&nbsp;&nbsp;:</span> {{ $detailUser->tahun_lulus }}
                             </td>
                         </tr>
 
@@ -258,7 +268,7 @@
                             </td>
                             <td>
                                 <span class="max-md:hidden">&nbsp;&nbsp;&nbsp;:</span>
-                                {{ $user->nama_ayah }}
+                                {{ $detailUser->nama_ayah }}
 
                             </td>
                         </tr>
@@ -269,7 +279,7 @@
                             </td>
                             <td>
                                 <span class="max-md:hidden">&nbsp;&nbsp;&nbsp;:</span>
-                                {{ $user->nama_ibu }}
+                                {{ $detailUser->nama_ibu }}
 
                             </td>
                         </tr>
@@ -279,7 +289,7 @@
                                 No Hp Wali
                             </td>
                             <td>
-                                <span class="max-md:hidden">&nbsp;&nbsp;&nbsp;:</span> {{ $user->no_hp_wali }}
+                                <span class="max-md:hidden">&nbsp;&nbsp;&nbsp;:</span> {{ $detailUser->no_hp_wali }}
                             </td>
                         </tr>
 
@@ -288,7 +298,7 @@
                                 Pekerjaan Wali
                             </td>
                             <td>
-                                <span class="max-md:hidden">&nbsp;&nbsp;&nbsp;:</span> {{ $user->pekerjaan_wali }}
+                                <span class="max-md:hidden">&nbsp;&nbsp;&nbsp;:</span> {{ $detailUser->pekerjaan_wali }}
                             </td>
                         </tr>
 

@@ -13,16 +13,6 @@
         </div>
     @endif
 
-    <div class="flex justify-center mt-3 mx-10 max-md:block">
-        <div class="w-1/2 mt-2 max-md:w-full">
-            <div
-                class="flex justify-center items-center w-full px-2 py-1 rounded max-md:w-full border-d-green border cursor-pointer bg-white text-d-green">
-                {{ $notifikasi->notifikasi }}
-
-            </div>
-        </div>
-    </div>
-
     <div class="flex justify-center mt-6 mx-10 max-md:block">
         <div class="w-1/2 p-10 bg-white max-md:w-full rounded-md">
 
@@ -30,8 +20,8 @@
 
                 <div class="flex justify-center items-center">
 
-                    <img src="{{ asset('storage/siswa/pas-foto/' . $user->pas_foto) }}" alt="foto-siswa"
-                        class="w-24 h-36 rounded-3xl max-md:mb-5">
+                    <img src="{{ asset('storage/siswa/' . $user->tahun_daftar . '/' . $user->nik . '/' . $detailUser->pas_foto) }}"
+                        alt="foto-siswa" class="w-24 h-36 rounded-3xl max-md:mb-5">
                 </div>
 
                 <div class="col-span-2">
@@ -64,7 +54,7 @@
                         <div class="col-span-2">
                             <span class="max-md:hidden">:</span>
 
-                            {{ $user->prodi }}
+                            {{ $user->detailCalonSiswa->prodi }}
                         </div>
                     </div>
 
@@ -79,51 +69,158 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-4 border-b border-d-green border-opacity-60 max-md:block">
-                        <div class="col-span-2">
+                    <div class="grid grid-cols-4 border-b border-d-green  border-opacity-60 max-md:block">
+                        <div class="col-span-4">
                             Aksi
-                        </div>
-                        <div class="col-span-2 flex">
                             <span class="max-md:hidden">:&nbsp;</span>
+                        </div>
+                        <div class="col-span-4 flex">
 
-                            {{ $notifikasi->notifikasi === 'Selamat anda lulus ujian pendaftaran' ? '-' : '' }}
+                            {{-- 
+                               'Pendaftar Baru'
+                                'Cetak Formulir'
+                                'Formulir Tercetak'
+                                'Siap Ujian'
+                                'Ujian Selesai'
+                                'Lulus Ujian'
+                                'Lengkapi Berkas'
+                                'Berkas Terupload'
+                                'Masukan Akta Yang Valid'
+                                'Masukan KK Yang Valid'
+                                'Masukan SHUN Yang Valid'
+                                'Masukan Ijazah Yang Valid'
+                                'Masukan Raport Yang Valid'
+                                'Masukan Transkip Nilai Yang Valid'
+                                'Masukan Pas Foto Yang Valid'
+                                'Berkas Terupdate'
+                                'Pendaftaran Selesai'
+                            --}}
+
+                            {{-- {{ $user->notifikasi_admin === 'Lulus Ujian' ? '-' : '' }} --}}
+
                             <a href="{{ route(
-                                $notifikasi->notifikasi === 'Pendaftaran sedang diproses'
-                                    ? 'siswa-profil'
-                                    : ($notifikasi->notifikasi === 'Selamat anda lulus ujian pendaftaran'
-                                        ? 'siswa-profil'
-                                        : ($notifikasi->notifikasi === 'Lengkapi Berkas'
-                                            ? 'siswa-upload-berkas'
-                                            : ($notifikasi->notifikasi === 'Perbarui Akta Yang Valid' ||
-                                            $notifikasi->notifikasi === 'Perbarui KK Yang Valid' ||
-                                            $notifikasi->notifikasi === 'Perbarui Pas Foto Yang Valid' ||
-                                            $notifikasi->notifikasi === 'Perbarui SHUN Yang Valid' ||
-                                            $notifikasi->notifikasi === 'Perbarui Ijazah Yang Valid' ||
-                                            $notifikasi->notifikasi === 'Perbarui Raport Yang Valid' ||
-                                            $notifikasi->notifikasi === 'Perbarui Transkip Nilai Yang Valid'
-                                                ? 'siswa-update-berkas'
-                                                : 'siswa-cetak-formulir'))),
+                                match ($user->notifikasi_admin) {
+                                    'Pendaftar Baru', 'Siap Ujian', 'Lulus Ujian', 'Tidak Lulus Ujian', 'Berkas Terupload', 'Berkas Terupdate' => 'siswa-profil',
+                            
+                                    'Masukan Pas Foto Yang Valid' => 'siswa-pengaturan-akun',
+                            
+                                    'Cetak Formulir' => 'siswa-formulir-pendaftaran',
+                            
+                                    'Lengkapi Berkas' => 'siswa-upload-berkas',
+                            
+                                    'Masukan Akta Yang Valid',
+                                    'Masukan KK Yang Valid',
+                                    'Masukan SHUN Yang Valid',
+                                    'Masukan Ijazah Yang Valid',
+                                    'Masukan Raport Yang Valid',
+                                    'Masukan Transkip Nilai Yang Valid'
+                                        => 'siswa-update-berkas', // 'Berkas Terupload' => 'siswa-upload-berkas',
+                                    // 'Perbarui Akta Yang Valid',
+                                    // 'Perbarui KK Yang Valid',
+                                    // 'Perbarui Pas Foto Yang Valid',
+                                    // 'Perbarui SHUN Yang Valid',
+                                    // 'Perbarui Ijazah Yang Valid',
+                                    // 'Perbarui Raport Yang Valid',
+                                    // 'Perbarui Transkip Nilai Yang Valid'
+                                    //     => 'siswa-update-berkas',
+                                    // default => 'siswa-cetak-formulir',
+                                },
                             ) }}"
                                 class="flex">
 
                                 <div
-                                    class="flex justify-center items-center py-1 px-2 my-1 rounded bg-d-green text-white border cursor-pointer hover:bg-white hover:text-d-green {{ $notifikasi->notifikasi === 'Selamat anda lulus ujian pendaftaran' ? 'hidden' : '' }}">
-                                    {{ $notifikasi->notifikasi === 'Pendaftaran sedang diproses'
-                                        ? 'Pendaftaran sedang diproses'
-                                        : ($notifikasi->notifikasi === 'Selamat anda lulus ujian pendaftaran'
-                                            ? ''
-                                            : ($notifikasi->notifikasi === 'Lengkapi Berkas'
-                                                ? 'Upload Berkas'
-                                                : ($notifikasi->notifikasi === 'Perbarui Akta Yang Valid' ||
-                                                $notifikasi->notifikasi === 'Perbarui KK Yang Valid' ||
-                                                $notifikasi->notifikasi === 'Perbarui Pas Foto Yang Valid' ||
-                                                $notifikasi->notifikasi === 'Perbarui SHUN Yang Valid' ||
-                                                $notifikasi->notifikasi === 'Perbarui Ijazah Yang Valid' ||
-                                                $notifikasi->notifikasi === 'Perbarui Raport Yang Valid' ||
-                                                $notifikasi->notifikasi === 'Perbarui Transkip Nilai Yang Valid'
-                                                    ? 'Update Berkas'
-                                                    : 'Cetak Formulir'))) }}
+                                    class="flex justify-center items-center py-1 px-2 my-1 rounded border cursor-pointer  {{ $user->notifikasi_admin === 'Tidak Lulus Ujian' ? 'bg-red' : 'bg-d-green' }} text-white hover:bg-white hover:text-d-green {{ $user->notifikasi_admin === 'Selamat anda lulus ujian pendaftaran' ? 'hidden' : '' }}">
+                                    @switch($user->notifikasi_admin)
+                                        @case('Pendaftar Baru')
+                                            Pendaftaran sedang diproses, <br>
+                                            tunggu admin menverifikasi data anda
+                                        @break
+
+                                        @case('Masukan Pas Foto Yang Valid')
+                                            Masukan Pas Foto Yang Valid
+                                        @break
+
+                                        @case('Cetak Formulir')
+                                            Cetak Formulir
+                                        @break
+
+                                        @case('Siap Ujian')
+                                            Silahkan ujian di SMK Ma'arif NU Doro, <br> dengan membawa formulir pendaftaran yang
+                                            telah dicetak, <br>
+                                            setelah ujian selesai hasil ujian akan diumumkan melalui aplikasi ini dan pesan whatsapp
+                                        @break
+
+                                        @case('Lulus Ujian')
+                                            Lulus ujian
+                                        @break
+
+                                        @case('Tidak Lulus Ujian')
+                                            Tidak lulus ujian
+                                        @break
+
+                                        @case('Lengkapi Berkas')
+                                            Upload Berkas
+                                        @break
+
+                                        @case('Berkas Terupload')
+                                            Berkas terupload <br>
+                                            tunggu admin menverifikasi berkas anda
+                                        @break
+
+                                        
+                                        @case('Berkas Terupdate')
+                                            Berkas terupdate <br>
+                                            tunggu admin menverifikasi berkas anda
+                                        @break
+
+                                        @case('Masukan Akta Yang Valid')
+                                            Masukan Akta Yang Valid
+                                        @break
+
+                                        @case('Masukan KK Yang Valid')
+                                            Masukan KK Yang Valid
+                                        @break
+
+                                        @case('Masukan SHUN Yang Valid')
+                                            Masukan SHUN Yang Valid
+                                        @break
+
+                                        @case('Masukan Ijazah Yang Valid')
+                                            Masukan Ijazah Yang Valid
+                                        @break
+
+                                        @case('Masukan Raport Yang Valid')
+                                            Masukan Raport Yang Valid
+                                        @break
+
+                                        @case('Masukan Transkip Nilai Yang Valid')
+                                            Masukan Transkip Nilai Yang Valid
+                                        @break
+
+                                        {{-- @case('Lengkapi Berkas')
+                                            Upload Berkas
+                                        @break
+
+                                        @case('Perbarui Akta Yang Valid')
+                                        @case('Perbarui KK Yang Valid')
+
+                                        @case('Perbarui Pas Foto Yang Valid')
+                                        @case('Perbarui SHUN Yang Valid')
+
+                                        @case('Perbarui Ijazah Yang Valid')
+                                        @case('Perbarui Raport Yang Valid')
+
+                                        @case('Perbarui Transkip Nilai Yang Valid')
+                                            Update Berkas
+                                        @break
+
+                                        @default
+                                            @if ($user->notifikasi_admin !== 'Selamat anda lulus ujian pendaftaran')
+                                                Cetak Formulir
+                                            @endif --}}
+                                    @endswitch
                                 </div>
+
                             </a>
 
                         </div>

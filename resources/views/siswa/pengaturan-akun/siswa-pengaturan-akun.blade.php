@@ -6,7 +6,6 @@
         }
     </style>
 
-
     @if (session('success'))
         <div class="flex justify-center mt-3 mx-10 max-md:block">
             <div class="w-1/2 mt-2 max-md:w-full">
@@ -19,7 +18,6 @@
             </div>
         </div>
     @endif
-
 
     @if ($errors->any())
         <div class="flex justify-center mx-10 mt-1">
@@ -116,13 +114,101 @@
                 </div>
             </div>
         </form>
+
+        {{-- Pas Foto --}}
+        <div
+            class="flex justify-center mt-3 {{ $user->notifikasi_admin === 'Masukan Pas Foto Yang Valid' || $user->notifikasi_admin === 'Pendaftar Baru' ? '' : 'hidden' }}">
+            <div class="w-1/2  grid grid-cols-3 max-md:w-full mt-2 bg-white">
+                <div class="py-2 ps-2 border-t border-l border-b border-d-green rounded-tl rounded-bl">
+                    Pas Foto
+                </div>
+
+                <div class="border-d-green border focus:outline-none cursor-pointer flex justify-center items-center"
+                    id="togglePasFoto">
+                    Ubah
+                </div>
+                <div class="flex items-center cursor-pointer justify-center border-d-green border-t border-r border-b rounded-tr rounded-br"
+                    id="lihatPasFotoLama">
+                    Lihat
+                </div>
+            </div>
+
+        </div>
+
+        {{-- Input Pas Foto on click --}}
+        <form action="{{ route('siswa-update-berkas-pas-foto-post', ['id' => $user->nik]) }}" method="POST"
+            enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" value="{{ $user->detailCalonSiswa->pas_foto }}" name="pasFotoLama">
+
+            <div class="hidden justify-center mb-5" id="triggerPasFoto">
+                <div class="w-1/2 grid grid-cols-3 max-md:w-full mt-2 bg-white">
+
+                    <div class="py-2 ps-2 border-t border-l border-b border-d-green rounded-tl rounded-bl">
+                        Pas Foto 3x4
+                    </div>
+
+                    <div class="border-d-green border focus:outline-none flex justify-center items-center">
+                        <input type="file" class="w-full ps-2" accept=".jpg, .png, .jpeg" name="pas_foto"
+                            onchange="validateFileSize(this, 2)" id="inputPasFoto" required>
+                    </div>
+
+                    <div
+                        class="grid grid-cols-2 items-center border-d-green border-t border-r border-b rounded-tr rounded-br">
+
+                        <div class="border-r h-full flex justify-center items-center cursor-pointer" id="lihatPasFoto">
+                            <i class="fa-solid fa-eye text-blue"></i>
+                        </div>
+
+                        <button class=" h-full flex justify-center items-center cursor-pointer">
+                            <i class="fa-solid fa-paper-plane text-d-green"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    {{-- Div Modal Image Lama --}}
+    <div class="hidden w-full h-full bg-black bg-opacity-20 top-0" id="previewImageLama">
+        <div class="flex w-full h-full justify-center items-center">
+
+            <div class="fixed flex justify-center items-center top-3.5 right-2 px-2 cursor-pointer hover:bg-l-sky-blue hover:bg-opacity-10 rounded-full"
+                id="closePreviewImageLama">
+                <i class="fa-solid fa-xmark text-white text-xl"></i>
+            </div>
+
+            <div class="bg-white p-4 mx-auto" style="width: 400px; height: 600px;">
+                <img src="" alt="Pratinjau Gambar" class="w-full h-full object-cover">
+            </div>
+
+        </div>
+    </div>
+
+    {{-- Div Modal Image Baru --}}
+    <div class="hidden w-full h-full bg-black bg-opacity-20 top-0" id="divPreviewImage">
+        <div class="flex w-full h-full justify-center items-center">
+
+            <div class="fixed flex justify-center items-center top-3.5 right-2 px-2 mr-3 cursor-pointer hover:bg-l-sky-blue hover:bg-opacity-10 rounded-full"
+                id="closePreviewImage">
+                <i class="fa-solid fa-xmark text-white text-xl"></i>
+            </div>
+
+            <div class="bg-white p-4 mx-auto" style="width: 400px; height: 600px;">
+                <img src="" alt="Pratinjau Gambar" id="previewImage" class="w-full h-full object-cover">
+            </div>
+
+        </div>
     </div>
 
 
     <script type="module">
         $(document).ready(function() {
 
-          
+
             // Tampilkan ubah password
             $("#ubahPassword").on("click", function() {
                 $("#openPassword").toggleClass("hidden")
@@ -173,7 +259,6 @@
                 });
             });
 
-
             // show password
             $("#lihatPassword").on("click", function() {
 
@@ -188,7 +273,44 @@
                 }
             });
 
+            // Toggle Foto
+            $("#togglePasFoto").on("click", function() {
+                $("#triggerPasFoto").toggleClass("hidden flex");
+            });
 
+            $("#lihatPasFotoLama").on("click", function() {
+                $("#previewImageLama").removeClass("hidden").addClass("fixed");
+
+                // Mengubah isi src
+                $("#previewImageLama img").addClass().attr("src",
+                    "{{ asset('storage/siswa/' . $user->tahun_daftar . '/' . $user->nik . '/' . $user->detailCalonSiswa->pas_foto) }}"
+                )
+
+                // Remove Modal
+                $("#closePreviewImageLama").on("click", function() {
+                    $("#previewImageLama").removeClass("fixed").addClass("hidden");
+                });
+            });
+
+            // Tampilkan Update Pas Foto
+            $("#lihatPasFoto").on("click", function() {
+
+                let readerPasFoto = new FileReader();
+
+                readerPasFoto.onloadend = function() {
+                    $('#previewImage').attr('src', readerPasFoto.result);
+                    $('#divPreviewImage').removeClass('hidden').addClass('fixed');
+                };
+
+                if ($('#inputPasFoto')[0].files[0]) {
+                    readerPasFoto.readAsDataURL($('#inputPasFoto')[0].files[0]);
+                }
+
+                // Close Tampilan update pas foto
+                $("#closePreviewImage").on("click", function() {
+                    $("#divPreviewImage").removeClass("fixed").addClass("hidden");
+                });
+            });
         });
     </script>
 @endsection

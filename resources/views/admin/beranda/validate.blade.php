@@ -19,6 +19,18 @@
         </div>
     @endif
 
+    @if (session('error'))
+        <div class="grid mt-6 mx-auto place-items-center">
+            <div class="w-full text-red bg-white rounded-md">
+                <ul class="p-4">
+                    <li>{{ session('error') }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    @endif
+
+
     <div class="mt-10" id="prodi0validate">
         <div>PPDB Tahun {{ now()->year }}
             {{ $programStudy == 'admin-beranda-sudah-tervalidasi'
@@ -52,7 +64,7 @@
                             </td>
                             <td class="py-2 px-4">{{ $siswa->nik }}</td>
                             <td class="py-2 px-4">{{ $siswa->nama }}</td>
-                            <td class="py-2 px-4">{{ $siswa->prodi }}</td>
+                            <td class="py-2 px-4">{{ $siswa->detailCalonSiswa->prodi }}</td>
                             <td class="py-2 px-4 text-2xl">
                                 <div class="flex justify-center items-center  gap-5">
                                     <a href="{{ route('admin-beranda-siswa-edit', ['id' => $siswa->nik]) }}">

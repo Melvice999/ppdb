@@ -35,7 +35,7 @@ class AuthController extends Controller
         // Verifikasi password
         if (Hash::check($request->password, $user->password)) {
             // Login pengguna menggunakan nik sebagai ID
-            Auth::guard('siswa')->login($user); // Menggunakan nik sebagai ID
+            Auth::guard('siswa')->login($user); 
             return redirect('siswa/profil');
         } else {
             return back()->with('error', 'Password salah');
@@ -58,29 +58,21 @@ class AuthController extends Controller
 
     public function postLoginAdmin(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+        $user = \App\Models\AdminModel::where('email', $request->email)->first();
 
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::guard('admin')->attempt($credentials)) {
-            $request->session()->regenerate();
-            // dd('berhasil');
-
+        if (!$user) {
+            return back()->with('error', 'Email tidak valid');
+        }
+        
+        // Verifikasi password
+        if (Hash::check($request->password, $user->password)) {
+            
+            Auth::guard('admin')->login($user); 
             return redirect()->to(url('admin/admin-beranda'));
         } else {
-            $emailExists = Auth::getProvider()->retrieveByCredentials(['email' => $request->email]);
-
-            if ($emailExists && !Auth::validate(['email' => $request->email, 'password' => $request->password])) {
-                return back()
-                    ->with('error', 'Password salah');
-            } else {
-                return back()
-                    ->with('error', 'Kombinasi email & password tidak valid');
-            }
+            return back()->with('error', 'Password salah');
         }
+
     }
 
 
@@ -100,28 +92,19 @@ class AuthController extends Controller
 
     public function postLoginHeadmaster(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+        $user = \App\Models\HeadmasterModel::where('email', $request->email)->first();
 
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::guard('headmaster')->attempt($credentials)) {
-            $request->session()->regenerate();
-            // dd('berhasil');
-
+        if (!$user) {
+            return back()->with('error', 'Email tidak valid');
+        }
+        
+        // Verifikasi password
+        if (Hash::check($request->password, $user->password)) {
+            
+            Auth::guard('headmaster')->login($user); 
             return redirect()->to(url('headmaster/headmaster-beranda'));
         } else {
-            $emailExists = Auth::getProvider()->retrieveByCredentials(['email' => $request->email]);
-
-            if ($emailExists && !Auth::validate(['email' => $request->email, 'password' => $request->password])) {
-                return back()
-                    ->with('error', 'Password salah');
-            } else {
-                return back()
-                    ->with('error', 'Kombinasi email & password tidak valid');
-            }
+            return back()->with('error', 'Password salah');
         }
     }
 }

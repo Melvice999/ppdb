@@ -1,5 +1,18 @@
 @extends('layouts.admin-layout')
 @section('content')
+    @php
+        $sortedSiswa =
+            $programStudy == 'admin-beranda-tkro'
+                ? $calonSiswaTkro
+                : ($programStudy == 'admin-beranda-tbsm'
+                    ? $calonSiswaTbsm
+                    : ($programStudy == 'admin-beranda-tkj'
+                        ? $calonSiswaTkj
+                        : ($programStudy == 'admin-beranda-akl'
+                            ? $calonSiswaAkl
+                            : [])));
+    @endphp
+
     <div class=" text-2xl font-medium">Admin / Beranda /
         {{ $programStudy == 'admin-beranda-tkro'
             ? 'TKRO'
@@ -13,6 +26,7 @@
     </div>
 
     <div class="mt-10">Data Validasi</div>
+
     @if (session('success'))
         <div class="grid mt-6 mx-auto place-items-center">
             <div class="w-full text-white bg-d-green rounded-md mb-6">
@@ -23,6 +37,19 @@
             </div>
         </div>
     @endif
+
+    @if (session('error'))
+        <div class="grid mt-6 mx-auto place-items-center">
+            <div class="w-full text-red bg-white rounded-md">
+                <ul class="p-4">
+                    <li>{{ session('error') }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    @endif
+
+
     <div class="grid grid-cols-2 w-full gap-10 mt-3 max-md:grid-cols-1">
 
         <div class="grid w-full bg-d-green text-white rounded-lg p-3 cursor-pointer" id="prodi1toggle">
@@ -79,7 +106,7 @@
                             : ''))) }}
             - Belum Tervalidasi</div>
         <div class="overflow-x-auto">
-            <table class="bg-white rounded-lg mt-3 table-auto text-center min-w-full">
+            <table class="bg-white rounded-lg mt-3 table-auto text-center min-w-full" id="data-table-unverify">
                 <thead>
                     <tr class="border-b border-d-green">
                         <th>No</th>
@@ -91,50 +118,50 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($programStudy == 'admin-beranda-tkro' ? $calonSiswaTkro : ($programStudy == 'admin-beranda-tbsm' ? $calonSiswaTbsm : ($programStudy == 'admin-beranda-tkj' ? $calonSiswaTkj : ($programStudy == 'admin-beranda-akl' ? $calonSiswaAkl : []))) as $i => $siswa)
-                        @if ($siswa->status === 0)
+                    @foreach ($sortedSiswa as $detailSiswa)
+                        @if ($detailSiswa->calonSiswa->status === 0)
                             <tr class="border-b border-d-green">
-                                <td>{{ $i + 1 }}</td>
+                                <td class="nomor-urut"></td>
+
                                 <td class="py-1 my-1 px-2">
                                     <span
-                                        class="{{ $siswa->notifikasi_admin === 'Pendaftar Baru' ? 'bg-[#FFD700] text-black' : ($siswa->notifikasi_admin === 'Berkas Terupload' ? 'bg-[#008000] text-white' : ($siswa->notifikasi_admin === 'Berkas Update' ? 'bg-[#0000FF] text-white' : ($siswa->notifikasi_admin === 'Siap Ujian' ? 'bg-[#FFA500] text-black' : 'bg-[#808080] text-white'))) }} rounded py-1 px-1">
-                                        {{ $siswa->notifikasi_admin }}
+                                        class="{{ $detailSiswa->calonSiswa->notifikasi_admin === 'Pendaftar Baru' ? 'bg-[#FFD700] text-black' : ($detailSiswa->calonSiswa->notifikasi_admin === 'Berkas Terupload' ? 'bg-[#008000] text-white' : ($detailSiswa->calonSiswa->notifikasi_admin === 'Berkas Update' ? 'bg-[#0000FF] text-white' : ($detailSiswa->calonSiswa->notifikasi_admin === 'Siap Ujian' ? 'bg-[#FFA500] text-black' : 'bg-[#808080] text-white'))) }} rounded py-1 px-1">
+                                        {{ $detailSiswa->calonSiswa->notifikasi_admin }}
                                     </span>
-
                                 </td>
-
-                                <td class="py-2 px-4">{{ $siswa->nik }}</td>
-                                <td class="py-2 px-4">{{ $siswa->nama }}</td>
-                                <td class="py-2 px-4">{{ $siswa->prodi }}</td>
+                                <td class="py-2 px-4">{{ $detailSiswa->calonSiswa->nik }}</td>
+                                <td class="py-2 px-4">{{ $detailSiswa->calonSiswa->nama }}</td>
+                                <td class="py-2 px-4">{{ $detailSiswa->prodi }}</td>
                                 <td class="py-2 px-4 text-2xl">
-                                    <div class="flex justify-center items-center  gap-5">
-                                        <a href="{{ route('admin-beranda-siswa-edit', ['id' => $siswa->nik]) }}">
+                                    <div class="flex justify-center items-center gap-5">
+                                        <a
+                                            href="{{ route('admin-beranda-siswa-edit', ['id' => $detailSiswa->calonSiswa->nik]) }}">
                                             <i
                                                 class="fa-solid fa-pen-to-square text-grey hover:opacity-70 cursor-pointer"></i>
                                         </a>
-
-                                        <form action="{{ route('admin-beranda-siswa-verifikasi', ['id' => $siswa->nik]) }}"
+                                        <form
+                                            action="{{ route('admin-beranda-siswa-verifikasi', ['id' => $detailSiswa->calonSiswa->nik]) }}"
                                             method="POST">
                                             @csrf
-                                            <input type="hidden" name="status" value="{{ $siswa->status }} ">
-
+                                            <input type="hidden" name="status"
+                                                value="{{ $detailSiswa->calonSiswa->status }}">
                                             <button type="submit">
                                                 <i
                                                     class="fa-solid fa-square-check text-d-green hover:opacity-70 cursor-pointer"></i>
                                             </button>
                                         </form>
-
                                         <button class="hapus-btn"
-                                            data-url="{{ route('admin-beranda-siswa-delete', ['id' => $siswa->nik]) }}"
-                                            data-nama="{{ $siswa->nama }}">
+                                            data-url="{{ route('admin-beranda-siswa-delete', ['id' => $detailSiswa->calonSiswa->nik]) }}"
+                                            data-nama="{{ $detailSiswa->nama }}">
                                             <i class="fa-solid fa-trash text-red hover:opacity-70 cursor-pointer"></i>
                                         </button>
-
                                     </div>
                                 </td>
                             </tr>
                         @endif
                     @endforeach
+
+
                 </tbody>
             </table>
         </div>
@@ -153,7 +180,7 @@
                             : ''))) }}
             - Sudah Tervalidasi</div>
         <div class="overflow-x-auto">
-            <table class="bg-white rounded-lg mt-3 table-auto text-center min-w-full">
+            <table class="bg-white rounded-lg mt-3 table-auto text-center min-w-full" id="data-table-verify">
                 <thead>
                     <tr class="border-b border-d-green">
                         <th>No</th>
@@ -165,31 +192,33 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($programStudy == 'admin-beranda-tkro' ? $calonSiswaTkro : ($programStudy == 'admin-beranda-tbsm' ? $calonSiswaTbsm : ($programStudy == 'admin-beranda-tkj' ? $calonSiswaTkj : ($programStudy == 'admin-beranda-akl' ? $calonSiswaAkl : []))) as $i => $siswa)
-                        @if ($siswa->status === 1)
+                    @foreach ($sortedSiswa as $detailSiswa)
+                        @if ($detailSiswa->calonSiswa->status === 1)
                             <tr class="border-b border-d-green">
-                                <td> {{ $i + 1 }} </td>
+                                <td class="nomor-urut"></td>
+
                                 <td class="py-1 my-1 px-2">
                                     <span
-                                        class="{{ $siswa->notifikasi_admin === 'Pendaftar Baru' ? 'bg-[#FFD700] text-black' : ($siswa->notifikasi_admin === 'Berkas Terupload' ? 'bg-[#008000] text-white' : ($siswa->notifikasi_admin === 'Berkas Update' ? 'bg-[#0000FF] text-white' : ($siswa->notifikasi_admin === 'Siap Ujian' ? 'bg-[#FFA500] text-black' : 'bg-[#808080] text-white'))) }} rounded py-1 px-1">
-                                        {{ $siswa->notifikasi_admin }}
+                                        class="{{ $detailSiswa->calonSiswa->notifikasi_admin === 'Pendaftar Baru' ? 'bg-[#FFD700] text-black' : ($detailSiswa->calonSiswa->notifikasi_admin === 'Berkas Terupload' ? 'bg-[#008000] text-white' : ($detailSiswa->calonSiswa->notifikasi_admin === 'Berkas Update' ? 'bg-[#0000FF] text-white' : ($detailSiswa->calonSiswa->notifikasi_admin === 'Siap Ujian' ? 'bg-[#FFA500] text-black' : 'bg-[#808080] text-white'))) }} rounded py-1 px-1">
+                                        {{ $detailSiswa->calonSiswa->notifikasi_admin }}
                                     </span>
-
                                 </td>
-                                <td class="py-2 px-4">{{ $siswa->nik }}</td>
-                                <td class="py-2 px-4">{{ $siswa->nama }}</td>
-                                <td class="py-2 px-4">{{ $siswa->prodi }}</td>
+                                <td class="py-2 px-4">{{ $detailSiswa->calonSiswa->nik }}</td>
+                                <td class="py-2 px-4">{{ $detailSiswa->calonSiswa->nama }}</td>
+                                <td class="py-2 px-4">{{ $detailSiswa->calonSiswa->prodi }}</td>
                                 <td class="py-2 px-4 text-2xl">
                                     <div class="flex justify-center items-center gap-5">
-                                        <a href="{{ route('admin-beranda-siswa-edit', ['id' => $siswa->nik]) }}">
+                                        <a
+                                            href="{{ route('admin-beranda-siswa-edit', ['id' => $detailSiswa->calonSiswa->nik]) }}">
                                             <i
                                                 class="fa-solid fa-pen-to-square text-grey hover:opacity-70 cursor-pointer"></i>
                                         </a>
                                         <form
-                                            action="{{ route('admin-beranda-siswa-unverifikasi', ['id' => $siswa->nik]) }}"
+                                            action="{{ route('admin-beranda-siswa-unverifikasi', ['id' => $detailSiswa->calonSiswa->nik]) }}"
                                             method="POST">
                                             @csrf
-                                            <input type="hidden" name="status" value="{{ $siswa->status }} ">
+                                            <input type="hidden" name="status"
+                                                value="{{ $detailSiswa->calonSiswa->status }}">
                                             <button type="submit">
                                                 <i
                                                     class="fa-solid fa-square-minus text-red hover:opacity-70 cursor-pointer"></i>
@@ -200,6 +229,8 @@
                             </tr>
                         @endif
                     @endforeach
+
+
                 </tbody>
             </table>
         </div>
@@ -223,6 +254,19 @@
                     }
                 });
             });
+
+            const nomorUrutElementsUnverify = document.querySelectorAll('#data-table-unverify .nomor-urut')
+            // Loop melalui semua elemen dan atur nomor urut
+            nomorUrutElementsUnverify.forEach((element, index) => {
+                element.textContent = index + 1;
+            });
+
+            const nomorUrutElementsVerify = document.querySelectorAll('#data-table-verify .nomor-urut')
+            // Loop melalui semua elemen dan atur nomor urut
+            nomorUrutElementsVerify.forEach((element, index) => {
+                element.textContent = index + 1;
+            });
+
         });
     </script>
 

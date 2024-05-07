@@ -34,39 +34,37 @@
             </div>
         </div>
     @endif
-
     <div class=" mt-10 mb-2">
         <span
-            class="{{ $siswa->notifikasi_admin === 'Pendaftar Baru' ? 'bg-[#FFD700] text-black' : ($siswa->notifikasi_admin === 'Berkas Terupload' ? 'bg-[#008000] text-white' : ($siswa->notifikasi_admin === 'Berkas Update' ? 'bg-[#0000FF] text-white' : ($siswa->notifikasi_admin === 'Siap Ujian' ? 'bg-[#FFA500] text-black' : 'bg-[#808080] text-white'))) }} rounded py-1 px-1">
+            class="{{ $siswa->notifikasi_admin === 'Pendaftar Baru' ? 'bg-[#FFD700] text-black' : ($siswa->notifikasi_admin === 'Berkas Terupload' ? 'bg-[#008000] text-white' : ($siswa->notifikasi_admin === 'Berkas Update' ? 'bg-[#0000FF] text-white' : ($siswa->notifikasi_admin === 'Tidak Lulus Ujian' ? 'bg-red text-white' : ($siswa->notifikasi_admin === 'Siap Ujian' ? 'bg-[#FFA500] text-black' : 'bg-[#808080] text-white')))) }} rounded py-1 px-1">
             {{ $siswa->notifikasi_admin }}
         </span>
 
     </div>
-
-    <img src="{{ asset('storage/siswa/pas-foto/' . $siswa->pas_foto) }}"
+    <img src="{{ asset('storage/siswa/' . $siswa->tahun_daftar . '/' . $siswa->nik . '/' . $siswa->detailCalonSiswa->pas_foto) }}"
         class="hidden rounded-xl overflow-hidden mb-3 bg-white max-h-80" alt="" id="pas_foto">
     <embed
-        src="{{ asset($berkas && $berkas->nik ? 'storage/siswa/akta/' . $berkas->akta : 'storage/siswa/pas-foto/no_pict.png') }}"
+        src="{{ asset($berkas && $berkas->nik ? 'storage/siswa/' . $siswa->tahun_daftar . '/' . $siswa->nik . '/' . $berkas->akta : 'assets/img/not-found.png') }}"
         type="application/pdf" class="hidden object-cover {{ $berkas && $berkas->nik ? 'w-full h-full' : 'w-full h-2/5' }}"
         id="akta" />
     <embed
-        src="{{ asset($berkas && $berkas->nik ? 'storage/siswa/kk/' . $berkas->kk : 'storage/siswa/pas-foto/no_pict.png') }}"
+        src="{{ asset($berkas && $berkas->nik ? 'storage/siswa/' . $siswa->tahun_daftar . '/' . $siswa->nik . '/' . $berkas->kk : 'assets/img/not-found.png') }}"
         type="application/pdf" class="hidden object-cover {{ $berkas && $berkas->nik ? 'w-full h-full' : 'w-full h-2/5' }}"
         id="kk" />
     <embed
-        src="{{ asset($berkas && $berkas->nik ? 'storage/siswa/shun/' . $berkas->shun : 'storage/siswa/pas-foto/no_pict.png') }}"
+        src="{{ asset($berkas && $berkas->nik ? 'storage/siswa/' . $siswa->tahun_daftar . '/' . $siswa->nik . '/' . $berkas->shun : 'assets/img/not-found.png') }}"
         type="application/pdf" class="hidden object-cover {{ $berkas && $berkas->nik ? 'w-full h-full' : 'w-full h-2/5' }}"
         id="shun" />
     <embed
-        src="{{ asset($berkas && $berkas->nik ? 'storage/siswa/ijazah/' . $berkas->ijazah : 'storage/siswa/pas-foto/no_pict.png') }}"
+        src="{{ asset($berkas && $berkas->nik ? 'storage/siswa/' . $siswa->tahun_daftar . '/' . $siswa->nik . '/' . $berkas->ijazah : 'assets/img/not-found.png') }}"
         type="application/pdf" class="hidden object-cover {{ $berkas && $berkas->nik ? 'w-full h-full' : 'w-full h-2/5' }}"
         id="ijazah" />
     <embed
-        src="{{ asset($berkas && $berkas->nik ? 'storage/siswa/raport/' . $berkas->raport : 'storage/siswa/pas-foto/no_pict.png') }}"
+        src="{{ asset($berkas && $berkas->nik ? 'storage/siswa/' . $siswa->tahun_daftar . '/' . $siswa->nik . '/' . $berkas->raport : 'assets/img/not-found.png') }}"
         type="application/pdf" class="hidden object-cover {{ $berkas && $berkas->nik ? 'w-full h-full' : 'w-full h-2/5' }}"
         id="raport" />
     <embed
-        src="{{ asset($berkas && $berkas->nik ? 'storage/siswa/transkip-nilai/' . $berkas->transkip_nilai : 'storage/siswa/pas-foto/no_pict.png') }}"
+        src="{{ asset($berkas && $berkas->nik ? 'storage/siswa/' . $siswa->tahun_daftar . '/' . $siswa->nik . '/' . $berkas->transkip_nilai : 'assets/img/not-found.png') }}"
         type="application/pdf" class="hidden object-cover {{ $berkas && $berkas->nik ? 'w-full h-full' : 'w-full h-2/5' }}"
         id="transkip_nilai" />
 
@@ -83,87 +81,140 @@
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full">
                 {{-- <label class="w-1/5" for="email">Email</label><br> --}}
 
-                <div class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none flex justify-between"
+                <div class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none cursor-pointer flex justify-between"
                     id="togglePasFoto">
                     <div class="p-2"> Lihat Foto</div>
                 </div>
 
-                <div class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" id="toggleAkta">
+                <div class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none cursor-pointer"
+                    id="toggleAkta">
                     <div class="p-2"> Lihat Akta</div>
                 </div>
-                <div class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" id="toggleKk">
+                <div class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none cursor-pointer"
+                    id="toggleKk">
                     <div class="p-2"> Lihat KK</div>
                 </div>
 
             </div>
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full">
-                <div class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" id="toggleShun">
+                <div class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none cursor-pointer"
+                    id="toggleShun">
                     <div class="p-2"> Lihat SHUN</div>
                 </div>
-                <div class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" id="toggleIjazah">
+                <div class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none cursor-pointer"
+                    id="toggleIjazah">
                     <div class="p-2"> Lihat Ijazah</div>
                 </div>
 
             </div>
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full">
-                <div class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" id="toggleRaport">
+                <div class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none cursor-pointer"
+                    id="toggleRaport">
                     <div class="p-2"> Lihat Raport</div>
                 </div>
-                <div class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" id="toggleTranskipNilai">
+                <div class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none cursor-pointer"
+                    id="toggleTranskipNilai">
                     <div class="p-2"> Lihat Transkip Nilai</div>
                 </div>
 
             </div>
 
-
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
                 <label class="w-1/5" for="notifikasi">Aksi</label><br>
                 <div class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
-                    <select name="notifikasi" id="" class="w-full p-2">
-                        <option
-                            value="Pendaftaran sedang diproses"{{ $notifikasi->notifikasi == 'Pendaftaran sedang diproses' ? 'selected' : '' }}>
-                            Pendaftaran sedang diproses</option>
+                    <select name="notifikasi_admin" id="" class="w-full p-2 cursor-pointer">
 
-                        <option
-                            value="Silahkan mengikuti ujian di SMK Maarif NU Doro dengan membawa formulir yang telah dicetak"
-                            {{ $notifikasi->notifikasi == 'Silahkan mengikuti ujian di SMK Maarif NU Doro dengan membawa formulir yang telah dicetak' ? 'selected' : '' }}>
-                            Silahkan mengikuti ujian di SMK Maarif NU Doro dengan membawa formulir yang telah dicetak
-                        </option>
-                        <option value="Selamat anda lulus ujian pendaftaran"
-                            {{ $notifikasi->notifikasi == 'Selamat anda lulus ujian pendaftaran' ? 'selected' : '' }}>
-                            Selamat anda lulus ujian pendaftaran
+                        <option class="{{ $siswa->notifikasi_admin == 'Pendaftar Baru' ? '' : 'hidden' }}"
+                            value="Pendaftar Baru" {{ $siswa->notifikasi_admin == 'Pendaftar Baru' ? 'selected' : '' }}>
+                            Pendaftar Baru
                         </option>
 
-                        <option class="{{ $berkas && $berkas->nik ? 'hidden' : '' }}" value="Lengkapi Berkas"
-                            {{ $notifikasi->notifikasi == 'Lengkapi Berkas' ? 'selected' : '' }}>
+                        <option
+                            class="{{ $siswa->notifikasi_admin == 'Pendaftar Baru' || $siswa->notifikasi_admin == 'Tidak Lulus Ujian' ? '' : 'hidden' }}"
+                            value="Cetak Formulir" {{ $siswa->notifikasi_admin == 'Cetak Formulir' ? 'selected' : '' }}>
+                            Cetak
+                            Formulir
+                        </option>
+
+                        <option class="{{ $siswa->notifikasi_admin == 'Formulir Tercetak' ? '' : 'hidden' }}"
+                            value="Siap Ujian" {{ $siswa->notifikasi_admin == 'Siap Ujian' ? 'selected' : '' }}>Siap
+                            Ujian
+                        </option>
+
+                        <option
+                            class="{{ $siswa->notifikasi_admin == 'Siap Ujian' || $siswa->notifikasi_admin == 'Tidak Lulus Ujian' ? '' : 'hidden' }}"
+                            value="Lengkapi Berkas" {{ $siswa->notifikasi_admin == 'Lulus Ujian' || $siswa->notifikasi_admin == 'Lengkapi Berkas' ? 'selected' : '' }}>
+                            Lulus
+                            Ujian & Lengkapi Berkas
+                        </option>
+
+                        <option class="{{ $siswa->notifikasi_admin == 'Siap Ujian' ? '' : 'hidden' }}"
+                            value="Tidak Lulus Ujian"
+                            {{ $siswa->notifikasi_admin == 'Tidak Lulus Ujian' || $siswa->notifikasi_admin == 'Lulus Ujian' ? 'selected' : '' }}>
+                            Tidak Lulus
+                            Ujian
+                        </option>
+
+                        <option class="{{ $siswa->notifikasi_admin == 'Lulus Ujian' ? '' : 'hidden' }}"
+                            value="Lengkapi Berkas" {{ $siswa->notifikasi_admin == 'Lengkapi Berkas' ? 'selected' : '' }}>
                             Lengkapi Berkas
                         </option>
-                        <option class="{{ $berkas && $berkas->nik ? '' : 'hidden' }}" value="Perbarui Akta Yang Valid"
-                            {{ $notifikasi->notifikasi == 'Perbarui Akta Yang Valid' ? 'selected' : '' }}>
-                            Perbarui Akta Yang Valid</option>
-                        <option class="{{ $berkas && $berkas->nik ? '' : 'hidden' }}" value="Perbarui KK Yang Valid"
-                            {{ $notifikasi->notifikasi == 'Perbarui KK Yang Valid' ? 'selected' : '' }}>
-                            Perbarui KK Yang Valid</option>
-                        <option class="{{ $berkas && $berkas->nik ? '' : 'hidden' }}" value="Perbarui Pas Foto Yang Valid"
-                            {{ $notifikasi->notifikasi == 'Perbarui Pas Foto Yang Valid' ? 'selected' : '' }}>
-                            Perbarui Pas Foto Yang Valid</option>
-                        <option class="{{ $berkas && $berkas->nik ? '' : 'hidden' }}" value="Perbarui Ijazah Yang Valid"
-                            {{ $notifikasi->notifikasi == 'Perbarui Ijazah Yang Valid' ? 'selected' : '' }}>
-                            Perbarui Ijazah Yang Valid</option>
-                        <option class="{{ $berkas && $berkas->nik ? '' : 'hidden' }}" value="Perbarui SHUN Yang Valid"
-                            {{ $notifikasi->notifikasi == 'Perbarui SHUN Yang Valid' ? 'selected' : '' }}>
-                            Perbarui SHUN Yang Valid</option>
 
-                        <option class="{{ $berkas && $berkas->nik ? '' : 'hidden' }}" value="Perbarui Raport Yang Valid"
-                            {{ $notifikasi->notifikasi == 'Perbarui Raport Yang Valid' ? 'selected' : '' }}>
-                            Perbarui Raport Yang Valid</option>
+                        <option
+                            class="{{ $siswa->notifikasi_admin == 'Berkas Terupload' || $siswa->notifikasi_admin == 'Berkas Terupdate' ? '' : 'hidden' }}"
+                            value="Masukan Akta Yang Valid"
+                            {{ $siswa->notifikasi_admin == 'Masukan Akta Yang Valid' ? 'selected' : '' }}>Masukan Akta Yang
+                            Valid
                         </option>
-                        <option class="{{ $berkas && $berkas->nik ? '' : 'hidden' }}"
-                            value="Perbarui Transkip Nilai Yang Valid"
-                            {{ $notifikasi->notifikasi == 'Perbarui Transkip Nilai Yang Valid' ? 'selected' : '' }}>
-                            Perbarui Transkip Nilai Yang Valid</option>
+
+                        <option
+                            class="{{ $siswa->notifikasi_admin == 'Berkas Terupload' || $siswa->notifikasi_admin == 'Berkas Terupdate' ? '' : 'hidden' }}"
+                            value="Masukan KK Yang Valid"
+                            {{ $siswa->notifikasi_admin == 'Masukan KK Yang Valid' ? 'selected' : '' }}>Masukan KK Yang
+                            Valid
+                        </option>
+
+                        <option
+                            class="{{ $siswa->notifikasi_admin == 'Berkas Terupload' || $siswa->notifikasi_admin == 'Berkas Terupdate' ? '' : 'hidden' }}"
+                            value="Masukan SHUN Yang Valid"
+                            {{ $siswa->notifikasi_admin == 'Masukan SHUN Yang Valid' ? 'selected' : '' }}>Masukan SHUN Yang
+                            Valid
+                        </option>
+
+                        <option
+                            class="{{ $siswa->notifikasi_admin == 'Berkas Terupload' || $siswa->notifikasi_admin == 'Berkas Terupdate' ? '' : 'hidden' }}"
+                            value="Masukan Ijazah Yang Valid"
+                            {{ $siswa->notifikasi_admin == 'Masukan Ijazah Yang Valid' ? 'selected' : '' }}>Masukan Ijazah
+                            Yang Valid
+                        </option>
+
+                        <option
+                            class="{{ $siswa->notifikasi_admin == 'Berkas Terupload' || $siswa->notifikasi_admin == 'Berkas Terupdate' ? '' : 'hidden' }}"
+                            value="Masukan Raport Yang Valid"
+                            {{ $siswa->notifikasi_admin == 'Masukan Raport Yang Valid' ? 'selected' : '' }}>Masukan Raport
+                            Yang Valid
+                        </option>
+
+                        <option
+                            class="{{ $siswa->notifikasi_admin == 'Berkas Terupload' || $siswa->notifikasi_admin == 'Berkas Terupdate' ? '' : 'hidden' }}"
+                            value="Masukan Transkip Nilai Yang Valid"
+                            {{ $siswa->notifikasi_admin == 'Masukan Transkip Nilai Yang Valid' ? 'selected' : '' }}>Masukan
+                            Transkip Nilai Yang Valid
+                        </option>
+
+                        <option class="{{ $siswa->notifikasi_admin == 'Pendaftar Baru' ? '' : 'hidden' }}"
+                            value="Masukan Pas Foto Yang Valid"
+                            {{ $siswa->notifikasi_admin == 'Masukan Pas Foto Yang Valid' ? 'selected' : '' }}>Masukan Pas
+                            Foto Yang Valid
+                        </option>
+
+                        <option
+                            class="{{ $siswa->notifikasi_admin == 'Berkas Terupload' || $siswa->notifikasi_admin == 'Berkas Terupdate' ? '' : 'hidden' }}"
+                            value="Pendaftaran Selesai"
+                            {{ $siswa->notifikasi_admin == 'Pendaftaran Selesai' || $siswa->notifikasi_admin == 'Berkas Terupload' ? 'selected' : '' }}>
+                            Pendaftaran Selesai
                         </option>
 
                     </select>
@@ -426,40 +477,42 @@
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
                 <label class="w-1/5" for="asal_sekolah">Asal Sekolah</label><br>
-                <input type="text" name="asal_sekolah" value="{{ $siswa->asal_sekolah }}"
+                <input type="text" name="asal_sekolah" value="{{ $siswa->detailCalonSiswa->asal_sekolah }}"
                     placeholder="Masukan Nama Asal Sekolah"
                     class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
             </div>
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
                 <label class="w-1/5" for="tahun_lulus">Tahun Lulus</label><br>
-                <input type="number" name="tahun_lulus" value="{{ $siswa->tahun_lulus }}"
+                <input type="number" name="tahun_lulus" value="{{ $siswa->detailCalonSiswa->tahun_lulus }}"
                     placeholder="Masukan Tahun Lulus"
                     class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
             </div>
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
                 <label class="w-1/5" for="nama_ayah">Nama Ayah</label><br>
-                <input type="text" name="nama_ayah" value="{{ $siswa->nama_ayah }}" placeholder="Masukan Nama Ayah"
+                <input type="text" name="nama_ayah" value="{{ $siswa->detailCalonSiswa->nama_ayah }}"
+                    placeholder="Masukan Nama Ayah"
                     class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
             </div>
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
                 <label class="w-1/5" for="nama_ibu">Nama Ibu</label><br>
-                <input type="text" name="nama_ibu" value="{{ $siswa->nama_ibu }}" placeholder="Masukan Nama Ibu"
+                <input type="text" name="nama_ibu" value="{{ $siswa->detailCalonSiswa->nama_ibu }}"
+                    placeholder="Masukan Nama Ibu"
                     class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
             </div>
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
                 <label class="w-1/5" for="no_hp_wali">No Hp Wali</label><br>
-                <input type="number" name="no_hp_wali" value="{{ $siswa->no_hp_wali }}"
+                <input type="number" name="no_hp_wali" value="{{ $siswa->detailCalonSiswa->no_hp_wali }}"
                     placeholder="Masukan No Hp Wali"
                     class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
             </div>
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
                 <label class="w-1/5" for="pekerjaan_wali">Pekerjaan Wali</label><br>
-                <input type="text" name="pekerjaan_wali" value="{{ $siswa->pekerjaan_wali }}"
+                <input type="text" name="pekerjaan_wali" value="{{ $siswa->detailCalonSiswa->pekerjaan_wali }}"
                     placeholder="Masukan Pekerjaan Wali"
                     class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none" autocomplete="off">
             </div>

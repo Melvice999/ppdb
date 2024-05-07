@@ -9,12 +9,13 @@ use App\Models\CalonSiswa;
 use App\Models\PengaturanModel;
 use App\Models\BerandaModel;
 use App\Models\BerkasSiswa;
-use App\Models\NotifikasiAdminModel;
-use App\Models\NotifikasiModel;
+use App\Models\DetailCalonSiswaModel;
+use App\Models\OtpModel;
 use App\Models\PenilaianModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
@@ -22,14 +23,45 @@ class AdminController extends Controller
     public function index()
     {
         // jika ingin menambahkan tahun tinggal tambahkan addYear()-> untuk 1x tahunnya
-        // 'tkj'       => CalonSiswa::where('prodi', 'tkj')->where('tahun_daftar',  now()->addYear()->year)->count(),
+        // now()->addYear()->year
+        $tahun_daftar = now()->year;
+
+        $jumlahPendaftarTBSM = DetailCalonSiswaModel::where('prodi', 'TBSM')
+            ->whereHas('calonSiswa', function ($query) use ($tahun_daftar) {
+                $query->whereYear('tahun_daftar', $tahun_daftar);
+            })
+            ->count();
+
+        $jumlahPendaftarTKRO = DetailCalonSiswaModel::where('prodi', 'TKRO')
+            ->whereHas('calonSiswa', function ($query) use ($tahun_daftar) {
+                $query->whereYear('tahun_daftar', $tahun_daftar);
+            })
+            ->count();
+
+        $jumlahPendaftarTKJ = DetailCalonSiswaModel::where('prodi', 'TKJ')
+            ->whereHas('calonSiswa', function ($query) use ($tahun_daftar) {
+                $query->whereYear('tahun_daftar', $tahun_daftar);
+            })
+            ->count();
+
+        $jumlahPendaftarAKL = DetailCalonSiswaModel::where('prodi', 'AKL')
+            ->whereHas('calonSiswa', function ($query) use ($tahun_daftar) {
+                $query->whereYear('tahun_daftar', $tahun_daftar);
+            })
+            ->count();
+
         $data = [
-            'tbsm'      => CalonSiswa::where('prodi', 'tbsm')->where('tahun_daftar', now()->year)->count(),
-            'tkro'      => CalonSiswa::where('prodi', 'tkro')->where('tahun_daftar', now()->year)->count(),
-            'tkj'       => CalonSiswa::where('prodi', 'tkj')->where('tahun_daftar', now()->year)->count(),
-            'akl'       => CalonSiswa::where('prodi', 'akl')->where('tahun_daftar', now()->year)->count(),
-            'status0'   => CalonSiswa::where('status', 0)->where('tahun_daftar', now()->year)->count(),
-            'status1'   => CalonSiswa::where('status', 1)->where('tahun_daftar', now()->year)->count(),
+            'tbsm' => $jumlahPendaftarTBSM,
+            'tkro' => $jumlahPendaftarTKRO,
+            'tkj' => $jumlahPendaftarTKJ,
+            'akl' => $jumlahPendaftarAKL,
+
+            'status0'   => CalonSiswa::where('status', 0)->whereHas('detailCalonSiswa', function ($query) use ($tahun_daftar) {
+                $query->whereYear('tahun_daftar', $tahun_daftar);
+            })->count(),
+            'status1'   => CalonSiswa::where('status', 1)->whereHas('detailCalonSiswa', function ($query) use ($tahun_daftar) {
+                $query->whereYear('tahun_daftar', $tahun_daftar);
+            })->count(),
             'title'     => 'Beranda Admin',
         ];
 
@@ -39,22 +71,86 @@ class AdminController extends Controller
     public function berandaProdi(Request $request)
     {
         $programStudy   = $request->route()->getName();
-        $calonSiswaTbsm = CalonSiswa::where('prodi', 'tbsm')->where('tahun_daftar', now()->year)->get();
-        $calonSiswaTkro = CalonSiswa::where('prodi', 'tkro')->where('tahun_daftar', now()->year)->get();
-        $calonSiswaTkj  = CalonSiswa::where('prodi', 'tkj')->where('tahun_daftar', now()->year)->get();
-        $calonSiswaAkl  = CalonSiswa::where('prodi', 'akl')->where('tahun_daftar', now()->year)->get();
-        $statusTbsm0    = CalonSiswa::where('status', 0)->where('prodi', 'tbsm')->where('tahun_daftar', now()->year)->count();
-        $statusTbsm1    = CalonSiswa::where('status', 1)->where('prodi', 'tbsm')->where('tahun_daftar', now()->year)->count();
-        $statusTkro0    = CalonSiswa::where('status', 0)->where('prodi', 'tkro')->where('tahun_daftar', now()->year)->count();
-        $statusTkro1    = CalonSiswa::where('status', 1)->where('prodi', 'tkro')->where('tahun_daftar', now()->year)->count();
-        $statusTkj0     = CalonSiswa::where('status', 0)->where('prodi', 'tkj')->where('tahun_daftar', now()->year)->count();
-        $statusTkj1     = CalonSiswa::where('status', 1)->where('prodi', 'tkj')->where('tahun_daftar', now()->year)->count();
-        $statusAkl0     = CalonSiswa::where('status', 0)->where('prodi', 'akl')->where('tahun_daftar', now()->year)->count();
-        $statusAkl1     = CalonSiswa::where('status', 1)->where('prodi', 'akl')->where('tahun_daftar', now()->year)->count();
-        $status0        = CalonSiswa::where('status', 0)->where('tahun_daftar', now()->year);
-        $status1        = CalonSiswa::where('status', 1)->where('tahun_daftar', now()->year);
+
+        $tahun_daftar = now()->year;
+
+        $calonSiswaTbsm = DetailCalonSiswaModel::orderBy('updated_at', 'DESC')->where('prodi', 'TBSM')
+            ->whereHas('calonSiswa', function ($query) use ($tahun_daftar) {
+                $query->whereYear('tahun_daftar', $tahun_daftar);
+            })->get();
+
+        $calonSiswaTkro = DetailCalonSiswaModel::orderBy('updated_at', 'DESC')->where('prodi', 'TKRO')
+            ->whereHas('calonSiswa', function ($query) use ($tahun_daftar) {
+                $query->whereYear('tahun_daftar', $tahun_daftar);
+            })->get();
+
+        $calonSiswaTkj = DetailCalonSiswaModel::orderBy('updated_at', 'DESC')->where('prodi', 'TKJ')
+            ->whereHas('calonSiswa', function ($query) use ($tahun_daftar) {
+                $query->whereYear('tahun_daftar', $tahun_daftar);
+            })->get();
+
+        $calonSiswaAkl = DetailCalonSiswaModel::orderBy('updated_at', 'DESC')->where('prodi', 'AKL')
+            ->whereHas('calonSiswa', function ($query) use ($tahun_daftar) {
+                $query->whereYear('tahun_daftar', $tahun_daftar);
+            })->get();
+
+        $statusTbsm0 = CalonSiswa::where('status', 0)
+            ->whereHas('detailCalonSiswa', function ($query) {
+                $query->where('prodi', 'TBSM')->whereYear('tahun_daftar', now()->year);
+            })
+            ->count();
+
+        $statusTkro0 = CalonSiswa::where('status', 0)
+            ->whereHas('detailCalonSiswa', function ($query) {
+                $query->where('prodi', 'TKRO')->whereYear('tahun_daftar', now()->year);
+            })
+            ->count();
+
+        $statusTkj0 = CalonSiswa::where('status', 0)
+            ->whereHas('detailCalonSiswa', function ($query) {
+                $query->where('prodi', 'TKJ')->whereYear('tahun_daftar', now()->year);
+            })
+            ->count();
+
+        $statusAkl0 = CalonSiswa::where('status', 0)
+            ->whereHas('detailCalonSiswa', function ($query) {
+                $query->where('prodi', 'AKL')->whereYear('tahun_daftar', now()->year);
+            })
+            ->count();
+
+
+        $statusTbsm1 = CalonSiswa::where('status', 1)
+            ->whereHas('detailCalonSiswa', function ($query) {
+                $query->where('prodi', 'TBSM')->whereYear('tahun_daftar', now()->year);
+            })
+            ->count();
+
+        $statusTkro1 = CalonSiswa::where('status', 1)
+            ->whereHas('detailCalonSiswa', function ($query) {
+                $query->where('prodi', 'TKRO')->whereYear('tahun_daftar', now()->year);
+            })
+            ->count();
+
+        $statusTkj1 = CalonSiswa::where('status', 1)
+            ->whereHas('detailCalonSiswa', function ($query) {
+                $query->where('prodi', 'TKJ')->whereYear('tahun_daftar', now()->year);
+            })
+            ->count();
+
+        $statusAkl1 = CalonSiswa::where('status', 1)
+            ->whereHas('detailCalonSiswa', function ($query) {
+                $query->where('prodi', 'AKL')->whereYear('tahun_daftar', now()->year);
+            })
+            ->count();
+
+        $siswa = CalonSiswa::get();
+
+
+        // $status0        = CalonSiswa::where('status', 0)->where('tahun_daftar', now()->year);
+        // $status1        = CalonSiswa::where('status', 1)->where('tahun_daftar', now()->year);
 
         $data = [
+            'siswa'             => $siswa,
             'title'             => 'Beranda Admin',
             'calonSiswaTbsm'    => $calonSiswaTbsm,
             'calonSiswaTkro'    => $calonSiswaTkro,
@@ -68,18 +164,24 @@ class AdminController extends Controller
             'statusTkj1'        => $statusTkj1,
             'statusAkl0'        => $statusAkl0,
             'statusAkl1'        => $statusAkl1,
-            'status0'           => $status0,
-            'status1'           => $status1,
+            // 'status0'           => $status0,
+            // 'status1'           => $status1,
         ];
         return view('admin.beranda.prodi', ['programStudy' => $programStudy], $data);
     }
 
     public function berandaValidate(Request $request)
     {
-        $programStudy   = $request->route()->getName();
-        $status0        = CalonSiswa::where('status', 0)->where('tahun_daftar', now()->year)->get();
-        $status1        = CalonSiswa::where('status', 1)->where('tahun_daftar', now()->year)->get();
+        $tahun_daftar = now()->year;
 
+        $programStudy   = $request->route()->getName();
+
+        $status0 =  CalonSiswa::orderBy('updated_at', 'DESC')->where('status', 0)->whereHas('detailCalonSiswa', function ($query) use ($tahun_daftar) {
+            $query->whereYear('tahun_daftar', $tahun_daftar);
+        })->get();
+        $status1 =  CalonSiswa::orderBy('updated_at', 'DESC')->where('status', 1)->whereHas('detailCalonSiswa', function ($query) use ($tahun_daftar) {
+            $query->whereYear('tahun_daftar', $tahun_daftar);
+        })->get();
 
         $data = [
             'title'     => 'Beranda Admin',
@@ -94,10 +196,8 @@ class AdminController extends Controller
         $siswa = CalonSiswa::where('nik', $id)->first();
         $berkas = BerkasSiswa::where('nik', $id)->first();
         $penilaian = PenilaianModel::where('nik', $id)->first();
-        $notifikasi = NotifikasiModel::where('nik', $id)->first();
         $data = [
             'penilaian'         => $penilaian,
-            'notifikasi'        => $notifikasi,
             'siswa'             => $siswa,
             'berkas'            => $berkas,
             'title'             => 'Beranda Admin',
@@ -107,45 +207,290 @@ class AdminController extends Controller
 
     public function postBerandaSiswaEdit(Request $request, $id)
     {
+
+        if ($request->notifikasi_admin == 'Masukan Pas Foto Yang Valid') {
+            $target = $request->no_hp;
+            $message = "Harap Masukan Pas Foto Yang Valid.
+        1. Pas Foto Ukuran 3x4 
+        2. Ukuran Maksimal 1.5 MB. 
+        3. Format .jpg, .jpeg, .png.
+        4. Background Berwarna Merah.
+            ";
+
+            $token = env('FONTTE_API_TOKEN');
+
+            $ch = curl_init();
+
+            curl_setopt_array($ch, array(
+                CURLOPT_URL => 'https://api.fonnte.com/send',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => array(
+                    'target' => $target,
+                    'message' => $message,
+                ),
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: ' . $token
+                ),
+                CURLOPT_SSL_VERIFYPEER => false,
+            ));
+            curl_exec($ch);
+
+            curl_close($ch);
+        }
+
+        if ($request->notifikasi_admin == 'Cetak Formulir') {
+            $target = $request->no_hp;
+            $message = "Harap Masuk ke Akun PPDB SMK Ma'arif NU Doro dan Cetak Formulir Pendaftaran.
+
+        Setelah mencetak formulir pendaftaran dari akun PPDB SMK Ma'arif NU Doro, selanjutnya silakan mengikuti ujian PPDB di SMK Ma'arif NU Doro dengan membawa formulir pendaftaran yang telah dicetak.
+        ";
+
+            $token = env('FONTTE_API_TOKEN');
+
+            $ch = curl_init();
+
+            curl_setopt_array($ch, array(
+                CURLOPT_URL => 'https://api.fonnte.com/send',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => array(
+                    'target' => $target,
+                    'message' => $message,
+                ),
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: ' . $token
+                ),
+                CURLOPT_SSL_VERIFYPEER => false,
+            ));
+            curl_exec($ch);
+
+            curl_close($ch);
+        }
+
+        if ($request->notifikasi_admin == 'Tidak Lulus Ujian') {
+            $target = $request->no_hp;
+            $message = "Maaf, kami ingin memberitahukan bahwa Anda belum berhasil lolos dalam ujian PPDB SMK Ma'arif NU Doro. 
+        Meskipun demikian, jangan putus asa dan tetap semangat untuk mencoba di masa yang akan datang. 
+        Terima kasih atas partisipasi Anda.
+            ";
+
+            $token = env('FONTTE_API_TOKEN');
+
+            $ch = curl_init();
+
+            curl_setopt_array($ch, array(
+                CURLOPT_URL => 'https://api.fonnte.com/send',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => array(
+                    'target' => $target,
+                    'message' => $message,
+                ),
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: ' . $token
+                ),
+                CURLOPT_SSL_VERIFYPEER => false,
+            ));
+            curl_exec($ch);
+
+            curl_close($ch);
+        }
+
+        if ($request->notifikasi_admin == 'Lengkapi Berkas') {
+            $target = $request->no_hp;
+            $message = " Selamat! Kami senang memberitahukan bahwa Anda telah LULUS ujian PPDB SMK SMK Ma'arif NU Doro.
+
+        Langkah berikutnya adalah melengkapi berkas pendaftaran pada akun PPDB SMK Ma'arif NU Doro.
+
+        Pastikan untuk menyertakan dokumen-dokumen berikut dalam format PDF dan tidak melebihi ukuran 1.5MB:
+
+        1. Akta Kelahiran,
+        2. Kartu Keluarga (KK),
+        3. Surat Keterangan Hasil Ujian Nasional (SHUN),
+        4. Ijazah terakhir,
+        5. Raport terakhir,
+        6. Transkrip Nilai,
+
+        Terima kasih atas kerjasamanya, dan kami tunggu segera kiriman berkas pendaftarannya!.
+            ";
+
+            $token = env('FONTTE_API_TOKEN');
+
+            $ch = curl_init();
+
+            curl_setopt_array($ch, array(
+                CURLOPT_URL => 'https://api.fonnte.com/send',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => array(
+                    'target' => $target,
+                    'message' => $message,
+                ),
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: ' . $token
+                ),
+                CURLOPT_SSL_VERIFYPEER => false,
+            ));
+            curl_exec($ch);
+
+            curl_close($ch);
+        }
+
+        if ($request->notifikasi_admin == 'Masukan Akta Yang Valid' || $request->notifikasi_admin == 'Masukan KK Yang Valid' || $request->notifikasi_admin == 'Masukan SHUN Yang Valid' || $request->notifikasi_admin == 'Masukan Ijazah Yang Valid' || $request->notifikasi_admin == 'Masukan Raport Yang Valid' || $request->notifikasi_admin == 'Masukan Transkrip Nilai Yang Valid') {
+
+            if ($request->notifikasi_admin == 'Masukan Akta Yang Valid') {
+                $value = 'Akta';
+            } elseif ($request->notifikasi_admin == 'Masukan KK Yang Valid') {
+                $value = 'Kartu Keluarga';
+            } elseif ($request->notifikasi_admin == 'Masukan SHUN Yang Valid') {
+                $value = 'Surat Keterangan Hasil Ujian Nasional';
+            } elseif ($request->notifikasi_admin == 'Masukan Ijazah Yang Valid') {
+                $value = 'Ijazah';
+            } elseif ($request->notifikasi_admin == 'Masukan Raport Yang Valid') {
+                $value = 'Raport';
+            } elseif ($request->notifikasi_admin == 'Masukan Transkrip Nilai Yang Valid') {
+                $value = 'Transkrip Nilai';
+            } else {
+                // Notifikasi tidak dikenali
+                $value = 'Notifikasi tidak dikenali';
+            }
+
+            $message = "Mohon unggah $value yang valid.";
+
+
+            $target = $request->no_hp;
+            $message = "Masukan " . $value . "yang valid.
+        Ketentuan:
+        1. Berkas berformat PDF
+        2. Ukuran maksimal 1.5 MB.
+        ";
+
+            $token = env('FONTTE_API_TOKEN');
+
+            $ch = curl_init();
+
+            curl_setopt_array($ch, array(
+                CURLOPT_URL => 'https://api.fonnte.com/send',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => array(
+                    'target' => $target,
+                    'message' => $message,
+                ),
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: ' . $token
+                ),
+                CURLOPT_SSL_VERIFYPEER => false,
+            ));
+            curl_exec($ch);
+
+            curl_close($ch);
+        }
+
+        if ($request->notifikasi_admin == 'Pendaftaran Selesai') {
+            $target = $request->no_hp;
+            $message = "Pendaftaran PPDB SMK Maarif NU Doro selesai. Terima kasih atas partisipasi Anda.
+            ";
+
+            $token = env('FONTTE_API_TOKEN');
+
+            $ch = curl_init();
+
+            curl_setopt_array($ch, array(
+                CURLOPT_URL => 'https://api.fonnte.com/send',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => array(
+                    'target' => $target,
+                    'message' => $message,
+                ),
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: ' . $token
+                ),
+                CURLOPT_SSL_VERIFYPEER => false,
+            ));
+            curl_exec($ch);
+
+            curl_close($ch);
+        }
+
+        if ($request->notifikasi_admin === "Lulus Ujian" || $request->notifikasi_admin === "Tidak Lulus Ujian") {
+            $request->validate([
+                'btq'       => 'required',
+                'akademik'  => 'required',
+                'berat_badan'  => 'required',
+                'tinggi_badan'  => 'required',
+            ], [
+                'btq.required'       => 'Nilai BTQ wajib diisi',
+                'akademik.required'  => 'Nilai Akademik wajib diisi',
+                'berat_badan.required'  => 'Nilai Berat Badan wajib diisi',
+                'tinggi_badan.required'  => 'Nilai Tinggi Badan wajib diisi',
+            ]);
+        }
+
+        if ($request->notifikasi_admin === "Pendaftaran Selesai") {
+            CalonSiswa::where('nik', $id)->update([
+                'status' => 1
+            ]);
+        }
+
         $request->validate([
             'nik'       => 'min:16',
         ], [
             'nik.min'       => 'Panjang NIK minimal 16 karakter',
         ]);
 
-        $notifikasi = $request->notifikasi;
-        NotifikasiModel::where('nik', $id)->update([
-            'notifikasi' => $notifikasi,
-        ]);
-
         PenilaianModel::where('nik', $id)->update([
-            'btq'=>  $request->btq,
-            'akademik'=>  $request->akademik,
-            'berat_badan'=>  $request->berat_badan,
-            'tinggi_badan'=>  $request->tinggi_badan,
-            'tatto'=>  $request->tatto,
-            'tindik'=>  $request->tindik,
-            'tangan'=>  $request->tangan,
-            'kaki'=>  $request->kaki,
-            'riwayat_penyakit'=>  $request->riwayat_penyakit,
-            'lainnya'=>  $request->lainnya,
+            'btq' =>  $request->btq,
+            'akademik' =>  $request->akademik,
+            'berat_badan' =>  $request->berat_badan,
+            'tinggi_badan' =>  $request->tinggi_badan,
+            'tatto' =>  $request->tatto,
+            'tindik' =>  $request->tindik,
+            'tangan' =>  $request->tangan,
+            'kaki' =>  $request->kaki,
+            'riwayat_penyakit' =>  $request->riwayat_penyakit,
+            'lainnya' =>  $request->lainnya,
         ]);
-
-        if ($notifikasi === "Selamat anda lulus ujian pendaftaran") {
-            CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Lulus Ujian', 'status' => 1]);
-        } elseif ($notifikasi === "Pendaftaran sedang diproses") {
-            CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Pendaftar Baru', 'status' => 0]);
-        } elseif ($notifikasi === "Silahkan mengikuti ujian di SMK Maarif NU Doro dengan membawa formulir yang telah dicetak") {
-            CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Siap Ujian']);
-        }
 
         if ($request->reset_password !== null) {
 
             $request->validate([
                 'reset_password'  => 'min:6'
-              ], [
+            ], [
                 'reset_password.min'          => 'Password minimal 6 karakter.',
-              ]);
+            ]);
 
             $new_password = $request->reset_password;
             CalonSiswa::where('nik', $id)->update([
@@ -156,7 +501,6 @@ class AdminController extends Controller
         CalonSiswa::where('nik', $id)->update([
             'nik' => $request->nik,
             'no_pendaftaran' => $request->no_pendaftaran,
-            'jalur_pendaftaran' => $request->jalur_pendaftaran,
             'nama' => $request->nama,
             'tempat_lahir' => $request->tempat_lahir,
             'tanggal_lahir' => $request->tanggal_lahir,
@@ -168,6 +512,11 @@ class AdminController extends Controller
             'kecamatan' => $request->kecamatan,
             'kabupaten' => $request->kabupaten,
             'kode_pos' => $request->kode_pos,
+            'notifikasi_admin' => $request->notifikasi_admin,
+        ]);
+
+        DetailCalonSiswaModel::where('nik', $id)->update([
+            'jalur_pendaftaran' => $request->jalur_pendaftaran,
             'prodi' => $request->prodi,
             'wearpack' => $request->wearpack,
             'asal_sekolah' => $request->asal_sekolah,
@@ -188,13 +537,10 @@ class AdminController extends Controller
         ]);
 
         // delete no pendaftaran
-
-
         $siswa = CalonSiswa::where('nik', $id);
         $nama = $siswa->where('nik', $id)->first();
 
         CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Pendaftar Baru']);
-        NotifikasiModel::where('nik', $id)->update(['notifikasi' => 'Pendaftaran sedang diproses']);
         $siswa->update(['status' => 0]);
 
         return redirect()->back()->with('success', 'Status ' . $nama->nama . ' berhasil diperbarui');
@@ -202,14 +548,15 @@ class AdminController extends Controller
 
     public function berandaSiswaVertifikasi(Request $request, $id)
     {
+        $siswa = CalonSiswa::where('nik', $id)->first();
+        if ($siswa->notifikasi_admin !== 'Pendaftaran Selesai') {
+            return redirect()->back()->with('error', 'Pendaftaran ' . $siswa->nama . ' Belum Selesai');
+        }
         $request->validate([
             'status' => 'required|in:0,1',
         ]);
 
-        $siswa = CalonSiswa::where('nik', $id);
         $nama = $siswa->where('nik', $id)->first();
-
-        NotifikasiModel::where('nik', $id)->update(['notifikasi' => 'Selamat anda lulus ujian pendaftaran']);
         CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Lulus Ujian']);
 
 
@@ -220,42 +567,48 @@ class AdminController extends Controller
     public function berandaSiswaDelete($id)
     {
         $berkasSiswa = BerkasSiswa::where('nik', $id)->first();
+        $user = CalonSiswa::where('nik', $id)->first();
+
 
         // Periksa apakah data ada sebelum mencoba untuk menghapusnya
         if ($berkasSiswa) {
-            if (Storage::exists('public/siswa/akta/' . $berkasSiswa->akta)) {
-                Storage::delete('public/siswa/akta/' . $berkasSiswa->akta);
+            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->akta)) {
+                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->akta);
             }
 
-            if (Storage::exists('public/siswa/kk/' . $berkasSiswa->kk)) {
-                Storage::delete('public/siswa/kk/' . $berkasSiswa->kk);
+            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->kk)) {
+                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->kk);
             }
 
-            if (Storage::exists('public/siswa/pas-foto/' . $berkasSiswa->pas_foto)) {
-                Storage::delete('public/siswa/pas-foto/' . $berkasSiswa->pas_foto);
+            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->pas_foto)) {
+                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->pas_foto);
             }
 
-            if (Storage::exists('public/siswa/shun/' . $berkasSiswa->shun)) {
-                Storage::delete('public/siswa/shun/' . $berkasSiswa->shun);
+            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->shun)) {
+                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->shun);
             }
 
-            if (Storage::exists('public/siswa/ijazah/' . $berkasSiswa->ijazah)) {
-                Storage::delete('public/siswa/ijazah/' . $berkasSiswa->ijazah);
+            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->ijazah)) {
+                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->ijazah);
             }
 
-            if (Storage::exists('public/siswa/raport/' . $berkasSiswa->raport)) {
-                Storage::delete('public/siswa/raport/' . $berkasSiswa->raport);
+            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->raport)) {
+                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->raport);
             }
 
-            if (Storage::exists('public/siswa/transkip-nilai/' . $berkasSiswa->transkip_nilai)) {
-                Storage::delete('public/siswa/transkip-nilai/' . $berkasSiswa->transkip_nilai);
+            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->transkip_nilai)) {
+                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->transkip_nilai);
             }
         }
 
         BerkasSiswa::where('nik', $id)->delete();
-        NotifikasiModel::where('nik', $id)->delete();
         PenilaianModel::where('nik', $id)->delete();
+        DetailCalonSiswaModel::where('nik', $id)->delete();
+        OtpModel::where('nik', $id)->delete();
         CalonSiswa::where('nik', $id)->delete();
+
+        // Atur ulang nilai auto-increment
+        DB::statement('ALTER TABLE calon_siswa AUTO_INCREMENT = 1;');
         return redirect()->back()->with('success', 'Data berhasil dihapus');
     }
 

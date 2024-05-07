@@ -29,7 +29,8 @@ Route::prefix('/')->group(function () {
     // Daftar Formulir Calon Siswa
     Route::post('calon-siswa/store', [CalonSiswaController::class, 'store'])->name('calon-siswa.store');
     Route::get('daftar/otp/{nik?}/{no_hp?}', [CalonSiswaController::class, 'otp'])->name('daftar/otp');
-    Route::post('daftar/otp-reset', [CalonSiswaController::class, 'otpReset'])->name('daftar/otp-reset');
+    Route::post('daftar/otp-update-nohp/{nik?}/{no_hp?}', [CalonSiswaController::class, 'otpUpdateNohp'])->name('daftar/otp-update-nohp');
+    Route::post('daftar/otp-request/{nik?}/{no_hp?}', [CalonSiswaController::class, 'otpRequest'])->name('daftar/otp-request');
     Route::post('daftar/otp-post', [CalonSiswaController::class, 'otpPost'])->name('daftar/otp-post');
 
     Route::get('daftar/detail-calon-siswa/{nik?}/{no_hp?}/{otp?}', [CalonSiswaController::class, 'detailCalonSiswa'])->name('daftar/detail-calon-siswa');

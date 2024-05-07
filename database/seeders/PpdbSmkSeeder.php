@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
 
 class PpdbSmkSeeder extends Seeder
 {
@@ -16,53 +15,6 @@ class PpdbSmkSeeder extends Seeder
      */
     public function run()
     {
-
-        // $faker = Faker::create();
-
-        // for ($i = 1; $i <= 50; $i++) {
-        //     // Generate unique nik
-        //     $nik = $faker->unique()->numerify('############');
-
-        //     // Generate tahun_daftar dan no_pendaftar
-        //     $tahun_daftar = $faker->numberBetween(2020, 2024);
-        //     $no_pendaftaran = $tahun_daftar . '-' . str_pad($i, 3, '0', STR_PAD_LEFT);
-
-        //     // Simpan data calon siswa ke tabel calon_siswa
-        //     DB::table('calon_siswa')->insert([
-        //         'nik'               => $nik,
-        //         'nama'              => $faker->name,
-        //         'tempat_lahir'      => $faker->city,
-        //         'tanggal_lahir'     => $faker->date,
-        //         'no_hp'             => $faker->phoneNumber,
-        //         'desa'              => $faker->city,
-        //         'rt'                => $faker->numerify('##'),
-        //         'rw'                => $faker->numerify('##'),
-        //         'provinsi'          => $faker->state,
-        //         'kecamatan'         => $faker->city,
-        //         'kabupaten'         => $faker->city,
-        //         'jenis_kelamin'     => $faker->randomElement(['Laki-laki', 'Perempuan']),
-        //         'kode_pos'          => $faker->numerify('#####'),
-        //         'prodi'             => $faker->randomElement(['TBSM', 'TKRO', 'TKJ', 'AKL']),
-        //         'wearpack/baju'     => $faker->randomElement(['S', 'M', 'L', 'XL', 'XXL']),
-        //         'asal_sekolah'      => $faker->company,
-        //         'tahun_lulus'       => $faker->year,
-        //         'nama_ayah'         => $faker->name('male'),
-        //         'nama_ibu'          => $faker->name('female'),
-        //         'no_hp_wali'        => $faker->phoneNumber,
-        //         'pekerjaan_wali'    => $faker->jobTitle,
-        //         'status'            => $faker->randomElement([1]),
-        //         'created_at'        => now(),
-        //         'updated_at'        => now(),
-        //         'tahun_daftar'      => $tahun_daftar,
-        //         'notifikasi_admin'  => $faker->randomElement(['Lulus Ujian'])
-        //     ]);
-
-        //     DB::table('no_pendaftaran')->insert([
-        //         'nik'               => $nik,
-        //         'no_pendaftaran'      => $no_pendaftaran,
-        //         // Tambahkan atribut lain sesuai kebutuhan
-        //     ]);
-        // }
 
         DB::table('pengaturan')->insert([
             'pendaftaran'   => 1,

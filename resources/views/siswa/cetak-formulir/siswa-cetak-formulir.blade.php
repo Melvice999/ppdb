@@ -124,7 +124,7 @@
             <td>
                 Jalur Pendaftaran
                 <span>:</span>
-                {{ $user->jalur_pendaftaran }}
+                {{ $detailUser->jalur_pendaftaran }}
             </td>
             <td>
                 No Pendaftaran
@@ -138,7 +138,7 @@
             <tr>
                 <td style="width: 20%; vertical-align: top; padding:0 ;">
                     <div class="passport-photo" style="margin-top:40px; ">
-                        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(storage_path('app/public/siswa/pas-foto/' . $user->pas_foto))) }}"
+                        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(storage_path('app/public/siswa/' . $user->tahun_daftar . '/' . $user->nik . '/' . $detailUser->pas_foto))) }}"
                             alt="Foto Passport">
                     </div>
                 </td>
@@ -269,13 +269,13 @@
                     </td>
                     <td>
                         <span>:</span>
-                        {{ $user->prodi == 'TKRO'
+                        {{ $detailUser->prodi == 'TKRO'
                             ? 'Teknik Kendaraan Ringan Otomotif'
-                            : ($user->prodi == 'TKJ'
+                            : ($detailUser->prodi == 'TKJ'
                                 ? 'Teknik Komputer dan Jaringan'
-                                : ($user->prodi == 'AKL'
+                                : ($detailUser->prodi == 'AKL'
                                     ? 'Akuntansi dan Keuangan Lembaga'
-                                    : ($user->prodi == 'TBSM'
+                                    : ($detailUser->prodi == 'TBSM'
                                         ? 'Teknik dan Bisnis Sepeda Motor'
                                         : 'Prodi Tidak Diketahui'))) }}
 
@@ -287,7 +287,7 @@
                         Ukuran Wearpack / Baju
                     </td>
                     <td>
-                        <span>:</span> {{ $user->wearpack }}
+                        <span>:</span> {{ $detailUser->wearpack }}
                     </td>
                 </tr>
 
@@ -306,7 +306,7 @@
                     </td>
                     <td>
                         <span>:</span>
-                        {{ $user->asal_sekolah }}
+                        {{ $detailUser->asal_sekolah }}
 
                     </td>
                 </tr>
@@ -316,7 +316,7 @@
                         Tahun Lulus
                     </td>
                     <td>
-                        <span>:</span> {{ $user->tahun_lulus }}
+                        <span>:</span> {{ $detailUser->tahun_lulus }}
                     </td>
                 </tr>
 
@@ -335,7 +335,7 @@
                     </td>
                     <td>
                         <span>:</span>
-                        {{ $user->nama_ayah }}
+                        {{ $detailUser->nama_ayah }}
 
                     </td>
                 </tr>
@@ -346,7 +346,7 @@
                     </td>
                     <td>
                         <span>:</span>
-                        {{ $user->nama_ibu }}
+                        {{ $detailUser->nama_ibu }}
 
                     </td>
                 </tr>
@@ -356,7 +356,7 @@
                         No Hp Wali
                     </td>
                     <td>
-                        <span>:</span> {{ $user->no_hp_wali }}
+                        <span>:</span> {{ $detailUser->no_hp_wali }}
                     </td>
                 </tr>
 
@@ -365,7 +365,7 @@
                         Pekerjaan Wali
                     </td>
                     <td>
-                        <span>:</span> {{ $user->pekerjaan_wali }}
+                        <span>:</span> {{ $detailUser->pekerjaan_wali }}
                     </td>
                 </tr>
 

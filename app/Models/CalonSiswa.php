@@ -20,7 +20,6 @@ class CalonSiswa extends Model implements Authenticatable
 
     protected $fillable = [
         'nik',
-        'jalur_pendaftaran',
         'nama',
         'tempat_lahir',
         'tanggal_lahir',
@@ -33,39 +32,40 @@ class CalonSiswa extends Model implements Authenticatable
         'kabupaten',
         'jenis_kelamin',
         'kode_pos',
-        'prodi',
-        'wearpack',
-        'asal_sekolah',
-        'tahun_lulus',
-        'nama_ayah',
-        'nama_ibu',
-        'no_hp_wali',
-        'pekerjaan_wali',
         'tahun_daftar',
         'password',
-        'pas_foto',
         'no_pendaftaran',
+        'notifikasi_admin',
     ];
-
-    // Implementasi metode routeNotificationForWhatsApp
-    public function routeNotificationForWhatsApp()
-    {
-        return $this->no_hp; // Mengembalikan nomor HP dari atribut 'no_hp'
-    }
 
     // fitur penelusuran Admin
     public function scopeAdmin($query, $keyword)
     {
-        return $query->where('nama', 'like', '%' . $keyword . '%')
-            ->orWhere('kecamatan', 'like', '%' . $keyword . '%')
-            ->orWhere('tahun_daftar', 'like', '%' . $keyword . '%');
+        return $query->whereHas('detailCalonSiswa', function ($query) use ($keyword) {
+            $query->where('nik', 'like', '%' . $keyword . '%')
+                ->orWhere('nama', 'like', '%' . $keyword . '%')
+                ->orWhere('desa', 'like', '%' . $keyword . '%')
+                ->orWhere('kecamatan', 'like', '%' . $keyword . '%')
+                ->orWhere('tahun_daftar', 'like', '%' . $keyword . '%');
+        });
     }
 
     public function scopeHeadmaster($query, $keyword)
     {
-        return $query->where('nama', 'like', '%' . $keyword . '%');
+        return $query->whereHas('detailCalonSiswa', function ($query) use ($keyword) {
+            $query->where('nik', 'like', '%' . $keyword . '%')
+                ->orWhere('nama', 'like', '%' . $keyword . '%')
+                ->orWhere('desa', 'like', '%' . $keyword . '%')
+                ->orWhere('kecamatan', 'like', '%' . $keyword . '%')
+                ->orWhere('tahun_daftar', 'like', '%' . $keyword . '%');
+        });
     }
 
+    // Foreign Key relasi one to one
+    public function detailCalonSiswa()
+    {
+        return $this->hasOne(DetailCalonSiswaModel::class, 'nik', 'nik');
+    }
 
     // Implementasi metode getAuthIdentifierName
     public function getAuthIdentifierName()
