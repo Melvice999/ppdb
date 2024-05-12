@@ -172,7 +172,7 @@
                                     Kode Pos
                                 </td>
                                 <td>
-                                    <span class="max-md:hidden">&nbsp;&nbsp;&nbsp;:</span> {{ $detailUser->kode_pos }}
+                                    <span class="max-md:hidden">&nbsp;&nbsp;&nbsp;:</span> {{ $user->kode_pos }}
                                 </td>
                             </tr>
 

@@ -29,7 +29,7 @@ class AuthController extends Controller
         $user = \App\Models\CalonSiswa::where('nik', $request->nik)->first();
 
         if (!$user) {
-            return back()->with('error', 'Nik tidak valid');
+            return back()->with('error', 'NIK tidak valid');
         }
         
         // Verifikasi password
@@ -38,7 +38,7 @@ class AuthController extends Controller
             Auth::guard('siswa')->login($user); 
             return redirect('siswa/profil');
         } else {
-            return back()->with('error', 'Password salah');
+            return back()->with('error', 'Password tidak valid');
         }
     }
 
@@ -70,11 +70,10 @@ class AuthController extends Controller
             Auth::guard('admin')->login($user); 
             return redirect()->to(url('admin/admin-beranda'));
         } else {
-            return back()->with('error', 'Password salah');
+            return back()->with('error', 'Password tidak valid');
         }
 
     }
-
 
     public function loginHeadmaster(Request $request)
     {
@@ -104,7 +103,7 @@ class AuthController extends Controller
             Auth::guard('headmaster')->login($user); 
             return redirect()->to(url('headmaster/headmaster-beranda'));
         } else {
-            return back()->with('error', 'Password salah');
+            return back()->with('error', 'Password tidak valid');
         }
     }
 }

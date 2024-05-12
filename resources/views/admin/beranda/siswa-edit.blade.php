@@ -1,6 +1,5 @@
 @extends('layouts.admin-layout')
 @section('content')
-
     <style>
         input[type="number"]::-webkit-inner-spin-button,
         input[type="number"]::-webkit-outer-spin-button {
@@ -10,7 +9,8 @@
     </style>
 
     <div class=" text-2xl font-medium">
-        Admin / Beranda / Siswa / Edit
+        <a href="{{ route('admin-beranda') }}">Admin</a> / <a href="{{ route('admin-beranda') }}">Beranda </a> / <a
+            href="{{ route('admin-beranda-belum-tervalidasi') }}">Siswa</a> / Edit
     </div>
     @if ($errors->any())
         <div class="grid mt-6 mx-auto place-items-center">
@@ -64,9 +64,9 @@
         type="application/pdf" class="hidden object-cover {{ $berkas && $berkas->nik ? 'w-full h-full' : 'w-full h-2/5' }}"
         id="raport" />
     <embed
-        src="{{ asset($berkas && $berkas->nik ? 'storage/siswa/' . $siswa->tahun_daftar . '/' . $siswa->nik . '/' . $berkas->transkip_nilai : 'assets/img/not-found.png') }}"
+        src="{{ asset($berkas && $berkas->nik ? 'storage/siswa/' . $siswa->tahun_daftar . '/' . $siswa->nik . '/' . $berkas->transkrip_nilai : 'assets/img/not-found.png') }}"
         type="application/pdf" class="hidden object-cover {{ $berkas && $berkas->nik ? 'w-full h-full' : 'w-full h-2/5' }}"
-        id="transkip_nilai" />
+        id="transkrip_nilai" />
 
 
     <form action="{{ route('admin-beranda-siswa-edit-post', ['id' => $siswa->nik]) }}" method="POST">
@@ -115,8 +115,8 @@
                     <div class="p-2"> Lihat Raport</div>
                 </div>
                 <div class="py-2 border border-d-green w-full ps-2 rounded-xl focus:outline-none cursor-pointer"
-                    id="toggleTranskipNilai">
-                    <div class="p-2"> Lihat Transkip Nilai</div>
+                    id="toggleTranskripNilai">
+                    <div class="p-2"> Lihat Transkrip Nilai</div>
                 </div>
 
             </div>
@@ -200,9 +200,9 @@
 
                         <option
                             class="{{ $siswa->notifikasi_admin == 'Berkas Terupload' || $siswa->notifikasi_admin == 'Berkas Terupdate' ? '' : 'hidden' }}"
-                            value="Masukan Transkip Nilai Yang Valid"
-                            {{ $siswa->notifikasi_admin == 'Masukan Transkip Nilai Yang Valid' ? 'selected' : '' }}>Masukan
-                            Transkip Nilai Yang Valid
+                            value="Masukan Transkrip Nilai Yang Valid"
+                            {{ $siswa->notifikasi_admin == 'Masukan Transkrip Nilai Yang Valid' ? 'selected' : '' }}>Masukan
+                            Transkrip Nilai Yang Valid
                         </option>
 
                         <option class="{{ $siswa->notifikasi_admin == 'Pendaftar Baru' ? '' : 'hidden' }}"
@@ -455,7 +455,7 @@
             </div>
 
             <div class="w-full flex items-center border-b border-d-green gap-3 bg-white p-7 rounded-md max-md:w-full mt-6">
-                <label class="w-1/5" for="prodi">Program Studi</label><br>
+                <label class="w-1/5" for="prodi">Program Keahlian</label><br>
                 <select name="prodi"
                     class="mt-1 w-full py-2 focus:outline-none border border-d-green rounded-xl ps-2 cursor-pointer">
                     <option value="TBSM" {{ $siswa->prodi == 'TBSM' ? 'selected' : '' }}> TBSM
@@ -538,40 +538,37 @@
         </div>
     </form>
 
-
-
-
     <script type="module">
         $(document).ready(function() {
 
             $('#togglePasFoto').click(function() {
                 $('#pas_foto').toggleClass('hidden');
-                $('#raport, #transkip_nilai, #akta, #kk, #shun, #ijazah').addClass('hidden');
+                $('#raport, #transkrip_nilai, #akta, #kk, #shun, #ijazah').addClass('hidden');
             });
 
             $('#toggleAkta').click(function() {
                 $('#akta').toggleClass('hidden');
-                $('#raport, #transkip_nilai, #pas_foto, #kk, #shun, #ijazah').addClass('hidden');
+                $('#raport, #transkrip_nilai, #pas_foto, #kk, #shun, #ijazah').addClass('hidden');
             });
 
             $('#toggleKk').click(function() {
                 $('#kk').toggleClass('hidden');
-                $('#raport, #transkip_nilai, #pas_foto, #akta, #shun, #ijazah').addClass('hidden');
+                $('#raport, #transkrip_nilai, #pas_foto, #akta, #shun, #ijazah').addClass('hidden');
             });
             $('#toggleIjazah').click(function() {
                 $('#ijazah').toggleClass('hidden');
-                $('#raport, #transkip_nilai, #pas_foto, #akta, #shun, #kk').addClass('hidden');
+                $('#raport, #transkrip_nilai, #pas_foto, #akta, #shun, #kk').addClass('hidden');
             });
             $('#toggleShun').click(function() {
                 $('#shun').toggleClass('hidden');
-                $('#raport, #transkip_nilai, #pas_foto, #akta, #ijazah, #kk').addClass('hidden');
+                $('#raport, #transkrip_nilai, #pas_foto, #akta, #ijazah, #kk').addClass('hidden');
             });
             $('#toggleRaport').click(function() {
                 $('#raport').toggleClass('hidden');
-                $('#shun, #transkip_nilai, #pas_foto, #akta, #ijazah, #kk').addClass('hidden');
+                $('#shun, #transkrip_nilai, #pas_foto, #akta, #ijazah, #kk').addClass('hidden');
             });
-            $('#toggleTranskipNilai').click(function() {
-                $('#transkip_nilai').toggleClass('hidden');
+            $('#toggleTranskripNilai').click(function() {
+                $('#transkrip_nilai').toggleClass('hidden');
                 $('#shun, #raport, #pas_foto, #akta, #ijazah, #kk').addClass('hidden');
             });
 

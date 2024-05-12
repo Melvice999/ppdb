@@ -1,7 +1,7 @@
 @extends('layouts.admin-layout')
 @section('content')
     <div class="w-full text-2xl font-medium">
-        Admin / Pengaturan / Beranda</div>
+        <a href="{{ route('admin-beranda') }}">Admin</a> / <a href="{{ route('admin-pengaturan') }}">Pengaturan</a> / Beranda</div>
 
     <div class="flex justify-between mt-10 mb-4">
         <div class="max-md:me-6">Edit Pengaturan Beranda PPDB Tahun {{ now()->year }}</div>

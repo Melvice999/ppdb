@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('kode_pos')->nullable();;
             $table->year('tahun_daftar')->default(DB::raw('YEAR(NOW())'));
             $table->integer('status')->default(0);
-            $table->enum('notifikasi_admin', ['Pendaftar Baru', 'Cetak Formulir', 'Formulir Tercetak', 'Siap Ujian', 'Lulus Ujian',  'Tidak Lulus Ujian', 'Lengkapi Berkas', 'Berkas Terupload', 'Masukan Akta Yang Valid', 'Masukan KK Yang Valid', 'Masukan SHUN Yang Valid', 'Masukan Ijazah Yang Valid', 'Masukan Raport Yang Valid', 'Masukan Transkip Nilai Yang Valid', 'Masukan Pas Foto Yang Valid', 'Berkas Terupdate', 'Pendaftaran Selesai'
+            $table->enum('notifikasi_admin', ['Pendaftar Baru', 'Cetak Formulir', 'Formulir Tercetak', 'Siap Ujian', 'Lulus Ujian',  'Tidak Lulus Ujian', 'Lengkapi Berkas', 'Berkas Terupload', 'Masukan Akta Yang Valid', 'Masukan KK Yang Valid', 'Masukan SHUN Yang Valid', 'Masukan Ijazah Yang Valid', 'Masukan Raport Yang Valid', 'Masukan Transkrip Nilai Yang Valid', 'Masukan Pas Foto Yang Valid', 'Berkas Terupdate', 'Pendaftaran Selesai'
         ]);
 
 

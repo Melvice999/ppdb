@@ -173,47 +173,47 @@ class CalonSiswaController extends Controller
 
         // start api whatsapp
         $otp = mt_rand(100000, 999999);
-    //     $waktu = now()->toDateTimeString();
+        $waktu = now()->toDateTimeString();
 
-    //     OtpModel::create([
-    //         'nik' => $request->nik,
-    //         'otp' => $otp,
-    //         'waktu' => $waktu,
-    //     ]);
+        OtpModel::create([
+            'nik' => $request->nik,
+            'otp' => $otp,
+            'waktu' => $waktu,
+        ]);
 
-    //     $target = $request->no_hp;
-    //     $message = "PPDB SMK Maarif NU Doro. 
-    // Kode OTP Anda adalah :
+        $target = $request->no_hp;
+        $message = "PPDB SMK Maarif NU Doro. 
+    Kode OTP Anda adalah :
           
-    //       " . $otp . "
+          " . $otp . "
 
-    // Kode OTP yang telah Anda terima hanya akan berlaku untuk 10 menit. Mohon untuk tidak memberikan kode ini kepada siapapun. Terima kasih atas kerjasama Anda. ";
+    Kode OTP yang telah Anda terima hanya akan berlaku untuk 10 menit. Mohon untuk tidak memberikan kode ini kepada siapapun. Terima kasih atas kerjasama Anda. ";
 
-    //     $token = env('FONTTE_API_TOKEN');
+        $token = env('FONTTE_API_TOKEN');
 
-    //     $ch = curl_init();
+        $ch = curl_init();
 
-    //     curl_setopt_array($ch, array(
-    //         CURLOPT_URL => 'https://api.fonnte.com/send',
-    //         CURLOPT_RETURNTRANSFER => true,
-    //         CURLOPT_ENCODING => '',
-    //         CURLOPT_MAXREDIRS => 10,
-    //         CURLOPT_TIMEOUT => 0,
-    //         CURLOPT_FOLLOWLOCATION => true,
-    //         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    //         CURLOPT_CUSTOMREQUEST => 'POST',
-    //         CURLOPT_POSTFIELDS => array(
-    //             'target' => $target,
-    //             'message' => $message,
-    //         ),
-    //         CURLOPT_HTTPHEADER => array(
-    //             'Authorization: ' . $token
-    //         ),
-    //         CURLOPT_SSL_VERIFYPEER => false,
-    //     ));
-    //     curl_exec($ch);
+        curl_setopt_array($ch, array(
+            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'target' => $target,
+                'message' => $message,
+            ),
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: ' . $token
+            ),
+            CURLOPT_SSL_VERIFYPEER => false,
+        ));
+        curl_exec($ch);
 
-    //     curl_close($ch);
+        curl_close($ch);
         // end api whatsapp
         return response()->json(['success' => 'Kode OTP telah dikirim ke nomor WhatsApp ' . $request->no_hp]);
     }
@@ -238,7 +238,7 @@ class CalonSiswaController extends Controller
                 return redirect()->to(url('daftar/detail-calon-siswa/' . $nik . '/' . $no_hp . '/' . $kodeOtp));
             } else {
                 // OTP kadaluwarsa
-                return redirect()->back()->with('error', 'OTP Kadaluwarsa');
+                return redirect()->back()->with('error', 'OTP Kadaluarsa');
             }
         } else {
             // OTP tidak valid
@@ -286,9 +286,12 @@ class CalonSiswaController extends Controller
     {
         $request->validate([
             'nik'       => 'min:16|unique:detail_calon_siswa|',
+            'pas_foto'  => 'mimes:jpg,jpeg,png|max:1536',
         ], [
             'nik.unique'    => 'NIK Telah terdaftar silahkan login',
             'nik.min'       => 'Panjang NIK minimal 16 karakter',
+            'pas_foto.max'  => 'Ukuran file pas foto maksimal 1.5 MB',
+            'pas_foto.mimes' => 'Format file pas foto harus .jpg, .jpeg, .png',
         ]);
 
         $pasFoto = $request->file('pas_foto');

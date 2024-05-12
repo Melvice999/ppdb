@@ -77,7 +77,7 @@ Route::prefix('siswa')->middleware('auth-siswa')->group(function () {
     Route::post('update-berkas-shun-post/{id?}', [SiswaController::class, 'updateBerkasShunPost'])->name('siswa-update-berkas-shun-post');
     Route::post('update-berkas-ijazah-post/{id?}', [SiswaController::class, 'updateBerkasIjazahPost'])->name('siswa-update-berkas-ijazah-post');
     Route::post('update-berkas-raport-post/{id?}', [SiswaController::class, 'updateBerkasRaportPost'])->name('siswa-update-berkas-raport-post');
-    Route::post('update-berkas-transkip-nilai-post/{id?}', [SiswaController::class, 'updateBerkasTranskipNilaiPost'])->name('siswa-update-berkas-transkip-nilai-post');
+    Route::post('update-berkas-transkrip-nilai-post/{id?}', [SiswaController::class, 'updateBerkasTranskripNilaiPost'])->name('siswa-update-berkas-transkrip-nilai-post');
 
     Route::get('cetak-formulir', [SiswaController::class, 'cetakFormulir'])->name('siswa-cetak-formulir');
 

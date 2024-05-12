@@ -171,13 +171,13 @@ class SiswaController extends Controller
     ], ['nik.unique' => 'Berkas sudah terisi.']);
 
 
-
-    $akta = $request->file('akta');
-    $kk = $request->file('kk');
-    $shun = $request->file('shun');
-    $ijazah = $request->file('ijazah');
-    $raport = $request->file('raport');
-    $transkip_nilai = $request->file('transkip_nilai');
+dd(public_path('assets/img/not-found.png'));
+    $akta = $request->file('akta') ?? public_path('assets/img/not-found.png');
+    $kk = $request->file('kk') ?? public_path('assets/img/not-found.png');
+    $shun = $request->file('shun') ?? public_path('assets/img/not-found.png');
+    $ijazah = $request->file('ijazah') ?? public_path('assets/img/not-found.png');
+    $raport = $request->file('raport') ?? public_path('assets/img/not-found.png');
+    $transkrip_nilai = $request->file('transkrip_nilai') ?? public_path('assets/img/not-found.png');
     $nik = $request->nik;
 
     $aktaName = $nik . '-Akta.pdf';
@@ -185,7 +185,7 @@ class SiswaController extends Controller
     $shunName = $nik . '-SHUN.pdf';
     $ijazahName = $nik . '-Ijazah.pdf';
     $raportName = $nik . '-Raport.pdf';
-    $transkipNilaiName = $nik . '-TranskipNilai.pdf';
+    $transkripNilaiName = $nik . '-TranskripNilai.pdf';
 
     // Save akta ke database
     $berkasDetail = new BerkasSiswa();
@@ -196,7 +196,7 @@ class SiswaController extends Controller
     $berkasDetail->shun = $shunName;
     $berkasDetail->ijazah = $ijazahName;
     $berkasDetail->raport = $raportName;
-    $berkasDetail->transkip_nilai = $transkipNilaiName;
+    $berkasDetail->transkrip_nilai = $transkripNilaiName;
 
     $berkasDetail->save();
     CalonSiswa::where('nik', $nik)->update(['notifikasi_admin' => 'Berkas Terupload']);
@@ -207,7 +207,7 @@ class SiswaController extends Controller
     $shun->storeAs('siswa/' . date('Y') . '/' . $request->nik, $shunName, 'public');
     $ijazah->storeAs('siswa/' . date('Y') . '/' . $request->nik, $ijazahName, 'public');
     $raport->storeAs('siswa/' . date('Y') . '/' . $request->nik, $raportName, 'public');
-    $transkip_nilai->storeAs('siswa/' . date('Y') . '/' . $request->nik, $transkipNilaiName, 'public');
+    $transkrip_nilai->storeAs('siswa/' . date('Y') . '/' . $request->nik, $transkripNilaiName, 'public');
 
     return redirect()->to(url('siswa/profil'))->with('success', 'Berkas berhasil diupload');
   }
@@ -312,7 +312,7 @@ class SiswaController extends Controller
 
     CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Pendaftar Baru']);
 
-    return redirect()->back()->with('success', 'Foto berhasil diupdate.');
+    return redirect()->back()->with('success', 'Pas foto berhasil diupdate.');
   }
 
   public function updateBerkasShunPost(Request $request, $id)
@@ -396,31 +396,31 @@ class SiswaController extends Controller
     return redirect()->back()->with('success', 'Raport berhasil diupdate.');
   }
 
-  public function updateBerkasTranskipNilaiPost(Request $request, $id)
+  public function updateBerkasTranskripNilaiPost(Request $request, $id)
   {
     $berkasSiswa = BerkasSiswa::where('nik', $id)->first();
     $user = CalonSiswa::where('nik', $id)->first();
 
-    if ($request->hasFile('transkip_nilai')) {
+    if ($request->hasFile('transkrip_nilai')) {
       // Hapus berkas lama jika ada
-      $transkipNilaiLama = $berkasSiswa->transkip_nilai;
-      if ($transkipNilaiLama) {
-        Storage::delete($transkipNilaiLama);
+      $transkripNilaiLama = $berkasSiswa->transkrip_nilai;
+      if ($transkripNilaiLama) {
+        Storage::delete($transkripNilaiLama);
       }
 
-      $transkipNilaiName = $id . '-TranskipNilai.pdf';
+      $transkripNilaiName = $id . '-TranskripNilai.pdf';
 
       // Simpan berkas baru
-      $request->file('transkip_nilai')->storeAS('siswa/' . $user->tahun_daftar . '/' . $user->nik  , $transkipNilaiName, 'public');
+      $request->file('transkrip_nilai')->storeAS('siswa/' . $user->tahun_daftar . '/' . $user->nik  , $transkripNilaiName, 'public');
     }
 
     BerkasSiswa::where('nik', $id)->update([
-      'transkip_nilai' => $transkipNilaiName,
+      'transkrip_nilai' => $transkripNilaiName,
     ]);
 
     CalonSiswa::where('nik', $id)->update(['notifikasi_admin' => 'Berkas Terupdate']);
 
-    return redirect()->back()->with('success', 'Transkip Nilai berhasil diupdate.');
+    return redirect()->back()->with('success', 'Transkrip Nilai berhasil diupdate.');
   }
 
   public function pengaturanPasswordPost(Request $request)

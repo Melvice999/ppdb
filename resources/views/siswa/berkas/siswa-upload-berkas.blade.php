@@ -26,7 +26,7 @@
 
                     <div class="fixed flex justify-center items-center top-3.5 px-2 right-28 mr-3 cursor-pointer hover:bg-l-sky-blue hover:bg-opacity-10 rounded-full max-md:right-0"
                         onclick="closePreviewPDF()">
-                        <i class="fa-solid fa-xmark text-white text-xl max-md:text-black"></i>
+                        <i class="fa-solid fa-xmark text-white text-xl max-md:text-d-green"></i>
                     </div>
 
                     <div class="w-full h-full">
@@ -170,18 +170,18 @@
                         <div class="w-1/2 flex max-md:w-full mt-2 bg-white">
                             <div
                                 class="py-2 w-1/3 ps-2 border-t border-l border-b border-d-green rounded-tl rounded-bl max-md:w-2/5">
-                                Transkip Nilai
+                                Transkrip Nilai
                             </div>
 
                             <div
                                 class="border-d-green border focus:outline-none w-3/5 max-md:w-2/5 flex justify-center items-center">
                                 <input type="file" class="w-full ps-2" accept=".pdf"
-                                    onchange="validateFileSize(this, 1.5)" id="inputTranskipNilai" name="transkip_nilai"
+                                    onchange="validateFileSize(this, 1.5)" id="inputTranskripNilai" name="transkrip_nilai"
                                     required>
                             </div>
                             <label
                                 class="flex items-center cursor-pointer justify-center border-d-green border-t border-r border-b rounded-tr rounded-br w-1/5"
-                                onclick="buttonTranskipNilai()">
+                                onclick="buttonTranskripNilai()">
                                 Lihat
                             </label>
                         </div>
@@ -312,22 +312,22 @@
                     }
                 }
 
-                // Tampilkan TranskipNilai
-                window.buttonTranskipNilai = function() {
-                    let inputTranskipNilai = $('#inputTranskipNilai')[0];
+                // Tampilkan TranskripNilai
+                window.buttonTranskripNilai = function() {
+                    let inputTranskripNilai = $('#inputTranskripNilai')[0];
                     let divPreviewPDF = $('#divPreviewPDF');
                     let previewPDF = $('#previewPDF');
 
-                    let fileTranskipNilai = inputTranskipNilai.files[0];
-                    let readerTranskipNilai = new FileReader();
+                    let fileTranskripNilai = inputTranskripNilai.files[0];
+                    let readerTranskripNilai = new FileReader();
 
-                    readerTranskipNilai.onloadend = function() {
-                        previewPDF.attr('src', readerTranskipNilai.result);
+                    readerTranskripNilai.onloadend = function() {
+                        previewPDF.attr('src', readerTranskripNilai.result);
                         divPreviewPDF.removeClass('hidden').addClass('fixed');
                     };
 
-                    if (fileTranskipNilai) {
-                        readerTranskipNilai.readAsDataURL(fileTranskipNilai);
+                    if (fileTranskripNilai) {
+                        readerTranskripNilai.readAsDataURL(fileTranskripNilai);
                     }
                 }
 
@@ -341,7 +341,6 @@
                     let divPreviewImage = $('#divPreviewImage');
                     divPreviewImage.removeClass('fixed').addClass('hidden');
                 }
-
 
                 // Alert Max File Size
                 window.validateFileSize = function(input, maxSizeInMB) {
@@ -364,9 +363,6 @@
                         return false;
                     }
                 });
-
-
-
             });
         </script>
     @else

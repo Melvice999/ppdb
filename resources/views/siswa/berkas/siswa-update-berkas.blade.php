@@ -303,33 +303,33 @@
                     </div>
                 </form>
 
-                {{-- Transkip Nilai --}}
+                {{-- Transkrip Nilai --}}
                 <div class="flex justify-center">
                     <div class="w-1/2  grid grid-cols-3 max-md:w-full mt-2 bg-white">
                         <div class="py-2 ps-2 border-t border-l border-b border-d-green rounded-tl rounded-bl">
-                            Transkip Nilai
+                            Transkrip Nilai
                         </div>
 
                         <div class="border-d-green border focus:outline-none cursor-pointer flex justify-center items-center"
-                            id="toggleTranskipNilai">
+                            id="toggleTranskripNilai">
                             Ubah
                         </div>
                         <div class="flex items-center cursor-pointer justify-center border-d-green border-t border-r border-b rounded-tr rounded-br"
-                            id="lihatTranskipNilaiLama">
+                            id="lihatTranskripNilaiLama">
                             Lihat
                         </div>
                     </div>
 
                 </div>
 
-                {{-- Input Transkip Nilai on click --}}
-                <form action="{{ route('siswa-update-berkas-transkip-nilai-post', ['id' => $user->nik]) }}"
+                {{-- Input Transkrip Nilai on click --}}
+                <form action="{{ route('siswa-update-berkas-transkrip-nilai-post', ['id' => $user->nik]) }}"
                     method="POST" enctype="multipart/form-data">
                     @csrf
 
-                    <input type="hidden" value="{{ $berkas->transkip_nilai }}" name="transkipNilaiLama">
+                    <input type="hidden" value="{{ $berkas->transkrip_nilai }}" name="transkripNilaiLama">
 
-                    <div class="hidden justify-center mb-5" id="triggerTranskipNilai">
+                    <div class="hidden justify-center mb-5" id="triggerTranskripNilai">
                         <div class="w-1/2 grid grid-cols-3 max-md:w-full mt-2 bg-white">
 
                             <div class="py-2 ps-2 border-t border-l border-b border-d-green rounded-tl rounded-bl">
@@ -337,15 +337,15 @@
                             </div>
 
                             <div class="border-d-green border focus:outline-none flex justify-center items-center">
-                                <input type="file" class="w-full ps-2" accept=".pdf" name="transkip_nilai"
-                                    onchange="validateFileSize(this, 1.5)" id="inputTranskipNilai" required>
+                                <input type="file" class="w-full ps-2" accept=".pdf" name="transkrip_nilai"
+                                    onchange="validateFileSize(this, 1.5)" id="inputTranskripNilai" required>
                             </div>
 
                             <div
                                 class="grid grid-cols-2 items-center border-d-green border-t border-r border-b rounded-tr rounded-br">
 
                                 <div class="border-r h-full flex justify-center items-center cursor-pointer"
-                                    id="lihatTranskipNilai">
+                                    id="lihatTranskripNilai">
                                     <i class="fa-solid fa-eye text-blue"></i>
                                 </div>
                                 <button class=" h-full flex justify-center items-center cursor-pointer">
@@ -551,32 +551,32 @@
                         }
                     });
 
-                    // Toggle TranskipNilai
-                    $("#toggleTranskipNilai").on("click", function() {
-                        $("#triggerTranskipNilai").toggleClass("hidden flex");
+                    // Toggle TranskripNilai
+                    $("#toggleTranskripNilai").on("click", function() {
+                        $("#triggerTranskripNilai").toggleClass("hidden flex");
                     });
 
-                    $("#lihatTranskipNilaiLama").on("click", function() {
+                    $("#lihatTranskripNilaiLama").on("click", function() {
                         $("#previewBerkasLama").removeClass("hidden").addClass("fixed");
 
                         // Mengubah isi src
                         $("#previewBerkasLama embed").attr("src",
-                            "data:application/pdf;base64,{{ base64_encode(file_get_contents('storage/siswa/' . $user->tahun_daftar . '/' . $user->nik . '/' . $berkas->transkip_nilai)) }}"
+                            "data:application/pdf;base64,{{ base64_encode(file_get_contents('storage/siswa/' . $user->tahun_daftar . '/' . $user->nik . '/' . $berkas->transkrip_nilai)) }}"
                         )
                     });
 
-                    // Tampilkan Update TranskipNilai
-                    $("#lihatTranskipNilai").on("click", function() {
+                    // Tampilkan Update TranskripNilai
+                    $("#lihatTranskripNilai").on("click", function() {
 
-                        let readerTranskipNilai = new FileReader();
+                        let readerTranskripNilai = new FileReader();
 
-                        readerTranskipNilai.onloadend = function() {
-                            $('#previewPDF').attr('src', readerTranskipNilai.result);
+                        readerTranskripNilai.onloadend = function() {
+                            $('#previewPDF').attr('src', readerTranskripNilai.result);
                             $('#divPreviewPDF').removeClass('hidden').addClass('fixed');
                         };
 
-                        if ($('#inputTranskipNilai')[0].files[0]) {
-                            readerTranskipNilai.readAsDataURL($('#inputTranskipNilai')[0].files[0]);
+                        if ($('#inputTranskripNilai')[0].files[0]) {
+                            readerTranskripNilai.readAsDataURL($('#inputTranskripNilai')[0].files[0]);
                         }
                     });
 
@@ -606,15 +606,18 @@
             </script>
         @endif
 
-        <div class="flex justify-center mt-3 mx-10 max-md:block">
-            <div class="w-1/2 mt-2 max-md:w-full">
-                <div
-                    class="flex justify-center items-center w-full px-2 py-1 rounded max-md:w-full border-d-green border cursor-pointer bg-white text-d-green">
-                    Halaman Belum Bisa Diakses
+        @if (!$berkas && $berkas->akta)
+            <div class="flex justify-center mt-3 mx-10 max-md:block">
+                <div class="w-1/2 mt-2 max-md:w-full">
+                    <div
+                        class="flex justify-center items-center w-full px-2 py-1 rounded max-md:w-full border-d-green border cursor-pointer bg-white text-d-green">
+                        Halaman Belum Bisa Diakses
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
     @endif
+
     @if ($user->notifikasi_admin === 'Pendaftaran Selesai')
         <div class="flex justify-center mt-3 mx-10 max-md:block">
             <div class="w-1/2 mt-2 max-md:w-full">

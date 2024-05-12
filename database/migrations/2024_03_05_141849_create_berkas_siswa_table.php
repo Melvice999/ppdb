@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('shun')->nullable();
             $table->string('ijazah')->nullable();
             $table->string('raport')->nullable();
-            $table->string('transkip_nilai')->nullable();
+            $table->string('transkrip_nilai')->nullable();
             $table->timestamps();
 
             $table->foreign('nik')->references('nik')->on('calon_siswa');

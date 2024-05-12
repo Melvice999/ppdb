@@ -1,6 +1,7 @@
 @extends('layouts.admin-layout')
 @section('content')
-    <div class=" text-2xl font-medium">Admin / Penelusuran
+    <div class=" text-2xl font-medium">
+        <a href="{{ route('admin-beranda') }}">Admin</a> / Penelusuran
     </div>
 
     <div class="mt-10" id="prodi0validate">

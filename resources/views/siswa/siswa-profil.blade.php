@@ -98,7 +98,7 @@
                                     'Masukan SHUN Yang Valid',
                                     'Masukan Ijazah Yang Valid',
                                     'Masukan Raport Yang Valid',
-                                    'Masukan Transkip Nilai Yang Valid'
+                                    'Masukan Transkrip Nilai Yang Valid'
                                         => 'siswa-update-berkas',
                                 },
                             ) }}"
@@ -168,8 +168,8 @@
                                             Masukan Raport Yang Valid
                                         @break
 
-                                        @case('Masukan Transkip Nilai Yang Valid')
-                                            Masukan Transkip Nilai Yang Valid
+                                        @case('Masukan Transkrip Nilai Yang Valid')
+                                            Masukan Transkrip Nilai Yang Valid
                                         @break
 
                                         @case('Pendaftaran Selesai')

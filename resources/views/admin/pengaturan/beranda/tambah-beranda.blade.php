@@ -1,7 +1,7 @@
 @extends('layouts.admin-layout')
 @section('content')
     <div class="w-full text-2xl font-medium">
-        Admin / Pengaturan / Beranda
+        <a href="{{ route('admin-beranda') }}">Admin</a> / <a href="{{ route('admin-pengaturan') }}">Pengaturan</a> / Beranda
     </div>
 
     <form action="{{ route('admin-pengaturan-create-beranda') }}" method="POST">

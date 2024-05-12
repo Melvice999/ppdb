@@ -46,7 +46,7 @@
                         <label for="pas_foto">Pas Foto 3x4</label><br>
                         <div class="flex justify-between items-center mb-2">
                             <input type="file" class="border-b w-full focus:outline-none" accept=".jpg, .png, .jpeg"
-                                onchange="validateFileSize(this, 2)" id="inputPasFoto" name="pas_foto" required>
+                                onchange="validateFileSize(this, 1.5)" id="inputPasFoto" name="pas_foto" required>
                             <div onclick="buttonPasFoto()"
                                 class="border py-1 px-2 border-d-green rounded ml-2 cursor-pointer hover:bg-d-green hover:text-white">
                                 Lihat
@@ -68,7 +68,7 @@
                     </div>
 
                     <div class="w-1/2 bg-white p-7 rounded-md max-md:w-full mt-6">
-                        <label for="prodi">Program Studi</label><br>
+                        <label for="prodi">Program Keahlian</label><br>
                         <select name="prodi" class="mt-1 w-full py-2 focus:outline-none border-b cursor-pointer" required>
                             <option value="TBSM" {{ old('prodi') == 'TBSM' ? 'selected' : '' }}> TBSM
                             </option>
@@ -180,6 +180,29 @@
                     $("#clsErrors").addClass("hidden");
                 });
 
+                // Alert Max File Size
+                window.validateFileSize = function(input, maxSizeInMB) {
+                    if (input.files.length > 0) {
+                        let fileSize = input.files[0].size / (1024 * 1024); // Convert to MB
+                        if (fileSize > maxSizeInMB) {
+                            alert(`Ukuran maksimal file ${maxSizeInMB} MB.`);
+                            input.value = ''; // Clear the file input
+                        }
+                    }
+                };
+
+                // Alert jika file yang diunggah bukan Gambar
+                $('form').on('change', 'input[type="file"][accept=".jpg, .png, .jpeg"]', function() {
+                    let inputFile = $(this);
+                    let fileType = inputFile.prop('files')[0].type;
+
+                    if (!(fileType === 'image/jpeg' || fileType === 'image/png')) {
+                        alert('File yang Anda unggah harus berformat JPG/JPEG atau PNG.');
+                        inputFile.val('');
+                        return false;
+                    }
+                });
+
                 $("#togglePW").on("click", function() {
                     let passwordInput = $("#PW");
                     let type = $("#PW").attr("type") === "password" ? "text" : "password";
@@ -248,35 +271,35 @@
                 }
 
                 // Fungsi untuk mengambil dan mengisi opsi dropdown
-                function populateDropdown(url, dropdown, placeholder) {
-                    $.ajax({
-                        url: url,
-                        dataType: 'json',
-                        success: function(data) {
-                            let dropdownElement = $(dropdown);
+                // function populateDropdown(url, dropdown, placeholder) {
+                //     $.ajax({
+                //         url: url,
+                //         dataType: 'json',
+                //         success: function(data) {
+                //             let dropdownElement = $(dropdown);
 
-                            // Bersihkan opsi yang sudah ada
-                            dropdownElement.empty();
+                //             // Bersihkan opsi yang sudah ada
+                //             dropdownElement.empty();
 
-                            // Tambahkan opsi placeholder
-                            if (placeholder) {
-                                dropdownElement.append($('<option>', {
-                                    value: '',
-                                    text: placeholder
-                                }));
-                            }
+                //             // Tambahkan opsi placeholder
+                //             if (placeholder) {
+                //                 dropdownElement.append($('<option>', {
+                //                     value: '',
+                //                     text: placeholder
+                //                 }));
+                //             }
 
-                            // Isi opsi dropdown
-                            $.each(data.result, function(index, item) {
-                                let option = $('<option>', {
-                                    value: item.id,
-                                    text: item.text
-                                });
-                                dropdownElement.append(option);
-                            });
-                        }
-                    });
-                }
+                //             // Isi opsi dropdown
+                //             $.each(data.result, function(index, item) {
+                //                 let option = $('<option>', {
+                //                     value: item.id,
+                //                     text: item.text
+                //                 });
+                //                 dropdownElement.append(option);
+                //             });
+                //         }
+                //     });
+                // }
 
             });
         </script>

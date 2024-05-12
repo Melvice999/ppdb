@@ -1,7 +1,7 @@
 @extends('layouts.admin-layout')
 @section('content')
     <div class="w-full text-2xl font-medium">
-        Admin / Pengaturan / Kontak
+        <a href="{{ route('admin-beranda') }}">Admin</a> / <a href="{{ route('admin-pengaturan') }}">Pengaturan</a> / Kontak
     </div>
 
     @if (session('success'))

@@ -26,7 +26,7 @@ class PpdbSmkSeeder extends Seeder
             <li>Foto copy akta kelahiran 2 lembar&nbsp;</li>
             <li>Foto copy keluarga (kk) 2 lembar</li>
             <li>Pas foto 3 x 4 berwarna 2 lembar</li>
-            <li>Foto copy transkip nilai /SHUN&nbsp;</li>
+            <li>Foto copy transkrip nilai /SHUN&nbsp;</li>
             <li>Ijazan 2 lembar (jika sudah ada)</li>
             <li>Persyaratan pendaftar dimasukan ke dalam stopmap</li>
             </ol>
@@ -68,7 +68,7 @@ class PpdbSmkSeeder extends Seeder
                 <li>Foto copy akta kelahiran 2 lembar&nbsp;</li>
                 <li>Foto copy keluarga (kk) 2 lembar</li>
                 <li>Pas foto 3 x 4 berwarna 2 lembar</li>
-                <li>Foto copy transkip nilai /SHUN&nbsp;</li>
+                <li>Foto copy transkrip nilai /SHUN&nbsp;</li>
                 <li>Ijazan 2 lembar (jika sudah ada)</li>
                 <li>Persyaratan pendaftar dimasukan ke dalam stopmap</li>
                 </ol>

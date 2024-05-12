@@ -1,6 +1,6 @@
 @extends('layouts.admin-layout')
 @section('content')
-    <div class=" text-2xl font-medium">Admin / Beranda /
+    <div class=" text-2xl font-medium"><a href="{{ route('admin-beranda') }}">Admin</a> / <a href="{{ route('admin-beranda') }}">Beranda</a> /
         {{ $programStudy == 'admin-beranda-sudah-tervalidasi'
             ? 'Tervalidasi'
             : ($programStudy == 'admin-beranda-belum-tervalidasi'

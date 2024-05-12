@@ -1,6 +1,6 @@
 @extends('layouts.admin-layout')
 @section('content')
-    <div class="w-full text-2xl font-medium">Admin / Beranda</div>
+    <div class="w-full text-2xl font-medium"> <a href="{{ route('admin-beranda') }}">Admin</a> / Beranda</div>
 
     <div class="mt-10">Program Keahlian</div>
     <div class="grid grid-cols-4 w-full gap-10 mt-3 max-md:grid-cols-1 max-lg:grid-cols-2">
@@ -79,5 +79,4 @@
     </div>
 
     <div class="h-10"></div>
-  
 @endsection()

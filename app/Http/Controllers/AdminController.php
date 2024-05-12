@@ -445,7 +445,7 @@ class AdminController extends Controller
             curl_close($ch);
         }
 
-        if ($request->notifikasi_admin === "Lulus Ujian" || $request->notifikasi_admin === "Tidak Lulus Ujian") {
+        if ($request->notifikasi_admin === "Lulus Ujian" || $request->notifikasi_admin === "Tidak Lulus Ujian" || $request->notifikasi_admin === "Lengkapi Berkas") {
             $request->validate([
                 'btq'       => 'required',
                 'akademik'  => 'required',
@@ -569,32 +569,32 @@ class AdminController extends Controller
 
         // Periksa apakah data ada sebelum mencoba untuk menghapusnya
         if ($berkasSiswa) {
-            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->akta)) {
-                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->akta);
+            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . '/' . $berkasSiswa->akta)) {
+                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . '/' . $berkasSiswa->akta);
             }
 
-            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->kk)) {
-                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->kk);
+            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . '/' . $berkasSiswa->kk)) {
+                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . '/' . $berkasSiswa->kk);
             }
 
-            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->pas_foto)) {
-                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->pas_foto);
+            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . '/' . $user->detailCalonSiswa->pas_foto)) {
+                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . '/' . $user->detailCalonSiswa->pas_foto);
             }
 
-            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->shun)) {
-                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->shun);
+            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . '/' . $berkasSiswa->shun)) {
+                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . '/' . $berkasSiswa->shun);
             }
 
-            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->ijazah)) {
-                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->ijazah);
+            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . '/' . $berkasSiswa->ijazah)) {
+                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . '/' . $berkasSiswa->ijazah);
             }
 
-            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->raport)) {
-                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->raport);
+            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . '/' . $berkasSiswa->raport)) {
+                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . '/' . $berkasSiswa->raport);
             }
 
-            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->transkip_nilai)) {
-                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . $berkasSiswa->transkip_nilai);
+            if (Storage::exists('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . '/' . $berkasSiswa->transkrip_nilai)) {
+                Storage::delete('public/siswa/' . $user->tahun_daftar . '/' . $user->nik  . '/' . $berkasSiswa->transkrip_nilai);
             }
         }
 

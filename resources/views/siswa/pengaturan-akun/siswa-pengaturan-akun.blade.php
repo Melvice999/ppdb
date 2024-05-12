@@ -150,7 +150,7 @@
 
                     <div class="border-d-green border focus:outline-none flex justify-center items-center">
                         <input type="file" class="w-full ps-2" accept=".jpg, .png, .jpeg" name="pas_foto"
-                            onchange="validateFileSize(this, 2)" id="inputPasFoto" required>
+                            onchange="validateFileSize(this, 1.5)" id="inputPasFoto" required>
                     </div>
 
                     <div
@@ -207,11 +207,32 @@
 
     <script type="module">
         $(document).ready(function() {
-
-
             // Tampilkan ubah password
             $("#ubahPassword").on("click", function() {
                 $("#openPassword").toggleClass("hidden")
+            });
+
+            // Alert Max File Size
+            window.validateFileSize = function(input, maxSizeInMB) {
+                if (input.files.length > 0) {
+                    let fileSize = input.files[0].size / (1024 * 1024); // Convert to MB
+                    if (fileSize > maxSizeInMB) {
+                        alert(`Ukuran maksimal file ${maxSizeInMB} MB.`);
+                        input.value = ''; // Clear the file input
+                    }
+                }
+            };
+
+            // Alert jika file yang diunggah bukan Gambar
+            $('form').on('change', 'input[type="file"][accept=".jpg, .png, .jpeg"]', function() {
+                let inputFile = $(this);
+                let fileType = inputFile.prop('files')[0].type;
+
+                if (!(fileType === 'image/jpeg' || fileType === 'image/png')) {
+                    alert('File yang Anda unggah harus berformat JPG/JPEG atau PNG.');
+                    inputFile.val('');
+                    return false;
+                }
             });
 
             // Mengubah fa-x ke fa-check password

@@ -13,7 +13,8 @@
                             : [])));
     @endphp
 
-    <div class=" text-2xl font-medium">Admin / Beranda /
+    <div class=" text-2xl font-medium">
+        <a href="{{ route('admin-beranda') }}">Admin</a> / <a href="{{ route('admin-beranda') }}">Beranda</a> /
         {{ $programStudy == 'admin-beranda-tkro'
             ? 'TKRO'
             : ($programStudy == 'admin-beranda-tbsm'

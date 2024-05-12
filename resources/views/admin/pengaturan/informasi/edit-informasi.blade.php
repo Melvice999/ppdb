@@ -3,7 +3,7 @@
     <script src="{{ asset('assets/vendor/ckeditor5/build/ckeditor.js') }}"></script>
 
     <div class="w-full text-2xl font-medium">
-        Admin / Pengaturan / Informasi</div>
+        <a href="{{ route('admin-beranda') }}">Admin</a> / <a href="{{ route('admin-pengaturan') }}">Pengaturan</a> / Informasi</div>
     <form action="{{ route('admin-pengaturan-informasi-post', ['id' => $informasi->id]) }}" method="POST">
         @csrf
         <div class="flex justify-between mt-10 mb-4">

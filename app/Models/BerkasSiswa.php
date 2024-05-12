@@ -16,6 +16,6 @@ class BerkasSiswa extends Model
         'shun',
         'ijazah',
         'raport',
-        'transkip_nilai'
+        'transkrip_nilai'
     ];
 }
