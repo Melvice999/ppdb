@@ -113,12 +113,12 @@
                     </div>
 
                     <div class="flex cursor-pointer w-1/2 max-md:w-full">
-                        <a href="#up" class="flex justify-end w-full">
+                        <div class="scroll-up flex justify-end w-full cursor-pointer">
                             <div id="toggleLangkahIIBerikutnya"
                                 class="mt-6 py-2 px-7 rounded-2xl bg-white border border-d-green hover:bg-d-green hover:text-white">
                                 Berikutnya
                             </div>
-                        </a>
+                        </div>
                     </div>
 
 
@@ -156,13 +156,13 @@
                     </div>
 
                     <div class="text-end w-1/2 flex justify-between max-md:w-full">
-                        <a href="#up">
+                        <div class="scroll-up cursor-pointer">
                             <div id="toggleLangkahIIISebelumnya"
                                 class="mt-6 py-2 px-7 rounded-2xl bg-white border border-d-green hover:bg-d-green hover:text-white">
                                 Sebelumnya
                             </div>
+                        </div>
 
-                        </a>
                         <button type="submit"
                             class="mt-6 py-2 px-7 rounded-2xl bg-white border border-d-green hover:bg-d-green hover:text-white">
                             Selesai
