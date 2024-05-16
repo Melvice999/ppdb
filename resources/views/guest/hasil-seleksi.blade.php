@@ -12,7 +12,7 @@
                     <thead>
                         <tr class="border-y border-d-green">
                             <th class="py-2 px-4">Nama</th>
-                            <th class="py-2 px-4">Prodi</th>
+                            <th class="py-2 px-4">Program Keahlian</th>
                             <th class="py-2 px-4">Tempat, <br class="hidden max-md:block"> Tanggal Lahir</th>
                         </tr>
                     </thead>
