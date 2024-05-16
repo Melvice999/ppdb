@@ -37,7 +37,7 @@
     </style>
 </head>
 
-<body class="font-sen bg-l-sky-blue" id="up">
+<body class="font-sen bg-l-sky-blue">
 
     @include('navbar.guest-navbar')
 
@@ -54,10 +54,10 @@
                 SMK MA'ARIF NU DORO
             </div>
             <div>
-                <a href="#up">
+                <div class="scroll-up">
                     <i class="fa-solid fa-arrow-up"></i>
                     <span>UP</span>
-                </a>
+                </div>
             </div>
         </div>
 
@@ -119,6 +119,15 @@
 
     <script type="module">
         $(document).ready(function() {
+
+            $('.scroll-up').on('click', function(e) {
+                e.preventDefault();
+                var target = $(this).attr('href');
+                $('html, body').animate({
+                    scrollTop: $(target).offset().top
+                }, 1000);
+            });
+
 
             // Open Nav Menu
             $("#nav_hidden").click(function() {
