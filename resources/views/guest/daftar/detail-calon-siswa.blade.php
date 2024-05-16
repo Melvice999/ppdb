@@ -269,38 +269,6 @@
                     let divPreviewImage = $('#divPreviewImage');
                     divPreviewImage.removeClass('fixed').addClass('hidden');
                 }
-
-                // Fungsi untuk mengambil dan mengisi opsi dropdown
-                // function populateDropdown(url, dropdown, placeholder) {
-                //     $.ajax({
-                //         url: url,
-                //         dataType: 'json',
-                //         success: function(data) {
-                //             let dropdownElement = $(dropdown);
-
-                //             // Bersihkan opsi yang sudah ada
-                //             dropdownElement.empty();
-
-                //             // Tambahkan opsi placeholder
-                //             if (placeholder) {
-                //                 dropdownElement.append($('<option>', {
-                //                     value: '',
-                //                     text: placeholder
-                //                 }));
-                //             }
-
-                //             // Isi opsi dropdown
-                //             $.each(data.result, function(index, item) {
-                //                 let option = $('<option>', {
-                //                     value: item.id,
-                //                     text: item.text
-                //                 });
-                //                 dropdownElement.append(option);
-                //             });
-                //         }
-                //     });
-                // }
-
             });
         </script>
     @endif
