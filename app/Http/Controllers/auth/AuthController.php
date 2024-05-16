@@ -13,7 +13,7 @@ class AuthController extends Controller
     public function loginSiswa(Request $request)
     {
 
-        if (Auth::guard('siswa')->check()) {
+        if (Auth::guard('calon_siswa')->check()) {
             return redirect('siswa/profil');
         } else {
             $auth   = $request->route()->getName();
@@ -31,11 +31,11 @@ class AuthController extends Controller
         if (!$user) {
             return back()->with('error', 'NIK tidak valid');
         }
-        
+
         // Verifikasi password
         if (Hash::check($request->password, $user->password)) {
             // Login pengguna menggunakan nik sebagai ID
-            Auth::guard('siswa')->login($user); 
+            Auth::guard('calon_siswa')->login($user);
             return redirect('siswa/profil');
         } else {
             return back()->with('error', 'Password tidak valid');
@@ -63,16 +63,15 @@ class AuthController extends Controller
         if (!$user) {
             return back()->with('error', 'Email tidak valid');
         }
-        
+
         // Verifikasi password
         if (Hash::check($request->password, $user->password)) {
-            
-            Auth::guard('admin')->login($user); 
+
+            Auth::guard('admin')->login($user);
             return redirect()->to(url('admin/admin-beranda'));
         } else {
             return back()->with('error', 'Password tidak valid');
         }
-
     }
 
     public function loginHeadmaster(Request $request)
@@ -96,11 +95,11 @@ class AuthController extends Controller
         if (!$user) {
             return back()->with('error', 'Email tidak valid');
         }
-        
+
         // Verifikasi password
         if (Hash::check($request->password, $user->password)) {
-            
-            Auth::guard('headmaster')->login($user); 
+
+            Auth::guard('headmaster')->login($user);
             return redirect()->to(url('headmaster/headmaster-beranda'));
         } else {
             return back()->with('error', 'Password tidak valid');

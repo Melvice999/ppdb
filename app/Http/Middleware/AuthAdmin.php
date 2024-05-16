@@ -16,7 +16,6 @@ class AuthAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-
         if (Auth::guard('admin')->check()) {
             return $next($request);
         }

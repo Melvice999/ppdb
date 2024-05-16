@@ -22,7 +22,7 @@ class SiswaController extends Controller
 {
   public function index()
   {
-    $user = Auth::guard('siswa')->user();
+    $user = Auth::guard('calon_siswa')->user();
     $nik = $user->nik;
 
 
@@ -47,7 +47,7 @@ class SiswaController extends Controller
 
   public function formulirPendaftaran()
   {
-    $user = Auth::guard('siswa')->user();
+    $user = Auth::guard('calon_siswa')->user();
     $nik = $user->nik;
 
     $user = CalonSiswa::where('nik', $nik)->first();
@@ -68,7 +68,7 @@ class SiswaController extends Controller
 
   public function pengaturan()
   {
-    $user = Auth::guard('siswa')->user();
+    $user = Auth::guard('calon_siswa')->user();
     $nik = $user->nik;
 
     $user = CalonSiswa::where('nik', $nik)->first();
@@ -84,7 +84,7 @@ class SiswaController extends Controller
 
   public function cetakFormulir()
   {
-    $user = Auth::guard('siswa')->user();
+    $user = Auth::guard('calon_siswa')->user();
     $nik = $user->nik;
 
     $user = CalonSiswa::where('nik', $nik)->first();
@@ -131,7 +131,7 @@ class SiswaController extends Controller
 
   public function pengaturanAkun()
   {
-    $user = Auth::guard('siswa')->user();
+    $user = Auth::guard('calon_siswa')->user();
     $nik = $user->nik;
 
     $user = CalonSiswa::where('nik', $nik)->first();
@@ -148,7 +148,7 @@ class SiswaController extends Controller
 
   public function uploadBerkas()
   {
-    $user = Auth::guard('siswa')->user();
+    $user = Auth::guard('calon_siswa')->user();
     $nik = $user->nik;
 
     $user = CalonSiswa::where('nik', $nik)->first();
@@ -171,7 +171,7 @@ class SiswaController extends Controller
     ], ['nik.unique' => 'Berkas sudah terisi.']);
 
 
-dd(public_path('assets/img/not-found.png'));
+    dd(public_path('assets/img/not-found.png'));
     $akta = $request->file('akta') ?? public_path('assets/img/not-found.png');
     $kk = $request->file('kk') ?? public_path('assets/img/not-found.png');
     $shun = $request->file('shun') ?? public_path('assets/img/not-found.png');
@@ -214,7 +214,7 @@ dd(public_path('assets/img/not-found.png'));
 
   public function updateBerkas()
   {
-    $user = Auth::guard('siswa')->user();
+    $user = Auth::guard('calon_siswa')->user();
     $nik = $user->nik;
 
     $user = CalonSiswa::where('nik', $nik)->first();
@@ -384,7 +384,7 @@ dd(public_path('assets/img/not-found.png'));
       $raportName = $id . '-Raport.pdf';
 
       // Simpan berkas baru
-      $request->file('raport')->storeAS('siswa/' . $user->tahun_daftar . '/' . $user->nik  , $raportName, 'public');
+      $request->file('raport')->storeAS('siswa/' . $user->tahun_daftar . '/' . $user->nik, $raportName, 'public');
     }
 
     BerkasSiswa::where('nik', $id)->update([
@@ -411,7 +411,7 @@ dd(public_path('assets/img/not-found.png'));
       $transkripNilaiName = $id . '-TranskripNilai.pdf';
 
       // Simpan berkas baru
-      $request->file('transkrip_nilai')->storeAS('siswa/' . $user->tahun_daftar . '/' . $user->nik  , $transkripNilaiName, 'public');
+      $request->file('transkrip_nilai')->storeAS('siswa/' . $user->tahun_daftar . '/' . $user->nik, $transkripNilaiName, 'public');
     }
 
     BerkasSiswa::where('nik', $id)->update([
@@ -441,7 +441,7 @@ dd(public_path('assets/img/not-found.png'));
 
   public function logout()
   {
-    Auth::guard('siswa')->logout();
+    Auth::guard('calon_siswa')->logout();
     return redirect('/');
   }
 }

@@ -43,9 +43,9 @@ return [
             'provider' => 'users',
         ],
         // daftarkan agar disimpan ke session
-        'siswa' => [
+        'calon_siswa' => [
             'driver' => 'session',
-            'provider' => 'siswas',
+            'provider' => 'calon_siswas',
         ],
         // daftarkan agar disimpan ke session
         'admin' => [
@@ -85,7 +85,7 @@ return [
             'driver' => 'eloquent',
             'model' => \App\Models\AdminModel::class,
         ],
-        'siswas' => [
+        'calon_siswas' => [
             'driver' => 'eloquent',
             'model' => \App\Models\CalonSiswa::class,
         ],
