@@ -20,7 +20,7 @@
                         @foreach ($siswa as $siswa)
                             <tr class="border-b border-d-green">
                                 <td class="py-2 px-4">{{ $siswa->nama }}</td>
-                                <td class="py-2 px-4">{{ $siswa->prodi }}</td>
+                                <td class="py-2 px-4">{{ $siswa->detailCalonSiswa->prodi }}</td>
                                 <td class="py-2 px-4">{{ $siswa->tempat_lahir }}, <br class="hidden max-md:block">
                                     {{ date('d-m-Y', strtotime($siswa->tanggal_lahir)) }}</td>
                             </tr>

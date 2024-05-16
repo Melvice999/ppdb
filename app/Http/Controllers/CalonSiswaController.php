@@ -338,7 +338,12 @@ class CalonSiswaController extends Controller
 
     public function hasilSeleksi()
     {
-        $siswa    = CalonSiswa::where('status', '1')->orderBy('prodi', 'desc')->where('tahun_daftar', now()->year)->get();
+        $siswa = CalonSiswa::where('status', '1')
+            ->whereHas('detailCalonSiswa', function ($query) {
+                $query->orderBy('prodi', 'desc')->where('tahun_daftar', now()->year);
+            })
+            ->get();
+
 
         $beranda = BerandaModel::where('status', 1)->get();
         $hasil_seleksi = PengaturanModel::select('hasil_seleksi')->first();
