@@ -37,7 +37,7 @@
     </style>
 </head>
 
-<body class="font-sen bg-l-sky-blue">
+<body class="font-sen bg-l-sky-blue" id="top">
 
     @include('navbar.guest-navbar')
 
@@ -54,7 +54,7 @@
                 SMK MA'ARIF NU DORO
             </div>
             <div>
-                <div class="scroll-up">
+                <div class="scroll-up cursor-pointer">
                     <i class="fa-solid fa-arrow-up"></i>
                     <span>UP</span>
                 </div>
@@ -122,7 +122,7 @@
 
             $('.scroll-up').on('click', function(e) {
                 e.preventDefault();
-                var target = $(this).attr('href');
+                var target = '#top'; 
                 $('html, body').animate({
                     scrollTop: $(target).offset().top
                 }, 1000);
