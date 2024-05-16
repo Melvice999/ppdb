@@ -201,7 +201,8 @@
                         <option
                             class="{{ $siswa->notifikasi_admin == 'Berkas Terupload' || $siswa->notifikasi_admin == 'Berkas Terupdate' ? '' : 'hidden' }}"
                             value="Masukan Transkrip Nilai Yang Valid"
-                            {{ $siswa->notifikasi_admin == 'Masukan Transkrip Nilai Yang Valid' ? 'selected' : '' }}>Masukan
+                            {{ $siswa->notifikasi_admin == 'Masukan Transkrip Nilai Yang Valid' ? 'selected' : '' }}>
+                            Masukan
                             Transkrip Nilai Yang Valid
                         </option>
 
@@ -232,7 +233,7 @@
                         <td>:</td>
                         <td class="px-3">
                             <select name="btq">
-                                <option value="">Masukan Penilaian</option>
+                                <option value="">Pilih  Nilai</option>
                                 <option value="Lancar" {{ $penilaian->btq == 'Lancar' ? 'selected' : '' }}>Lancar</option>
                                 <option value="Sedang" {{ $penilaian->btq == 'Sedang' ? 'selected' : '' }}>Sedang</option>
                                 <option value="Kurang" {{ $penilaian->btq == 'Kurang' ? 'selected' : '' }}>Kurang</option>
@@ -240,44 +241,23 @@
                         </td>
 
                         <td class="px-3">
-                            Tes Akademik
-                        </td>
-                        <td>:</td>
-                        <td class="px-3">
-                            <input type="number" class="border border-d-green ps-2 rounded-xl focus:outline-none"
-                                name="akademik" value="{{ $penilaian->akademik }}">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="px-3">
-                            Tinggi Badan
-                        </td>
-                        <td>:</td>
-                        <td class="px-3">
-                            <input type="number" class="border border-d-green ps-2 rounded-xl focus:outline-none"
-                                name="tinggi_badan" value="{{ $penilaian->tinggi_badan }}">
-                        </td>
-
-                        <td class="px-3">
-                            Berat Badan
-                        </td>
-                        <td>:</td>
-                        <td class="px-3">
-                            <input type="number" class="border border-d-green ps-2 rounded-xl focus:outline-none"
-                                name="berat_badan" value="{{ $penilaian->berat_badan }}">
-                        </td>
-                    </tr>
-
-
-                    <tr>
-                        <td class="px-3">
                             Tatto
                         </td>
                         <td>:</td>
                         <td class="px-3">
                             <input type="checkbox" name="tatto" value="1"
                                 @if ($penilaian->tatto == 1) checked @endif>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="px-3">
+                            Tes Akademik
+                        </td>
+                        <td>:</td>
+                        <td class="px-3">
+                            <input type="number" class="w-20 border border-d-green ps-2 rounded-xl focus:outline-none"
+                                name="akademik" value="{{ $penilaian->akademik }}">
                         </td>
 
                         <td class="px-3">
@@ -290,7 +270,18 @@
                         </td>
                     </tr>
 
+
                     <tr>
+
+                        <td class="px-3">
+                            Berat Badan
+                        </td>
+                        <td>:</td>
+                        <td class="px-3">
+                            <input type="number" class="w-20 border border-d-green ps-2 rounded-xl focus:outline-none"
+                                name="berat_badan" value="{{ $penilaian->berat_badan }}">
+                        </td>
+
                         <td class="px-3">
                             Tangan
                         </td>
@@ -298,6 +289,17 @@
                         <td class="px-3">
                             <input type="checkbox" name="tangan" value="1"
                                 @if ($penilaian->tangan == 1) checked @endif>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="px-3">
+                            Tinggi Badan
+                        </td>
+                        <td>:</td>
+                        <td class="px-3">
+                            <input type="number" class="w-20 border border-d-green ps-2 rounded-xl focus:outline-none"
+                                name="tinggi_badan" value="{{ $penilaian->tinggi_badan }}">
                         </td>
 
                         <td class="px-3">
@@ -312,21 +314,21 @@
 
                     <tr>
                         <td class="px-3">
+                            Lainnya
+                        </td>
+                        <td>:</td>
+                        <td class="px-3">
+                            <input type="text" class="w-20 border  border-d-green ps-2 rounded-xl focus:outline-none"
+                                name="lainnya" value="{{ $penilaian->lainnya }}">
+                        </td>
+
+                        <td class="px-3">
                             Riwayat Penyakit
                         </td>
                         <td>:</td>
                         <td class="px-3">
                             <input type="checkbox" name="riwayat_penyakit" value="1"
                                 @if ($penilaian->riwayat_penyakit == 1) checked @endif>
-                        </td>
-
-                        <td class="px-3">
-                            Lainnya
-                        </td>
-                        <td>:</td>
-                        <td class="px-3">
-                            <input type="text" class="border border-d-green ps-2 rounded-xl focus:outline-none"
-                                name="lainnya" value="{{ $penilaian->lainnya }}">
                         </td>
                     </tr>
 
