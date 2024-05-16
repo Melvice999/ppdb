@@ -1,7 +1,7 @@
 @extends('layouts.guest-layout')
 @section('content')
 
-    @if ($pendaftaran->pendaftaran === 1)
+    @if ($pendaftaran->pendaftaran == 1)
         {{-- Pesan Error --}}
         @if (session('error'))
             <div class="grid mt-6 ml-10 mr-10 mx-auto place-items-center" id="errorDiv">
@@ -79,7 +79,7 @@
             </div>
         </form>
     @endif
-    @if ($pendaftaran->pendaftaran === 0)
+    @if ($pendaftaran->pendaftaran == 0)
         <div class="grid mt-6 mx-10 place-items-center text-base max-sm:mx-3">
             {{-- {{ $siswa }} --}}
 
