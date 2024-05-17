@@ -2,10 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Closure;
 
 class AuthSiswa
 {
@@ -16,7 +16,7 @@ class AuthSiswa
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::guard('calon_siswa')->check()) {
+        if (Auth::guard('calonsiswa')->check()) {
             return $next($request);
         }
 

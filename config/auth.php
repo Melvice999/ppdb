@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\AdminModel;
-
 return [
 
     /*
@@ -43,9 +41,9 @@ return [
             'provider' => 'users',
         ],
         // daftarkan agar disimpan ke session
-        'calon_siswa' => [
-            'driver' => 'session',
-            'provider' => 'calon_siswas',
+        'calonsiswa' => [
+        'driver' => 'session',
+        'provider' => 'calonsiswa_provider', 
         ],
         // daftarkan agar disimpan ke session
         'admin' => [
@@ -85,9 +83,9 @@ return [
             'driver' => 'eloquent',
             'model' => \App\Models\AdminModel::class,
         ],
-        'calon_siswas' => [
+        'calonsiswa_provider' => [
             'driver' => 'eloquent',
-            'model' => \App\Models\CalonSiswa::class,
+            'model' => \App\Models\User::class,
         ],
         'headmasters' => [
             'driver' => 'eloquent',

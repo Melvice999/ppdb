@@ -12,8 +12,8 @@ class AuthController extends Controller
 {
     public function loginSiswa(Request $request)
     {
+        if (Auth::guard('calonsiswa')->check()) {
 
-        if (Auth::guard('calon_siswa')->check()) {
             return redirect('siswa/profil');
         } else {
             $auth   = $request->route()->getName();
@@ -26,7 +26,7 @@ class AuthController extends Controller
 
     public function postLoginSiswa(Request $request)
     {
-        $user = \App\Models\CalonSiswa::where('nik', $request->nik)->first();
+        $user = \App\Models\User::where('nik', $request->nik)->first();
 
         if (!$user) {
             return back()->with('error', 'NIK tidak valid');
@@ -34,9 +34,13 @@ class AuthController extends Controller
 
         // Verifikasi password
         if (Hash::check($request->password, $user->password)) {
-            // Login pengguna menggunakan nik sebagai ID
-            Auth::guard('calon_siswa')->login($user);
-            return redirect('siswa/profil');
+
+            Auth::guard('calonsiswa')->login($user);
+
+            // Tambahkan log
+            Log::info('User berhasil login', ['user' => $user]);
+
+            return redirect()->to(url('siswa/profil'));
         } else {
             return back()->with('error', 'Password tidak valid');
         }

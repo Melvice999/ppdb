@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Auth\Authenticatable as AuthenticableTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
 
 class CalonSiswa extends Model implements Authenticatable
 {
+    use AuthenticableTrait;
     use HasFactory;
     use Notifiable;
 
@@ -33,7 +35,6 @@ class CalonSiswa extends Model implements Authenticatable
         'jenis_kelamin',
         'kode_pos',
         'tahun_daftar',
-        'password',
         'no_pendaftaran',
         'notifikasi_admin',
     ];
@@ -69,37 +70,31 @@ class CalonSiswa extends Model implements Authenticatable
         return $this->hasOne(DetailCalonSiswaModel::class, 'nik', 'nik');
     }
 
-    // Implementasi metode getAuthIdentifierName
     public function getAuthIdentifierName()
     {
         return 'nik';
     }
 
-    // Implementasi metode getAuthIdentifier
     public function getAuthIdentifier()
     {
-        return $this->getAttribute('nik');
+         return $this->nik;
     }
 
-    // Implementasi metode getAuthPassword
     public function getAuthPassword()
     {
         return $this->password;
     }
 
-    // Implementasi metode getRememberToken
     public function getRememberToken()
     {
         return $this->remember_token;
     }
 
-    // Implementasi metode setRememberToken
     public function setRememberToken($value)
     {
         $this->remember_token = $value;
     }
 
-    // Implementasi metode getRememberTokenName
     public function getRememberTokenName()
     {
         return 'remember_token';

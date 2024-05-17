@@ -6,6 +6,10 @@
         }
     </style>
 
+    <?php
+    $detailCalonSiswa = $user->load('detailCalonSiswa');
+    ?>
+
     @if (session('success'))
         <div class="flex justify-center mt-3 mx-10 max-md:block">
             <div class="w-1/2 mt-2 max-md:w-full">
@@ -304,7 +308,7 @@
 
                 // Mengubah isi src
                 $("#previewImageLama img").addClass().attr("src",
-                    "{{ asset('storage/siswa/' . $user->tahun_daftar . '/' . $user->nik . '/' . $user->detailCalonSiswa->pas_foto) }}"
+                    "{{ asset('storage/siswa/' . $user->tahun_daftar . '/' . $user->nik . '/' . $detailCalonSiswa->detailCalonSiswa->pas_foto) }}"
                 )
 
                 // Remove Modal

@@ -1,5 +1,10 @@
 @extends('layouts.siswa-layout')
 @section('content')
+
+    <?php
+    $detailCalonSiswa = $user->load('detailCalonSiswa');
+    ?>
+
     @if (session('success'))
         <div class="flex justify-center mt-3 mx-10 max-md:block">
             <div class="w-1/2 mt-2 max-md:w-full">
@@ -54,7 +59,7 @@
                         <div class="col-span-2">
                             <span class="max-md:hidden">:</span>
 
-                            {{ $user->detailCalonSiswa->prodi }}
+                            {{ $detailCalonSiswa->detailCalonSiswa->prodi }}
                         </div>
                     </div>
 

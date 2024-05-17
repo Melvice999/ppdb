@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\CalonSiswa;
-// use App\Models\AkunSiswa;
 use App\Models\BerkasSiswa;
 use App\Models\DetailCalonSiswaModel;
-use App\Models\NotifikasiModel;
 use App\Models\PenilaianModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -22,7 +21,7 @@ class SiswaController extends Controller
 {
   public function index()
   {
-    $user = Auth::guard('calon_siswa')->user();
+    $user = Auth::guard('calonsiswa')->user();
     $nik = $user->nik;
 
 
@@ -47,7 +46,7 @@ class SiswaController extends Controller
 
   public function formulirPendaftaran()
   {
-    $user = Auth::guard('calon_siswa')->user();
+    $user = Auth::guard('calonsiswa')->user();
     $nik = $user->nik;
 
     $user = CalonSiswa::where('nik', $nik)->first();
@@ -68,7 +67,7 @@ class SiswaController extends Controller
 
   public function pengaturan()
   {
-    $user = Auth::guard('calon_siswa')->user();
+    $user = Auth::guard('calonsiswa')->user();
     $nik = $user->nik;
 
     $user = CalonSiswa::where('nik', $nik)->first();
@@ -84,7 +83,7 @@ class SiswaController extends Controller
 
   public function cetakFormulir()
   {
-    $user = Auth::guard('calon_siswa')->user();
+    $user = Auth::guard('calonsiswa')->user();
     $nik = $user->nik;
 
     $user = CalonSiswa::where('nik', $nik)->first();
@@ -131,7 +130,7 @@ class SiswaController extends Controller
 
   public function pengaturanAkun()
   {
-    $user = Auth::guard('calon_siswa')->user();
+    $user = Auth::guard('calonsiswa')->user();
     $nik = $user->nik;
 
     $user = CalonSiswa::where('nik', $nik)->first();
@@ -148,7 +147,7 @@ class SiswaController extends Controller
 
   public function uploadBerkas()
   {
-    $user = Auth::guard('calon_siswa')->user();
+    $user = Auth::guard('calonsiswa')->user();
     $nik = $user->nik;
 
     $user = CalonSiswa::where('nik', $nik)->first();
@@ -214,7 +213,7 @@ class SiswaController extends Controller
 
   public function updateBerkas()
   {
-    $user = Auth::guard('calon_siswa')->user();
+    $user = Auth::guard('calonsiswa')->user();
     $nik = $user->nik;
 
     $user = CalonSiswa::where('nik', $nik)->first();
@@ -433,7 +432,7 @@ class SiswaController extends Controller
     ]);
     $nik = $request->nik;
     $password = Hash::make($request->password);
-    CalonSiswa::where('nik', $nik)->update([
+    User::where('nik', $nik)->update([
       'password' => $password,
     ]);
     return redirect()->back()->with('success', 'Password berhasil diubah.');
@@ -441,7 +440,7 @@ class SiswaController extends Controller
 
   public function logout()
   {
-    Auth::guard('calon_siswa')->logout();
+    Auth::guard('calonsiswa')->logout();
     return redirect('/');
   }
 }

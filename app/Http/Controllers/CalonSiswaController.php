@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\BerandaModel;
 use Illuminate\Http\Request;
 use App\Models\CalonSiswa;
@@ -103,7 +104,6 @@ class CalonSiswaController extends Controller
         $siswa = [
             'nik' => $request->nik,
             'no_pendaftaran' => $no_pendaftaran,
-            'password' => Hash::make($request->password),
             'nama' => $request->nama,
             'tempat_lahir' => $request->tempat_lahir,
             'tanggal_lahir' => $request->tanggal_lahir,
@@ -120,6 +120,7 @@ class CalonSiswaController extends Controller
         ];
 
         CalonSiswa::create($siswa);
+        User::Create(['nik' => $request->nik, 'password' => Hash::make($request->password)]);
         PenilaianModel::create(['nik' => $request->nik]);
 
         return redirect()->to(url('daftar/otp/' . $request->nik . '/' . $request->no_hp));

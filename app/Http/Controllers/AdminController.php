@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\AdminModel;
 use App\Models\AkunSiswa;
 use Illuminate\Http\Request;
@@ -144,7 +145,6 @@ class AdminController extends Controller
             ->count();
 
         $siswa = CalonSiswa::get();
-
 
         // $status0        = CalonSiswa::where('status', 0)->where('tahun_daftar', now()->year);
         // $status1        = CalonSiswa::where('status', 1)->where('tahun_daftar', now()->year);
@@ -494,7 +494,7 @@ class AdminController extends Controller
             ]);
 
             $new_password = $request->reset_password;
-            CalonSiswa::where('nik', $id)->update([
+            User::where('nik', $id)->update([
                 'password' => Hash::make($new_password),
             ]);
         }
@@ -601,6 +601,7 @@ class AdminController extends Controller
         BerkasSiswa::where('nik', $id)->delete();
         PenilaianModel::where('nik', $id)->delete();
         DetailCalonSiswaModel::where('nik', $id)->delete();
+        User::where('nik', $id)->delete();
         OtpModel::where('nik', $id)->delete();
         CalonSiswa::where('nik', $id)->delete();
 

@@ -8,6 +8,10 @@
         }
     </style>
 
+    <?php
+    $detailCalonSiswa = $siswa->load('detailCalonSiswa');
+    ?>
+
     <div class=" text-2xl font-medium">
         <a href="{{ route('admin-beranda') }}">Admin</a> / <a href="{{ route('admin-beranda') }}">Beranda </a> / <a
             href="{{ route('admin-beranda-belum-tervalidasi') }}">Siswa</a> / Edit
@@ -41,7 +45,7 @@
         </span>
 
     </div>
-    <img src="{{ asset('storage/siswa/' . $siswa->tahun_daftar . '/' . $siswa->nik . '/' . $siswa->detailCalonSiswa->pas_foto) }}"
+    <img src="{{ asset('storage/siswa/' . $siswa->tahun_daftar . '/' . $siswa->nik . '/' . $detailCalonSiswa->detailCalonSiswa->pas_foto) }}"
         class="hidden rounded-xl overflow-hidden mb-3 bg-white max-h-80" alt="" id="pas_foto">
     <embed
         src="{{ asset($berkas && $berkas->nik ? 'storage/siswa/' . $siswa->tahun_daftar . '/' . $siswa->nik . '/' . $berkas->akta : 'assets/img/not-found.png') }}"
@@ -233,7 +237,7 @@
                         <td>:</td>
                         <td class="px-3">
                             <select name="btq">
-                                <option value="">Pilih  Nilai</option>
+                                <option value="">Pilih Nilai</option>
                                 <option value="Lancar" {{ $penilaian->btq == 'Lancar' ? 'selected' : '' }}>Lancar</option>
                                 <option value="Sedang" {{ $penilaian->btq == 'Sedang' ? 'selected' : '' }}>Sedang</option>
                                 <option value="Kurang" {{ $penilaian->btq == 'Kurang' ? 'selected' : '' }}>Kurang</option>
@@ -573,22 +577,6 @@
                 $('#transkrip_nilai').toggleClass('hidden');
                 $('#shun, #raport, #pas_foto, #akta, #ijazah, #kk').addClass('hidden');
             });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             // Open Nav Menu
             $("#clsError").click(function() {
                 $("#clsErrors").addClass("hidden");

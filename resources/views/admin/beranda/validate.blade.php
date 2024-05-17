@@ -1,6 +1,7 @@
 @extends('layouts.admin-layout')
 @section('content')
-    <div class=" text-2xl font-medium"><a href="{{ route('admin-beranda') }}">Admin</a> / <a href="{{ route('admin-beranda') }}">Beranda</a> /
+    <div class=" text-2xl font-medium"><a href="{{ route('admin-beranda') }}">Admin</a> / <a
+            href="{{ route('admin-beranda') }}">Beranda</a> /
         {{ $programStudy == 'admin-beranda-sudah-tervalidasi'
             ? 'Tervalidasi'
             : ($programStudy == 'admin-beranda-belum-tervalidasi'
@@ -62,9 +63,14 @@
                                 </span>
 
                             </td>
+
+                            <?php
+                            $detailCalonSiswa = $siswa->load('detailCalonSiswa');
+                            ?>
+
                             <td class="py-2 px-4">{{ $siswa->nik }}</td>
                             <td class="py-2 px-4">{{ $siswa->nama }}</td>
-                            <td class="py-2 px-4">{{ $siswa->detailCalonSiswa->prodi }}</td>
+                            <td class="py-2 px-4">{{ $detailCalonSiswa->detailCalonSiswa->prodi }}</td>
                             <td class="py-2 px-4 text-2xl">
                                 <div class="flex justify-center items-center  gap-5">
                                     <a href="{{ route('admin-beranda-siswa-edit', ['id' => $siswa->nik]) }}">

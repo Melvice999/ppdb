@@ -120,7 +120,7 @@
                 </thead>
                 <tbody>
                     @foreach ($sortedSiswa as $detailSiswa)
-                        @if ($detailSiswa->calonSiswa->status === 0)
+                        @if ($detailSiswa->calonSiswa->status == 0)
                             <tr class="border-b border-d-green">
                                 <td class="nomor-urut"></td>
 
@@ -194,7 +194,7 @@
                 </thead>
                 <tbody>
                     @foreach ($sortedSiswa as $detailSiswa)
-                        @if ($detailSiswa->calonSiswa->status === 1)
+                        @if ($detailSiswa->calonSiswa->status == 1)
                             <tr class="border-b border-d-green">
                                 <td class="nomor-urut"></td>
 

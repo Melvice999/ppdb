@@ -15,7 +15,6 @@ return new class extends Migration
         Schema::create('calon_siswa', function (Blueprint $table) {
             $table->string('nik')->primary();
             $table->string('no_pendaftaran');
-            $table->string('password');
             $table->string('nama');
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
@@ -38,7 +37,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-
+    
     /**
      * Reverse the migrations.
      */
