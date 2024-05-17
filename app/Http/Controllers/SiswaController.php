@@ -170,14 +170,13 @@ class SiswaController extends Controller
     ], ['nik.unique' => 'Berkas sudah terisi.']);
 
 
-    dd(public_path('assets/img/not-found.png'));
-    $akta = $request->file('akta') ?? public_path('assets/img/not-found.png');
-    $kk = $request->file('kk') ?? public_path('assets/img/not-found.png');
-    $shun = $request->file('shun') ?? public_path('assets/img/not-found.png');
-    $ijazah = $request->file('ijazah') ?? public_path('assets/img/not-found.png');
-    $raport = $request->file('raport') ?? public_path('assets/img/not-found.png');
-    $transkrip_nilai = $request->file('transkrip_nilai') ?? public_path('assets/img/not-found.png');
-    $nik = $request->nik;
+    $akta = $request->file('akta');
+    $kk = $request->file('kk');
+    $shun = $request->file('shun');
+    $ijazah = $request->file('ijazah');
+    $raport = $request->file('raport');
+    $transkrip_nilai = $request->file('transkrip_nilai');
+    $nik = $request->nik; $nik = $request->nik;
 
     $aktaName = $nik . '-Akta.pdf';
     $kkName = $nik . '-KK.pdf';
